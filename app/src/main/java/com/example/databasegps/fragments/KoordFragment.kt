@@ -26,11 +26,10 @@ class KoordFragment : BaseFragment() {
     private lateinit var binding: FragmentKoordBinding
     private lateinit var koordResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: KoordAdapter
-
-
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
     }
+
 
     //
     override fun onClickNew() {
@@ -50,18 +49,15 @@ class KoordFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         onKoordResult()
-        Log.d("MyLog", "onCreate: сработал")
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("MyLog", "onCreateView: запустился")
-        Log.d("MyLog", "onCreateView: $container")
         binding = FragmentKoordBinding.inflate(inflater, container, false)
         return binding.root
-        Log.d("MyLog", "onCreateView: сработал")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,9 +67,9 @@ class KoordFragment : BaseFragment() {
     }
 
     private fun observer() {
-       mainViewModel.allKoord.observe(viewLifecycleOwner){
-           adapter.submitList(it)
-       }
+        mainViewModel.allKoord.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     private fun initAdapter() = with(binding) {

@@ -14,17 +14,15 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     fun insertKoord(koordinate: Koordinate) = viewModelScope.launch {
         dao.insertKoordinate(koordinate)
     }
-
+    @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android
-    @Suppress("UNREACHABLE_CODE", "UNCHECKED_CAST")
     class MainViewModelFactory(val dataBase: MainDataBase) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return super.create(modelClass)
             if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-              @Suppress ("UNCHECKED_CAST")
+
                 return MainViewModel(dataBase) as T
             }
-            throw IllegalArgumentException("Unknown ViewModelClass")
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
