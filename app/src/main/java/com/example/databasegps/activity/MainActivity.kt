@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         }
     }
 
+    //Метод получет локацию при ее изменении и выполняет действия в теле метода
     override fun onGetLocation(location: Location) {
         binding.latitude.text = location.latitude.toString()
         binding.longitude.text = location.longitude.toString()
