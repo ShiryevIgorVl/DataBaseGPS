@@ -38,9 +38,17 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         setButtonNavListener()
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
+        initGPSServis()
         requestPermissionListener()
         chekPermissionGetLocation()
 
+    }
+
+    //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
+    private fun initGPSServis() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        myLocation = MyLocation()
+        myLocation.setLocListenerInterface(this)
     }
 
     // Проверка разрешений для GPS и иннициализация запускателя registerForActivityResult в соответсвии с рекомедациями
