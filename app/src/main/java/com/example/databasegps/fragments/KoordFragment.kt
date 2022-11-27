@@ -49,7 +49,6 @@ class KoordFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         onKoordResult()
-
     }
 
     override fun onCreateView(

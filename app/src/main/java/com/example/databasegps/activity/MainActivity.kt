@@ -2,6 +2,7 @@ package com.example.databasegps.activity
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -13,14 +14,20 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.example.databasegps.R
+import com.example.databasegps.constans.Constans
 import com.example.databasegps.databinding.ActivityMainBinding
+import com.example.databasegps.entities.ParselKoord
 import com.example.databasegps.fragments.FragmentManager
 import com.example.databasegps.fragments.KoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
+import com.example.databasegps.viewmodel.LocationViewModel
 import java.security.Permission
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -29,6 +36,11 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var locationManager: LocationManager
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
+
+
+    private val locationViewModel: LocationViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +53,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         initGPSServis()
         requestPermissionListener()
         chekPermissionGetLocation()
-
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
@@ -91,13 +102,20 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         }
     }
 
-    //Метод получет локацию при ее изменении и выполняет действия в теле метода
+    //Метод получает локацию при ее изменении и выполняет действия в теле метода
     override fun onGetLocation(location: Location) {
         binding.latitude.text = location.latitude.toString()
         binding.longitude.text = location.longitude.toString()
         binding.speed.text = location.speed.toString()
         binding.accuracy.text = location.accuracy.toString()
+
+        subscriptionLocation(location)
     }
+
+
+   override fun subscriptionLocation( location: Location) {
+        locationViewModel.locationLiveData.value = location
+            }
 
     // слушатель нажатий items Button Navigation View
     private fun setButtonNavListener() {
@@ -119,4 +137,5 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             true
         }
     }
+
 }
