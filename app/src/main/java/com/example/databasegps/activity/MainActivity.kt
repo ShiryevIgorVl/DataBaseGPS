@@ -6,21 +6,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.example.databasegps.R
-import com.example.databasegps.constans.Constans
 import com.example.databasegps.databinding.ActivityMainBinding
 import com.example.databasegps.entities.ParselKoord
 import com.example.databasegps.fragments.FragmentManager
@@ -28,7 +22,7 @@ import com.example.databasegps.fragments.KoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
 import com.example.databasegps.viewmodel.LocationViewModel
-import java.security.Permission
+
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
@@ -37,26 +31,28 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
 
+    var height = ""
 
-    private val locationViewModel: LocationViewModel by viewModels()
 
+ //   private val locationViewModel: LocationViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+     
         setButtonNavListener()
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        initGPSServis()
+        initGPSService()
         requestPermissionListener()
         chekPermissionGetLocation()
+
+        onClickButtonSave()
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
-    private fun initGPSServis() {
+    private fun initGPSService() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         myLocation = MyLocation()
         myLocation.setLocListenerInterface(this)
@@ -108,14 +104,16 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         binding.longitude.text = location.longitude.toString()
         binding.speed.text = location.speed.toString()
         binding.accuracy.text = location.accuracy.toString()
+        height = location.altitude.toString()
 
-        subscriptionLocation(location)
+        // subscriptionLocation(location)
+
     }
 
 
-   override fun subscriptionLocation( location: Location) {
-        locationViewModel.locationLiveData.value = location
-            }
+//    override fun subscriptionLocation(location: Location) {
+//        locationViewModel.locationLiveData.value = location
+//    }
 
     // слушатель нажатий items Button Navigation View
     private fun setButtonNavListener() {
@@ -135,6 +133,23 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 }
             }
             true
+        }
+    }
+
+    private fun onClickButtonSave() {
+        binding.save.setOnClickListener {
+            val receivedLocation = ParselKoord(
+                latitude = binding.latitude.text.toString(),
+                longitude = binding.longitude.text.toString(),
+                height = height,
+                accuracy = binding.accuracy.text.toString(),
+                speed = binding.speed.text.toString()
+            )
+
+            val i = Intent(this, KoordActivity::class.java).apply {
+                putExtra(KoordActivity.MAIN_KEY, receivedLocation)
+            }
+            startActivity(i)
         }
     }
 

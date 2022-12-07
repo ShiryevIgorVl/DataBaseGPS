@@ -23,7 +23,7 @@ import java.util.*
 class KoordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKoodBinding
 
-    private val locationViewModel: LocationViewModel by viewModels()
+  //  private val locationViewModel: LocationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,18 +72,19 @@ class KoordActivity : AppCompatActivity() {
     // Функция заполнения класса Koordinate()
     private fun onCreateKoordinate(): Koordinate {
         lateinit var koordinate: Koordinate
-        locationViewModel.getLocationLiveData().observe(this) {
+        val receivedLocation = intent.extras?.getSerializable(MAIN_KEY) as ParselKoord
+
             koordinate = Koordinate(
                 null,
                 "KIP",
-                it.latitude.toString(),
-                it.longitude.toString(),
-                it.altitude.toString(),
-                it.accuracy.toString(),
-                it.speed.toString(),
+                latitude = receivedLocation.latitude.toString(),
+                longitude = receivedLocation.longitude.toString(),
+                height = receivedLocation.height.toString(),
+                accuracy = receivedLocation.accuracy.toString(),
+                speed = receivedLocation.speed.toString(),
                 "мама где моя панама"
             )
-        }
+
         Log.d("MyLog", "onCreateKoordinate: ${koordinate.latitude}")
         return koordinate
     }
@@ -92,5 +93,9 @@ class KoordActivity : AppCompatActivity() {
     private fun getTime(): String {
         val formatter = SimpleDateFormat("hh:mm:ss dd.mm.yyyy", Locale.getDefault())
         return formatter.format(Calendar.getInstance().time)
+    }
+
+    companion object{
+        const val MAIN_KEY = "maim_key"
     }
 }

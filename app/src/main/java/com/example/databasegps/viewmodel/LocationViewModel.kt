@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-open class LocationViewModel() : ViewModel() {
+class LocationViewModel() : ViewModel() {
     val locationLiveData: MutableLiveData<Location> by lazy {
         MutableLiveData<Location>()
     }

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-class ParselKoord(
+open class ParselKoord(
    val latitude: String?,
    val longitude: String?,
    val height: String?,
