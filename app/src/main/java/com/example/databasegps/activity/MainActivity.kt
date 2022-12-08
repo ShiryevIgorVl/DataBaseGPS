@@ -12,7 +12,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.databasegps.R
 import com.example.databasegps.databinding.ActivityMainBinding
@@ -21,7 +20,6 @@ import com.example.databasegps.fragments.FragmentManager
 import com.example.databasegps.fragments.KoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
-import com.example.databasegps.viewmodel.LocationViewModel
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -31,24 +29,24 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
 
-    var height = ""
+    var height = "высота"
 
 
- //   private val locationViewModel: LocationViewModel by viewModels()
+    //   private val locationViewModel: LocationViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-     
+
         setButtonNavListener()
 
         initGPSService()
         requestPermissionListener()
         chekPermissionGetLocation()
 
-        onClickButtonSave()
+        //onClickButtonSave()
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
@@ -136,21 +134,24 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         }
     }
 
-    private fun onClickButtonSave() {
-        binding.save.setOnClickListener {
-            val receivedLocation = ParselKoord(
-                latitude = binding.latitude.text.toString(),
-                longitude = binding.longitude.text.toString(),
-                height = height,
-                accuracy = binding.accuracy.text.toString(),
-                speed = binding.speed.text.toString()
-            )
-
-            val i = Intent(this, KoordActivity::class.java).apply {
-                putExtra(KoordActivity.MAIN_KEY, receivedLocation)
-            }
-            startActivity(i)
-        }
-    }
+//    private fun onClickButtonSave() {
+//        binding.save.setOnClickListener {
+//            val receivedLocation = ParselKoord(
+//                latitude = binding.latitude.text.toString(),
+//                longitude = binding.longitude.text.toString(),
+//                height = height,
+//                accuracy = binding.accuracy.text.toString(),
+//                speed = binding.speed.text.toString()
+//            )
+//
+//            val i = Intent(this, KoordActivity::class.java).apply {
+//                putExtra(KoordActivity.MAIN_KEY, receivedLocation)
+//            }
+//            FragmentManager.currentFragment?.onClickNew()
+//            startActivity(i)
+//
+//          //  FragmentManager.setFragment(KoordFragment.newInstance(), this)
+//        }
+    //  }
 
 }

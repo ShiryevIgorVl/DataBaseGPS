@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import com.example.databasegps.database.MainDataBase
 
 import com.example.databasegps.entities.Koordinate
+import com.example.databasegps.entities.ParselKoord
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 
 //@Suppress("UNREACHABLE_CODE", "UNCHECKED_CAST")
@@ -13,6 +15,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
     fun insertKoord(koordinate: Koordinate) = viewModelScope.launch {
         dao.insertKoordinate(koordinate)
+    }
+
+    fun deleteKoord(id: Int) = viewModelScope.launch {
+        dao.deleteKoordinate(id)
     }
     @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android

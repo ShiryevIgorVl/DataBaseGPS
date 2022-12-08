@@ -21,7 +21,7 @@ import com.example.databasegps.recyclerview.KoordAdapter
 import com.example.databasegps.viewmodel.MainViewModel
 
 
-class KoordFragment : BaseFragment() {
+class KoordFragment : BaseFragment(), KoordAdapter.Listener {
 
     private lateinit var binding: FragmentKoordBinding
     private lateinit var koordResultLauncher: ActivityResultLauncher<Intent>
@@ -41,6 +41,9 @@ class KoordFragment : BaseFragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
                     mainViewModel.insertKoord(it.data?.getSerializableExtra(KOORD_KEY) as Koordinate)
+                    Log.d("MyLog", "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}")
+                }else{
+                    Log.d("MyLog", "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}")
                 }
             }
     }
@@ -61,6 +64,7 @@ class KoordFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initAdapter()
         observer()
     }
@@ -73,9 +77,14 @@ class KoordFragment : BaseFragment() {
 
     private fun initAdapter() = with(binding) {
         rvKoord.layoutManager = LinearLayoutManager(activity)
-        adapter = KoordAdapter()
+        adapter = KoordAdapter(this@KoordFragment)
         rvKoord.adapter = adapter
     }
+
+    override fun onClickDelItem(id: Int) {
+        mainViewModel.deleteKoord(id)
+    }
+
 
     companion object {
         const val KOORD_KEY = "koord_key"

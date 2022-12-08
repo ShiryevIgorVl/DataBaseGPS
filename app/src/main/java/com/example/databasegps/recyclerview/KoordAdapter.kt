@@ -13,20 +13,20 @@ import com.example.databasegps.databinding.KoordListItemBinding
 import com.example.databasegps.entities.Koordinate
 
 
-class KoordAdapter : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemComporator()) {
+class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemComporator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        return holder.setData(getItem(position))
+        return holder.setData(getItem(position), listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = KoordListItemBinding.bind(view)
 
-        fun setData(koordinate: Koordinate) = with(binding) {
+        fun setData(koordinate: Koordinate, listener: Listener) = with(binding) {
             tvLatitudeSet.text = koordinate.name
             tvLatitudeSet.text = koordinate.latitude
 
@@ -34,6 +34,10 @@ class KoordAdapter : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemCompor
             tvAccuracySet.text = koordinate.accuracy
             tvHeightSet.text = koordinate.height
             tvSpeedSet.text = koordinate.speed
+
+            buttonDel.setOnClickListener {
+                listener.onClickDelItem(koordinate.id!!)
+            }
         }
 
         companion object{
@@ -52,7 +56,10 @@ class KoordAdapter : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemCompor
         override fun areContentsTheSame(oldItem: Koordinate, newItem: Koordinate): Boolean {
          return oldItem == newItem
         }
+    }
 
+    interface Listener{
+        fun onClickDelItem(id: Int)
     }
 
 

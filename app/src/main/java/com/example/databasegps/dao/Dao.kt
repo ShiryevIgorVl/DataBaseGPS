@@ -1,6 +1,7 @@
 package com.example.databasegps.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.databasegps.entities.Koordinate
@@ -17,4 +18,8 @@ interface Dao {
     // и запускаем не из корутин (не suspend функция)потому,что есть Flow
     @Query ("SELECT * FROM koordinate")
     fun getAllKoordinate (): Flow<List<Koordinate>>
+
+    //Удаление из БД
+    @Query ("DELETE FROM koordinate WHERE id IS :id")
+    suspend fun deleteKoordinate(id: Int)
 }
