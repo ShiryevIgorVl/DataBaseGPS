@@ -6,6 +6,7 @@
     <string name="save">Сохранить точку</string>
     <string name="name">Наименование: </string>
     <string name="name_set">КИП</string>
+    <string name="id_set">КИП № по списку в БД</string>
     <string name="latitude">Широта: </string>
     <string name="latitude_set">00.000000</string>
     <string name="longitude">Долгота: </string>

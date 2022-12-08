@@ -138,13 +138,13 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         koordinate = Koordinate(
             null,
-            "KIP",
+            name = binding.btKontPoint.text.toString(),
             latitude = latitude,
             longitude = longitude,
             height = height,
             accuracy = accuracy,
             speed = speed,
-            "мама где моя панама"
+            note = binding.etNote.text.toString()
         )
 
         Log.d("MyLog", "onCreateKoordinate1: ${koordinate.latitude}")

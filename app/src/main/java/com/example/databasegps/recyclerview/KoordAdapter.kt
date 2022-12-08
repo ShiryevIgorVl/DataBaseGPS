@@ -27,9 +27,9 @@ class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, Koo
         private val binding = KoordListItemBinding.bind(view)
 
         fun setData(koordinate: Koordinate, listener: Listener) = with(binding) {
-            tvLatitudeSet.text = koordinate.name
+            tvNameSet.text = koordinate.name
             tvLatitudeSet.text = koordinate.latitude
-
+            tvNumListKipSet.text = (koordinate.id!! + 1).toString()
             tvLongitudeSet.text = koordinate.longitude
             tvAccuracySet.text = koordinate.accuracy
             tvHeightSet.text = koordinate.height
