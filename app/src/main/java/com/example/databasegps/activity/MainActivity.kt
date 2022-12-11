@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         requestPermissionListener()
         chekPermissionGetLocation()
 
+        FragmentManager.setFragment(KoordFragment.newInstance(), this)
+
         //onClickButtonSave()
     }
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.databasegps.R
 import com.example.databasegps.databinding.KoordListItemBinding
 import com.example.databasegps.entities.Koordinate
+import java.text.Format
 
 
 class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemComporator()) {
@@ -20,16 +21,16 @@ class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, Koo
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        return holder.setData(getItem(position), listener)
+        return holder.setData(getItem(position), position, listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = KoordListItemBinding.bind(view)
 
-        fun setData(koordinate: Koordinate, listener: Listener) = with(binding) {
+        fun setData(koordinate: Koordinate, position: Int, listener: Listener) = with(binding) {
             tvNameSet.text = koordinate.name
             tvLatitudeSet.text = koordinate.latitude
-            tvNumListKipSet.text = (koordinate.id!! + 1).toString()
+            tvNumListKipSet.text = (1 + position).toString()
             tvLongitudeSet.text = koordinate.longitude
             tvAccuracySet.text = koordinate.accuracy
             tvHeightSet.text = koordinate.height
