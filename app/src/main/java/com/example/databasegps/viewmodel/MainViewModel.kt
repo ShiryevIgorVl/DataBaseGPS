@@ -4,9 +4,8 @@ import androidx.lifecycle.*
 import com.example.databasegps.database.MainDataBase
 
 import com.example.databasegps.entities.Koordinate
-import com.example.databasegps.entities.ParselKoord
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
+
 
 //@Suppress("UNREACHABLE_CODE", "UNCHECKED_CAST")
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
@@ -20,6 +19,13 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     fun deleteKoord(id: Int) = viewModelScope.launch {
         dao.deleteKoordinate(id)
     }
+
+    fun getCoordinatList() = dao.getAllKoordinateList()
+
+
+
+
+
     @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android
     class MainViewModelFactory(val dataBase: MainDataBase) : ViewModelProvider.Factory {

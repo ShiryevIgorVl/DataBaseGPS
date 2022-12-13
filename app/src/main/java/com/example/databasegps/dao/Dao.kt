@@ -1,11 +1,12 @@
 package com.example.databasegps.dao
 
+import android.database.Cursor
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.databasegps.entities.Koordinate
 import kotlinx.coroutines.flow.Flow
+
 
 
 @Dao
@@ -22,4 +23,8 @@ interface Dao {
     //Удаление из БД
     @Query ("DELETE FROM koordinate WHERE id IS :id")
     suspend fun deleteKoordinate(id: Int)
+
+    // Получение всех записей в Cursor
+    @Query ("SELECT * FROM koordinate")
+    fun getAllKoordinateList (): List<Koordinate>
 }

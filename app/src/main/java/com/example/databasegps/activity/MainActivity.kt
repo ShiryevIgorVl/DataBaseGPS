@@ -2,7 +2,6 @@ package com.example.databasegps.activity
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -15,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.databasegps.R
 import com.example.databasegps.databinding.ActivityMainBinding
-import com.example.databasegps.entities.ParselKoord
 import com.example.databasegps.fragments.FragmentManager
 import com.example.databasegps.fragments.KoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
@@ -29,9 +27,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
 
-    var height = "высота"
-
-
     //   private val locationViewModel: LocationViewModel by viewModels()
 
 
@@ -39,6 +34,19 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    //Чтобы обойти проблемы с поиском подходящего анализатора XML добовляем эти настройки
+        System.setProperty(
+            "org.apache.poi.javax.xml.stream.XMLInputFactory",
+            "com.fasterxml.aalto.stax.InputFactoryImpl"
+        )
+        System.setProperty(
+            "org.apache.poi.javax.xml.stream.XMLOutputFactory",
+            "com.fasterxml.aalto.stax.OutputFactoryImpl"
+        )
+        System.setProperty(
+            "org.apache.poi.javax.xml.stream.XMLEventFactory",
+            "com.fasterxml.aalto.stax.EventFactoryImpl"
+        )
 
         setButtonNavListener()
 
@@ -47,8 +55,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         FragmentManager.setFragment(KoordFragment.newInstance(), this)
-
-        //onClickButtonSave()
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
@@ -91,7 +97,9 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 pLauncher.launch(
                     arrayOf(
                         Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
                     )
                 )
             }
@@ -104,16 +112,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         binding.longitude.text = location.longitude.toString()
         binding.speed.text = location.speed.toString()
         binding.accuracy.text = location.accuracy.toString()
-        height = location.altitude.toString()
-
-        // subscriptionLocation(location)
-
     }
-
-
-//    override fun subscriptionLocation(location: Location) {
-//        locationViewModel.locationLiveData.value = location
-//    }
 
     // слушатель нажатий items Button Navigation View
     private fun setButtonNavListener() {
@@ -135,25 +134,4 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             true
         }
     }
-
-//    private fun onClickButtonSave() {
-//        binding.save.setOnClickListener {
-//            val receivedLocation = ParselKoord(
-//                latitude = binding.latitude.text.toString(),
-//                longitude = binding.longitude.text.toString(),
-//                height = height,
-//                accuracy = binding.accuracy.text.toString(),
-//                speed = binding.speed.text.toString()
-//            )
-//
-//            val i = Intent(this, KoordActivity::class.java).apply {
-//                putExtra(KoordActivity.MAIN_KEY, receivedLocation)
-//            }
-//            FragmentManager.currentFragment?.onClickNew()
-//            startActivity(i)
-//
-//          //  FragmentManager.setFragment(KoordFragment.newInstance(), this)
-//        }
-    //  }
-
 }

@@ -2,7 +2,6 @@ package com.example.databasegps.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.databasegps.R
-import com.example.databasegps.activity.MainActivity
 
 object FragmentManager {
     var currentFragment: BaseFragment? = null

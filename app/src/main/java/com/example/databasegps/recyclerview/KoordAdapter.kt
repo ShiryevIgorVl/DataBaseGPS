@@ -3,15 +3,12 @@ package com.example.databasegps.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasegps.R
 import com.example.databasegps.databinding.KoordListItemBinding
 import com.example.databasegps.entities.Koordinate
-import java.text.Format
 
 
 class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemComporator()) {

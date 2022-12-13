@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat
 import com.example.databasegps.R
 import com.example.databasegps.databinding.ActivityKoodBinding
 import com.example.databasegps.entities.Koordinate
-import com.example.databasegps.entities.ParselKoord
-import com.example.databasegps.fragments.FragmentManager
 import com.example.databasegps.fragments.KoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
@@ -75,6 +73,7 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
         myLocation.setLocListenerInterface(this)
     }
 
+    //Проверка наличия разрешений на локацию и подключение обновлений данных локации (без проверки не работает)
     private fun chekPermissionGetLocation() {
         when {
             ContextCompat.checkSelfPermission(
@@ -93,11 +92,13 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
             }
         }
     }
-
+    // Заполнение полей и переменных данными из сервиса геолокации
     override fun onGetLocation(location: Location) {
-        binding.twLat.text = location.latitude.toString()
-        binding.tvLon.text = location.longitude.toString()
-        binding.tvAcc.text = location.accuracy.toString()
+        binding.apply {
+            twLat.text = location.latitude.toString()
+            tvLon.text = location.longitude.toString()
+            tvAcc.text = location.accuracy.toString()
+        }
 
         speed = location.speed.toString()
         height = location.altitude.toString()
@@ -128,7 +129,6 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
         }
         Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
         setResult(RESULT_OK, i)
-
     }
 
 
@@ -144,7 +144,23 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
             height = height,
             accuracy = accuracy,
             speed = speed,
-            note = binding.etNote.text.toString()
+            note = binding.etNote.text.toString(),
+            operationalnumberKIP = binding.etOperationalnumberKIP.text.toString(),
+            operationalKM = binding.etOperationalKM.text.toString(),
+            utsPipe = binding.etUtsPipe.text.toString(),
+            uppPipe = binding.etUppPipe.text.toString(),
+            ipolPipe = binding.etiPolPipe.text.toString(),
+            time = getTime(),
+            utsСover = binding.etUtsOver.text.toString(),
+            uppCover = binding.etUppCover.text.toString(),
+            ipolCover = binding.etIpolCover.text.toString(),
+            rPipeCover = binding.etRPipeCover.text.toString(),
+            ups = binding.etUps.text.toString(),
+            iprot = binding.etIprot.text.toString(),
+            depthPipe = binding.etDepthPipe.text.toString(),
+            iPipe = binding.etIPipe.text.toString(),
+            ues = binding.etUES.text.toString(),
+            damageIP = binding.etDamageIP.text.toString()
         )
 
         Log.d("MyLog", "onCreateKoordinate1: ${koordinate.latitude}")

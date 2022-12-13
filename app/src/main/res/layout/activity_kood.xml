@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
     <EditText
-        android:id="@+id/editTextNumber4"
+        android:id="@+id/etUtsСover"
         android:layout_width="75dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
@@ -111,10 +111,10 @@
         android:digits="0123456789,-"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber5" />
+        app:layout_constraintTop_toTopOf="@+id/etUppCover" />
 
     <EditText
-        android:id="@+id/editTextNumber9"
+        android:id="@+id/etRPipeCover"
         android:layout_width="84dp"
         android:layout_height="53dp"
         android:layout_marginStart="8dp"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
     <EditText
-        android:id="@+id/editTextNumber10"
+        android:id="@+id/etIprot"
         android:layout_width="84dp"
         android:layout_height="53dp"
         android:layout_marginTop="72dp"
@@ -137,26 +137,26 @@
         android:hint="I пр-к, мА"
         android:inputType="number"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber11"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber9"
+        app:layout_constraintEnd_toStartOf="@+id/etUps"
+        app:layout_constraintStart_toEndOf="@+id/etRPipeCover"
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
-    <EditText
-        android:id="@+id/editTextNumber11"
-        android:layout_width="84dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
-        android:background="#80DEEA"
-        android:ems="10"
-        android:hint="I пр-к, мА"
-        android:inputType="number"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
+            <EditText
+                android:id="@+id/etUps"
+                android:layout_width="84dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="72dp"
+                android:layout_marginEnd="8dp"
+                android:background="#80DEEA"
+                android:ems="10"
+                android:hint="U пр-з, В"
+                android:inputType="number"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
     <EditText
-        android:id="@+id/editTextNumber5"
+        android:id="@+id/etUppCover"
         android:layout_width="75dp"
         android:layout_height="52dp"
         android:layout_marginTop="10dp"
@@ -165,12 +165,12 @@
         android:hint="Uпп, В"
         android:inputType="number"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber6"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber4"
+        app:layout_constraintEnd_toStartOf="@+id/etIpolCover"
+        app:layout_constraintStart_toEndOf="@+id/etUtsСover"
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
     <EditText
-        android:id="@+id/editTextNumber3"
+        android:id="@+id/etiPolPipe"
         android:layout_width="112dp"
         android:layout_height="53dp"
         android:layout_marginEnd="8dp"
@@ -184,7 +184,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
 
     <EditText
-        android:id="@+id/editTextNumber6"
+        android:id="@+id/etIpolCover"
         android:layout_width="112dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
@@ -194,10 +194,10 @@
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber5" />
+        app:layout_constraintTop_toTopOf="@+id/etUppCover" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/etUtsPipe"
         android:layout_width="75dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
@@ -211,7 +211,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
 
     <EditText
-        android:id="@+id/editTextNumber7"
+        android:id="@+id/etDepthPipe"
         android:layout_width="110dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
@@ -221,44 +221,61 @@
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber8" />
+        app:layout_constraintTop_toTopOf="@+id/etIPipe" />
 
-    <EditText
-        android:id="@+id/editTextNumber13"
-        android:layout_width="179dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
-        android:autoText="false"
-        android:background="#80DEEA"
-        android:elegantTextHeight="false"
-        android:ems="10"
-        android:hint="Повреждение ИП, м"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textIsSelectable="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+            <EditText
+                android:id="@+id/etDamageIP"
+                android:layout_width="100dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="72dp"
+                android:autoText="false"
+                android:background="#80DEEA"
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="Повр. ИП, м"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
 
-    <EditText
-        android:id="@+id/editTextNumber14"
-        android:layout_width="179dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
-        android:autoText="false"
-        android:background="#80DEEA"
-        android:elegantTextHeight="false"
-        android:ems="10"
-        android:hint="№ КИП и км"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textIsSelectable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+            <EditText
+                android:id="@+id/etOperationalKM"
+                android:layout_width="100dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="72dp"
+                android:layout_marginEnd="8dp"
+                android:autoText="false"
+                android:background="#80DEEA"
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="км КИП "
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
 
-    <EditText
-        android:id="@+id/editTextNumber8"
+            <EditText
+                android:id="@+id/etOperationalnumberKIP"
+                android:layout_width="100dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="72dp"
+                android:autoText="false"
+                android:background="#80DEEA"
+                android:elegantTextHeight="false"
+                android:ems="10"
+                android:hint="№ КИП"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                app:layout_constraintEnd_toStartOf="@+id/etOperationalKM"
+                app:layout_constraintStart_toEndOf="@+id/etDamageIP"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+
+            <EditText
+        android:id="@+id/etIPipe"
         android:layout_width="80dp"
         android:layout_height="54dp"
         android:layout_marginTop="10dp"
@@ -267,12 +284,12 @@
         android:hint="Iтр, мА"
         android:inputType="number"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber12"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber7"
+        app:layout_constraintEnd_toStartOf="@+id/etUES"
+        app:layout_constraintStart_toEndOf="@+id/etDepthPipe"
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
 
     <EditText
-        android:id="@+id/editTextNumber12"
+        android:id="@+id/etUES"
         android:layout_width="81dp"
         android:layout_height="53dp"
         android:layout_marginEnd="8dp"
@@ -282,10 +299,10 @@
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber8" />
+        app:layout_constraintTop_toTopOf="@+id/etIPipe" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/etUppPipe"
         android:layout_width="72dp"
         android:layout_height="52dp"
         android:background="#80DEEA"
@@ -294,8 +311,8 @@
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/tvKoordName3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber3"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toStartOf="@+id/etiPolPipe"
+        app:layout_constraintStart_toEndOf="@+id/etUtsPipe"
         app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
 
     <Button
