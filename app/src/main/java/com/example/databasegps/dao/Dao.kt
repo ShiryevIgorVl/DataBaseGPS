@@ -24,7 +24,7 @@ interface Dao {
     @Query ("DELETE FROM koordinate WHERE id IS :id")
     suspend fun deleteKoordinate(id: Int)
 
-    // Получение всех записей в Cursor
+    // Получение всех записей
     @Query ("SELECT * FROM koordinate")
     fun getAllKoordinateList (): List<Koordinate>
 }

@@ -26,6 +26,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
 
 
+
     @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android
     class MainViewModelFactory(val dataBase: MainDataBase) : ViewModelProvider.Factory {

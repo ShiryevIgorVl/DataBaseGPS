@@ -35,18 +35,18 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     //Чтобы обойти проблемы с поиском подходящего анализатора XML добовляем эти настройки
-        System.setProperty(
-            "org.apache.poi.javax.xml.stream.XMLInputFactory",
-            "com.fasterxml.aalto.stax.InputFactoryImpl"
-        )
-        System.setProperty(
-            "org.apache.poi.javax.xml.stream.XMLOutputFactory",
-            "com.fasterxml.aalto.stax.OutputFactoryImpl"
-        )
-        System.setProperty(
-            "org.apache.poi.javax.xml.stream.XMLEventFactory",
-            "com.fasterxml.aalto.stax.EventFactoryImpl"
-        )
+//        System.setProperty(
+//            "org.apache.poi.javax.xml.stream.XMLInputFactory",
+//            "com.fasterxml.aalto.stax.InputFactoryImpl"
+//        )
+//        System.setProperty(
+//            "org.apache.poi.javax.xml.stream.XMLOutputFactory",
+//            "com.fasterxml.aalto.stax.OutputFactoryImpl"
+//        )
+//        System.setProperty(
+//            "org.apache.poi.javax.xml.stream.XMLEventFactory",
+//            "com.fasterxml.aalto.stax.EventFactoryImpl"
+//        )
 
         setButtonNavListener()
 
@@ -99,7 +99,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
                     )
                 )
             }
@@ -128,7 +127,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                     FragmentManager.currentFragment?.onClickNew()
                 }
                 R.id.upload -> {
-                    Log.d("MyLog", "нажали upload")
+                    Log.d("MyLog", "нажали settings")
+                    FragmentManager.currentFragment?.createExcelTable()
                 }
             }
             true

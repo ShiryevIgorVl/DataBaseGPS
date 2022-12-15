@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.databasegps"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -61,7 +61,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Excel
-    implementation 'org.apache.poi:poi: 5.2.3'
+    implementation 'org.apache.poi:poi:5.2.3'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
 
 
