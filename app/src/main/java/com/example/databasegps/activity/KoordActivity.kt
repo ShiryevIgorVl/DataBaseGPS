@@ -173,7 +173,7 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     // Функция получения текущего времени
     private fun getTime(): String {
-        val formatter = SimpleDateFormat("hh:mm:ss dd.mm.yyyy", Locale.getDefault())
+        val formatter = SimpleDateFormat("HH:mm:ss dd.MM.yyyy", Locale.getDefault())
         return formatter.format(Calendar.getInstance().time)
     }
 

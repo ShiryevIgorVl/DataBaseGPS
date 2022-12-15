@@ -109,8 +109,8 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
         val DIR_NAME = "ExcelFiles"
         val FILE_NAME = DIR_NAME + System.currentTimeMillis() + ".xls"
 
-      val koordList: List<Koordinate> = adapter.currentList
-        Log.d("MyTag", "createExcelTable: ${koordList.toString()}")
+        val koordList = adapter.currentList
+                Log.d("MyTag", "createExcelTable: ${koordList.toString()}")
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null
@@ -221,13 +221,13 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
         sheet.setColumnWidth(23, (30 * 200))
 
         //Проходим циклом создаем и записываем их в соотвтетствующие ячейки и строки
-        if (koordList.size > 0){
+        if (koordList.size > 0) {
 
             for (i in 0..(koordList.size - 1)) {
                 val rowNext = sheet.createRow(i + 1)
 
                 cell = rowNext.createCell(0)
-                cell.setCellValue("${i+1}")
+                cell.setCellValue("${i + 1}")
 
                 cell = rowNext.createCell(1)
                 cell.setCellValue(koordList[i].name)
@@ -324,7 +324,8 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
                 sheet.setColumnWidth(23, (30 * 100))
             }
             //Запись файла Excel в папку Докуметы телефона
-            val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            val path =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
             val file = File(path, FILE_NAME)
 
@@ -341,8 +342,8 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
                 e.printStackTrace()
             }
 
-        }else {
-          //  Toast.makeText(applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT).show()
+        } else {
+            //  Toast.makeText(applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT).show()
             return
         }
 
