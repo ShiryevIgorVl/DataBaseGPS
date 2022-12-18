@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.DecimalFormat
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.location.Location
@@ -37,6 +38,8 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private lateinit var loc: Location
 
+    private lateinit var decimalFormat: DecimalFormat
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,8 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
         actionBarSetting()
 
         chekPermissionGetLocation()
+
+        onClickKoordPointBotton()
     }
 
     // Создаем в активити верхнее меню
@@ -92,12 +97,13 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
             }
         }
     }
+
     // Заполнение полей и переменных данными из сервиса геолокации
     override fun onGetLocation(location: Location) {
         binding.apply {
-            twLat.text = location.latitude.toString()
-            tvLon.text = location.longitude.toString()
-            tvAcc.text = location.accuracy.toString()
+            twLat.text = formatTV(location.latitude)
+            tvLon.text = formatTV(location.longitude)
+            tvAcc.text = formatTVAcc(location.accuracy)
         }
 
         speed = location.speed.toString()
@@ -115,15 +121,6 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
     //Передаем данные в KoordFragment из окошек заполнения
     private fun setMainResult() {
         val onCreateKoordinate = onCreateKoordinate()
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.id}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.name}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.latitude}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.longitude}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.height}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.accuracy}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.speed}")
-        Log.d("MyLog", "setMainResult: ${onCreateKoordinate.note}")
-
         val i = Intent(this, MainActivity::class.java).apply {
             putExtra(KoordFragment.KOORD_KEY, onCreateKoordinate)
         }
@@ -138,7 +135,7 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         koordinate = Koordinate(
             null,
-            name = binding.btKontPoint.text.toString(),
+            name = binding.tvKoordName.text.toString(),
             latitude = latitude,
             longitude = longitude,
             height = height,
@@ -162,13 +159,27 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
             ues = binding.etUES.text.toString(),
             damageIP = binding.etDamageIP.text.toString()
         )
-
-        Log.d("MyLog", "onCreateKoordinate1: ${koordinate.latitude}")
-        Log.d("MyLog", "onCreateKoordinate2: ${koordinate.longitude}")
-        Log.d("MyLog", "onCreateKoordinate3: ${koordinate.height}")
-        Log.d("MyLog", "onCreateKoordinate4: ${koordinate.accuracy}")
-        Log.d("MyLog", "onCreateKoordinate5: ${koordinate.speed}")
         return koordinate
+    }
+
+    private fun onClickKoordPointBotton(){
+        binding.btKIP.setOnClickListener {
+            binding.tvKoordName.text = binding.btKIP.text
+        }
+
+        binding.btKontPoint.setOnClickListener {
+            binding.tvKoordName.text = binding.btKontPoint.text
+        }
+    }
+
+    private fun formatTV(a: Double): String{
+        decimalFormat = DecimalFormat("##.#####")
+        return decimalFormat.format(a).toString()
+    }
+
+    private fun formatTVAcc(a: Float): String{
+        decimalFormat = DecimalFormat("##.#")
+        return decimalFormat.format(a).toString()
     }
 
     // Функция получения текущего времени

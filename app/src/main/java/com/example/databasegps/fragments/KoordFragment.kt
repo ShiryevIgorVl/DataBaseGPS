@@ -110,7 +110,8 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
         val FILE_NAME = DIR_NAME + System.currentTimeMillis() + ".xls"
 
         val koordList = adapter.currentList
-                Log.d("MyTag", "createExcelTable: ${koordList.toString()}")
+
+                Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null
