@@ -1,30 +1,24 @@
 package com.example.databasegps.fragments
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasegps.activity.App
-import com.example.databasegps.activity.KoordActivity
-import com.example.databasegps.databinding.FragmentKoordBinding
-import com.example.databasegps.entities.Koordinate
-import com.example.databasegps.recyclerview.KoordAdapter
+import com.example.databasegps.activity.CoordActivity
+import com.example.databasegps.databinding.FragmentCoordBinding
+import com.example.databasegps.entities.Coordinate
+import com.example.databasegps.recyclerview.CoordAdapter
 import com.example.databasegps.viewmodel.MainViewModel
-import kotlinx.coroutines.Job
-import org.apache.commons.compress.harmony.pack200.NewAttributeBands.Call
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.apache.poi.ss.formula.functions.T
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
@@ -33,28 +27,27 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class KoordFragment : BaseFragment(), KoordAdapter.Listener {
+class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
-    private lateinit var binding: FragmentKoordBinding
+    private lateinit var binding: FragmentCoordBinding
     private lateinit var koordResultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var adapter: KoordAdapter
+    private lateinit var adapter: CoordAdapter
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
     }
 
 
     override fun onClickNew() {
-        koordResultLauncher.launch(Intent(activity, KoordActivity::class.java))
+        koordResultLauncher.launch(Intent(activity, CoordActivity::class.java))
     }
 
     private fun onKoordResult() {
         koordResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
-                    mainViewModel.insertKoord(it.data?.getSerializableExtra(KOORD_KEY) as Koordinate)
+                    mainViewModel.insertKoord(it.data?.getSerializableExtra(KOORD_KEY) as Coordinate)
                     Log.d(
                         "MyLog",
                         "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}"
@@ -78,7 +71,7 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentKoordBinding.inflate(inflater, container, false)
+        binding = FragmentCoordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -97,7 +90,7 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
 
     private fun initAdapter() = with(binding) {
         rvKoord.layoutManager = LinearLayoutManager(activity)
-        adapter = KoordAdapter(this@KoordFragment)
+        adapter = CoordAdapter(this@CoordFragment)
         rvKoord.adapter = adapter
     }
 
@@ -355,7 +348,7 @@ class KoordFragment : BaseFragment(), KoordAdapter.Listener {
         const val KOORD_KEY = "koord_key"
 
         @JvmStatic
-        fun newInstance() = KoordFragment()
+        fun newInstance() = CoordFragment()
 
     }
 }

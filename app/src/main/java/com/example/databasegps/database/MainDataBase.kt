@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.databasegps.dao.Dao
-import com.example.databasegps.entities.Koordinate
+import com.example.databasegps.entities.Coordinate
 
-@Database(entities = [Koordinate::class], version = 1)
+@Database(entities = [Coordinate::class], version = 1)
 abstract class MainDataBase : RoomDatabase() {
 
     abstract fun getDao(): Dao

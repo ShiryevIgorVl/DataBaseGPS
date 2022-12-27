@@ -17,15 +17,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.databasegps.R
-import com.example.databasegps.databinding.ActivityKoodBinding
-import com.example.databasegps.entities.Koordinate
-import com.example.databasegps.fragments.KoordFragment
+import com.example.databasegps.databinding.ActivityCoordBinding
+import com.example.databasegps.entities.Coordinate
+import com.example.databasegps.fragments.CoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
 import java.util.*
 
-class KoordActivity : AppCompatActivity(), LocListenerInterfase {
-    private lateinit var binding: ActivityKoodBinding
+class CoordActivity : AppCompatActivity(), LocListenerInterfase {
+    private lateinit var binding: ActivityCoordBinding
 
     private lateinit var locationManager: LocationManager
     private lateinit var myLocation: MyLocation
@@ -43,7 +43,7 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityKoodBinding.inflate(layoutInflater)
+        binding = ActivityCoordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initGPSService()
@@ -122,7 +122,7 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
     private fun setMainResult() {
         val onCreateKoordinate = onCreateKoordinate()
         val i = Intent(this, MainActivity::class.java).apply {
-            putExtra(KoordFragment.KOORD_KEY, onCreateKoordinate)
+            putExtra(CoordFragment.KOORD_KEY, onCreateKoordinate)
         }
         Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
         setResult(RESULT_OK, i)
@@ -130,10 +130,10 @@ class KoordActivity : AppCompatActivity(), LocListenerInterfase {
 
 
     // Функция заполнения класса Koordinate()
-    private fun onCreateKoordinate(): Koordinate {
-        lateinit var koordinate: Koordinate
+    private fun onCreateKoordinate(): Coordinate {
+        lateinit var koordinate: Coordinate
 
-        koordinate = Koordinate(
+        koordinate = Coordinate(
             null,
             name = binding.tvKoordName.text.toString(),
             latitude = latitude,

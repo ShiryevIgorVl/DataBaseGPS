@@ -3,16 +3,16 @@ package com.example.databasegps.viewmodel
 import androidx.lifecycle.*
 import com.example.databasegps.database.MainDataBase
 
-import com.example.databasegps.entities.Koordinate
+import com.example.databasegps.entities.Coordinate
 import kotlinx.coroutines.launch
 
 
 //@Suppress("UNREACHABLE_CODE", "UNCHECKED_CAST")
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     val dao = dataBase.getDao()
-    val allKoord: LiveData<List<Koordinate>> = dao.getAllKoordinate().asLiveData()
+    val allKoord: LiveData<List<Coordinate>> = dao.getAllKoordinate().asLiveData()
 
-    fun insertKoord(koordinate: Koordinate) = viewModelScope.launch {
+    fun insertKoord(koordinate: Coordinate) = viewModelScope.launch {
         dao.insertKoordinate(koordinate)
     }
 

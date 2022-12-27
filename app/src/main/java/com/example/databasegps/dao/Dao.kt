@@ -1,10 +1,9 @@
 package com.example.databasegps.dao
 
-import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.databasegps.entities.Koordinate
+import com.example.databasegps.entities.Coordinate
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,12 +12,12 @@ import kotlinx.coroutines.flow.Flow
 interface Dao {
    //Запись в DB
     @Insert
-    suspend fun insertKoordinate(koordinate: Koordinate)
+    suspend fun insertKoordinate(koordinate: Coordinate)
 
     //Считывание все из DB (запрос) автоматически и постоянно при изменении в DB возвращает поток списков координат (Entities)
     // и запускаем не из корутин (не suspend функция)потому,что есть Flow
     @Query ("SELECT * FROM koordinate")
-    fun getAllKoordinate (): Flow<List<Koordinate>>
+    fun getAllKoordinate (): Flow<List<Coordinate>>
 
     //Удаление из БД
     @Query ("DELETE FROM koordinate WHERE id IS :id")
@@ -26,5 +25,5 @@ interface Dao {
 
     // Получение всех записей
     @Query ("SELECT * FROM koordinate")
-    fun getAllKoordinateList (): List<Koordinate>
+    fun getAllKoordinateList (): List<Coordinate>
 }

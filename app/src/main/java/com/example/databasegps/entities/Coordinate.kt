@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity (tableName = "koordinate")
-data class Koordinate(
+data class Coordinate(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?,
     @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "operational_number_KIP") val operationalnumberKIP: String = "",

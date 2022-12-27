@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import com.example.databasegps.R
 import com.example.databasegps.databinding.ActivityMainBinding
 import com.example.databasegps.fragments.FragmentManager
-import com.example.databasegps.fragments.KoordFragment
+import com.example.databasegps.fragments.CoordFragment
 import com.example.databasegps.gps.LocListenerInterfase
 import com.example.databasegps.gps.MyLocation
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         requestPermissionListener()
         chekPermissionGetLocation()
 
-        FragmentManager.setFragment(KoordFragment.newInstance(), this)
+        FragmentManager.setFragment(CoordFragment.newInstance(), this)
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                     Log.d("MyLog", "нажали settings")
                 }
                 R.id.list -> {
-                    FragmentManager.setFragment(KoordFragment.newInstance(), this)
+                    FragmentManager.setFragment(CoordFragment.newInstance(), this)
                 }
                 R.id.save -> {
                     FragmentManager.currentFragment?.onClickNew()

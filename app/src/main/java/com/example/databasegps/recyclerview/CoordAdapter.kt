@@ -1,5 +1,4 @@
 package com.example.databasegps.recyclerview
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasegps.R
-import com.example.databasegps.databinding.KoordListItemBinding
-import com.example.databasegps.entities.Koordinate
+import com.example.databasegps.databinding.CoordListItemBinding
+import com.example.databasegps.entities.Coordinate
 
 
-class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, KoordAdapter.ItemHolder>(ItemComporator()) {
+class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, CoordAdapter.ItemHolder>(ItemComporator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
@@ -22,9 +21,9 @@ class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, Koo
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = KoordListItemBinding.bind(view)
+        private val binding = CoordListItemBinding.bind(view)
 
-        fun setData(koordinate: Koordinate, position: Int, listener: Listener) = with(binding) {
+        fun setData(koordinate: Coordinate, position: Int, listener: Listener) = with(binding) {
             tvNameSet.text = koordinate.name
             tvLatitudeSet.text = koordinate.latitude
             tvNumListKipSet.text = (1 + position).toString()
@@ -41,17 +40,17 @@ class KoordAdapter(private val listener: Listener) : ListAdapter<Koordinate, Koo
         companion object{
             fun create(parent: ViewGroup): ItemHolder {
                 return ItemHolder(LayoutInflater.from(parent.context)
-                    .inflate(R.layout.koord_list_item, parent, false))
+                    .inflate(R.layout.coord_list_item, parent, false))
             }
         }
     }
 
-    class ItemComporator : DiffUtil.ItemCallback<Koordinate>(){
-        override fun areItemsTheSame(oldItem: Koordinate, newItem: Koordinate): Boolean {
+    class ItemComporator : DiffUtil.ItemCallback<Coordinate>(){
+        override fun areItemsTheSame(oldItem: Coordinate, newItem: Coordinate): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Koordinate, newItem: Koordinate): Boolean {
+        override fun areContentsTheSame(oldItem: Coordinate, newItem: Coordinate): Boolean {
          return oldItem == newItem
         }
     }
