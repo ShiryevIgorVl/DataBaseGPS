@@ -1,7 +1,7 @@
-package com.example.databasegps.fragments
+package com.example.KYL.fragments
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.databasegps.R
+import com.example.KYL.R
 
 object FragmentManager {
     var currentFragment: BaseFragment? = null

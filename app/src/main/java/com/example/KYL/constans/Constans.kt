@@ -1,4 +1,4 @@
-package com.example.databasegps.constans
+package com.example.KYL.constans
 
 interface Constans {
     val LAT_EXTRA: String

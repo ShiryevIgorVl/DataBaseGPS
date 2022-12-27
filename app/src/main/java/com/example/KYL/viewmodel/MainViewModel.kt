@@ -1,9 +1,9 @@
-package com.example.databasegps.viewmodel
+package com.example.KYL.viewmodel
 
 import androidx.lifecycle.*
-import com.example.databasegps.database.MainDataBase
+import com.example.KYL.database.MainDataBase
 
-import com.example.databasegps.entities.Coordinate
+import com.example.KYL.entities.Coordinate
 import kotlinx.coroutines.launch
 
 

@@ -1,9 +1,9 @@
-package com.example.databasegps.dao
+package com.example.KYL.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.databasegps.entities.Coordinate
+import com.example.KYL.entities.Coordinate
 import kotlinx.coroutines.flow.Flow
 
 

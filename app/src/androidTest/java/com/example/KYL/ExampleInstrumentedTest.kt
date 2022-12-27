@@ -1,4 +1,4 @@
-package com.example.databasegps
+package com.example.KYL
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

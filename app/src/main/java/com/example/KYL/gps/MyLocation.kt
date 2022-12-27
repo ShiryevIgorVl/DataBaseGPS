@@ -1,4 +1,4 @@
-package com.example.databasegps.gps
+package com.example.KYL.gps
 
 import android.location.Location
 import android.location.LocationListener

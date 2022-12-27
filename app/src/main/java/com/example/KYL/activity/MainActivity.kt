@@ -1,4 +1,4 @@
-package com.example.databasegps.activity
+package com.example.KYL.activity
 
 import android.Manifest
 import android.content.Context
@@ -12,12 +12,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.example.databasegps.R
-import com.example.databasegps.databinding.ActivityMainBinding
-import com.example.databasegps.fragments.FragmentManager
-import com.example.databasegps.fragments.CoordFragment
-import com.example.databasegps.gps.LocListenerInterfase
-import com.example.databasegps.gps.MyLocation
+import com.example.KYL.R
+import com.example.KYL.databinding.ActivityMainBinding
+import com.example.KYL.fragments.FragmentManager
+import com.example.KYL.fragments.CoordFragment
+import com.example.KYL.gps.LocListenerInterfase
+import com.example.KYL.gps.MyLocation
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {

@@ -1,16 +1,18 @@
-package com.example.databasegps.recyclerview
+package com.example.KYL.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.databasegps.R
-import com.example.databasegps.databinding.CoordListItemBinding
-import com.example.databasegps.entities.Coordinate
+import com.example.KYL.R
+import com.example.KYL.databinding.CoordListItemBinding
+import com.example.KYL.entities.Coordinate
 
 
-class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, CoordAdapter.ItemHolder>(ItemComporator()) {
+class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, CoordAdapter.ItemHolder>(
+    ItemComporator()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)

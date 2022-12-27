@@ -1,7 +1,9 @@
-package com.example.databasegps.fragments
+package com.example.KYL.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -12,12 +14,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.databasegps.activity.App
-import com.example.databasegps.activity.CoordActivity
-import com.example.databasegps.databinding.FragmentCoordBinding
-import com.example.databasegps.entities.Coordinate
-import com.example.databasegps.recyclerview.CoordAdapter
-import com.example.databasegps.viewmodel.MainViewModel
+import com.example.KYL.R
+import com.example.KYL.activity.App
+import com.example.KYL.activity.CoordActivity
+import com.example.KYL.constans.Time
+import com.example.KYL.databinding.FragmentCoordBinding
+import com.example.KYL.entities.Coordinate
+import com.example.KYL.recyclerview.CoordAdapter
+import com.example.KYL.viewmodel.MainViewModel
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
@@ -99,12 +103,13 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     override fun createExcelTable() {
-        val DIR_NAME = "ExcelFiles"
-        val FILE_NAME = DIR_NAME + System.currentTimeMillis() + ".xls"
+
+        val DIR_NAME = context?.getString(R.string.app_name)
+        val FILE_NAME = DIR_NAME + " " + Time.getTimeForSaveFile() + ".xls"
 
         val koordList = adapter.currentList
 
-                Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
+       // Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null

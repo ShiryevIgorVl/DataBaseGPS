@@ -1,4 +1,4 @@
-package com.example.databasegps.activity
+package com.example.KYL.activity
 
 import android.Manifest
 import android.content.Context
@@ -16,12 +16,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.databasegps.R
-import com.example.databasegps.databinding.ActivityCoordBinding
-import com.example.databasegps.entities.Coordinate
-import com.example.databasegps.fragments.CoordFragment
-import com.example.databasegps.gps.LocListenerInterfase
-import com.example.databasegps.gps.MyLocation
+import com.example.KYL.R
+import com.example.KYL.constans.Time
+import com.example.KYL.databinding.ActivityCoordBinding
+import com.example.KYL.entities.Coordinate
+import com.example.KYL.fragments.CoordFragment
+import com.example.KYL.gps.LocListenerInterfase
+import com.example.KYL.gps.MyLocation
 import java.util.*
 
 class CoordActivity : AppCompatActivity(), LocListenerInterfase {
@@ -131,9 +132,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     // Функция заполнения класса Koordinate()
     private fun onCreateKoordinate(): Coordinate {
-        lateinit var koordinate: Coordinate
+        lateinit var coordinate: Coordinate
 
-        koordinate = Coordinate(
+        coordinate = Coordinate(
             null,
             name = binding.tvKoordName.text.toString(),
             latitude = latitude,
@@ -147,7 +148,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             utsPipe = binding.etUtsPipe.text.toString(),
             uppPipe = binding.etUppPipe.text.toString(),
             ipolPipe = binding.etiPolPipe.text.toString(),
-            time = getTime(),
+            time = Time.getTime(),
             utsСover = binding.etUtsOver.text.toString(),
             uppCover = binding.etUppCover.text.toString(),
             ipolCover = binding.etIpolCover.text.toString(),
@@ -159,7 +160,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             ues = binding.etUES.text.toString(),
             damageIP = binding.etDamageIP.text.toString()
         )
-        return koordinate
+        return coordinate
     }
 
     private fun onClickKoordPointBotton(){
@@ -182,11 +183,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         return decimalFormat.format(a).toString()
     }
 
-    // Функция получения текущего времени
-    private fun getTime(): String {
-        val formatter = SimpleDateFormat("HH:mm:ss dd.MM.yyyy", Locale.getDefault())
-        return formatter.format(Calendar.getInstance().time)
-    }
+
 
     companion object {
         const val MAIN_KEY = "main_key"

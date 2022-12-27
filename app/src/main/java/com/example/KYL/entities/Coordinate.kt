@@ -1,4 +1,4 @@
-package com.example.databasegps.entities
+package com.example.KYL.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
