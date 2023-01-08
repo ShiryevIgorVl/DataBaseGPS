@@ -107,11 +107,11 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             tvAcc.text = formatTVAcc(location.accuracy)
         }
 
-        speed = location.speed.toString()
-        height = location.altitude.toString()
-        longitude = location.longitude.toString()
-        latitude = location.latitude.toString()
-        accuracy = location.accuracy.toString()
+        speed = formatTVAcc(location.speed)
+        height = formatTVAlt(location.altitude)
+        longitude = formatTV(location.longitude)
+        latitude = formatTV(location.latitude)
+        accuracy = formatTVAcc(location.accuracy)
     }
 
     // Подключение стрелки назад в акшен баре, id этой стрелки home см. функцию onOptionsItemSelected
@@ -174,10 +174,14 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     private fun formatTV(a: Double): String{
-        decimalFormat = DecimalFormat("##.#####")
+        decimalFormat = DecimalFormat("##.######")
         return decimalFormat.format(a).toString()
     }
 
+    private fun formatTVAlt(a: Double): String{
+        decimalFormat = DecimalFormat("##.#")
+        return decimalFormat.format(a).toString()
+    }
     private fun formatTVAcc(a: Float): String{
         decimalFormat = DecimalFormat("##.#")
         return decimalFormat.format(a).toString()

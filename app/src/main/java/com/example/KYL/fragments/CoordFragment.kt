@@ -104,8 +104,8 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     override fun createExcelTable() {
 
-        val DIR_NAME = context?.getString(R.string.app_name)
-        val FILE_NAME = DIR_NAME + " " + Time.getTimeForSaveFile() + ".xls"
+        val APP_NAME = context?.getString(R.string.app_name)
+        val FILE_NAME = APP_NAME + " " + Time.getTimeForSaveFile() + ".xls"
 
         val koordList = adapter.currentList
 
@@ -115,7 +115,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         var cell: Cell? = null
         var sheet: Sheet? = null
 
-        sheet = wb.createSheet("Новый лист") // Создаем новый лист Excel
+        sheet = wb.createSheet("$APP_NAME") // Создаем новый лист Excel
         val row: Row = sheet.createRow(0) // Создаем новую строку
 
         cell = row.createCell(0) //В этой строке создаем новую ячейку
