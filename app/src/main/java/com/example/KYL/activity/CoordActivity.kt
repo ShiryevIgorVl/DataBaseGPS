@@ -4,9 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.DecimalFormat
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
@@ -17,13 +14,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.KYL.R
-import com.example.KYL.constans.Time
+import com.example.KYL.constans.MainDecimalFormat
+import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.ActivityCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
-import java.util.*
 
 class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var binding: ActivityCoordBinding
@@ -39,7 +36,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private lateinit var loc: Location
 
-    private lateinit var decimalFormat: DecimalFormat
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,16 +99,16 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     // Заполнение полей и переменных данными из сервиса геолокации
     override fun onGetLocation(location: Location) {
         binding.apply {
-            twLat.text = formatTV(location.latitude)
-            tvLon.text = formatTV(location.longitude)
-            tvAcc.text = formatTVAcc(location.accuracy)
+            twLat.text = MainDecimalFormat.formatTV(location.latitude)
+            tvLon.text = MainDecimalFormat.formatTV(location.longitude)
+            tvAcc.text = MainDecimalFormat.formatTVAcc(location.accuracy)
         }
 
-        speed = formatTVAcc(location.speed)
-        height = formatTVAlt(location.altitude)
-        longitude = formatTV(location.longitude)
-        latitude = formatTV(location.latitude)
-        accuracy = formatTVAcc(location.accuracy)
+        speed = MainDecimalFormat.formatTVAcc(location.speed)
+        height = MainDecimalFormat.formatTVAlt(location.altitude)
+        longitude = MainDecimalFormat.formatTV(location.longitude)
+        latitude = MainDecimalFormat.formatTV(location.latitude)
+        accuracy = MainDecimalFormat.formatTVAcc(location.accuracy)
     }
 
     // Подключение стрелки назад в акшен баре, id этой стрелки home см. функцию onOptionsItemSelected
@@ -148,7 +145,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             utsPipe = binding.etUtsPipe.text.toString(),
             uppPipe = binding.etUppPipe.text.toString(),
             ipolPipe = binding.etiPolPipe.text.toString(),
-            time = Time.getTime(),
+            time = MainTime.getTime(),
             utsСover = binding.etUtsOver.text.toString(),
             uppCover = binding.etUppCover.text.toString(),
             ipolCover = binding.etIpolCover.text.toString(),
@@ -165,31 +162,19 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private fun onClickKoordPointBotton(){
         binding.btKIP.setOnClickListener {
-            binding.tvKoordName.text = binding.btKIP.text
+            binding.tvKoordName.text = "КИП"
         }
 
         binding.btKontPoint.setOnClickListener {
-            binding.tvKoordName.text = binding.btKontPoint.text
+            binding.tvKoordName.text = "Контрольная точка"
         }
-    }
 
-    private fun formatTV(a: Double): String{
-        decimalFormat = DecimalFormat("##.######")
-        return decimalFormat.format(a).toString()
-    }
+        binding.btAD.setOnClickListener {
+            binding.tvKoordName.text = "Автомобильная дорога ( м)"
+        }
 
-    private fun formatTVAlt(a: Double): String{
-        decimalFormat = DecimalFormat("##.#")
-        return decimalFormat.format(a).toString()
-    }
-    private fun formatTVAcc(a: Float): String{
-        decimalFormat = DecimalFormat("##.#")
-        return decimalFormat.format(a).toString()
-    }
-
-
-
-    companion object {
-        const val MAIN_KEY = "main_key"
+        binding.btRiver.setOnClickListener {
+            binding.tvKoordName.text = "Река ( м)"
+        }
     }
 }

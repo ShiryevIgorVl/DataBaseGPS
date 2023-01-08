@@ -15,12 +15,10 @@
             android:id="@+id/tvAcc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginEnd="36dp"
             android:text="Точность"
             app:layout_constraintBottom_toTopOf="@+id/tvKoordName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvLon"
             app:layout_constraintTop_toTopOf="@+id/tvLon"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -39,11 +37,10 @@
             android:id="@+id/tvLon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
             android:text="Долгота"
             app:layout_constraintBottom_toTopOf="@+id/tvKoordName"
-            app:layout_constraintEnd_toStartOf="@+id/tvAcc"
-            app:layout_constraintStart_toEndOf="@+id/twLat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.666" />
 
@@ -327,6 +324,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="КИП"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
@@ -336,9 +334,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="Контрольная точка"
+            android:text="КТ"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+
+
+        <Button
+            android:id="@+id/btAD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:text="АД"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+            app:layout_constraintEnd_toStartOf="@+id/btKontPoint"
+            app:layout_constraintStart_toEndOf="@+id/btRiver"
+            app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+
+        <Button
+            android:id="@+id/btRiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Река"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+            app:layout_constraintEnd_toStartOf="@+id/btAD"
+            app:layout_constraintStart_toEndOf="@+id/btKIP"
             app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
 
         <EditText

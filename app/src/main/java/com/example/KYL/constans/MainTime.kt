@@ -4,7 +4,7 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import java.util.*
 
-object Time {
+object MainTime {
     // Функции получения текущего времени для разных форматов
     fun getTime(): String {
         val formatter = SimpleDateFormat("HH:mm:ss dd.MM.yyyy", Locale.getDefault())

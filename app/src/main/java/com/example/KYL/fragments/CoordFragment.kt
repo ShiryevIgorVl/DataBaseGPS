@@ -1,9 +1,7 @@
 package com.example.KYL.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -17,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.KYL.R
 import com.example.KYL.activity.App
 import com.example.KYL.activity.CoordActivity
-import com.example.KYL.constans.Time
+import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.recyclerview.CoordAdapter
@@ -30,7 +28,6 @@ import org.apache.poi.ss.usermodel.Workbook
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -105,7 +102,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun createExcelTable() {
 
         val APP_NAME = context?.getString(R.string.app_name)
-        val FILE_NAME = APP_NAME + " " + Time.getTimeForSaveFile() + ".xls"
+        val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
 
         val koordList = adapter.currentList
 
