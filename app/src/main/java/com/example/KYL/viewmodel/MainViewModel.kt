@@ -22,6 +22,9 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
     fun getCoordinatList() = dao.getAllKoordinateList()
 
+    fun getLastCoordinate() = dao.getLastCoordinate()
+
+
 
 
 

@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         pLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
                 if (it[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-                    Toast.makeText(this, "разрениние на GPS есть", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "разрешение на GPS есть", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "разрениние на GPS нет", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "разрешение на GPS нет", Toast.LENGTH_SHORT).show()
                 }
             }
     }

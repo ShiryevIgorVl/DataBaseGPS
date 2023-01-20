@@ -1,4 +1,5 @@
 package com.example.KYL.recyclerview
+import android.location.Location
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +28,13 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
 
         fun setData(koordinate: Coordinate, position: Int, listener: Listener) = with(binding) {
             tvNameSet.text = koordinate.name
-            tvLatitudeSet.text = koordinate.latitude
+            tvUtsSet.text = koordinate.utsPipe
             tvNumListKipSet.text = (1 + position).toString()
-            tvLongitudeSet.text = koordinate.longitude
+            tvDepthSet.text = koordinate.depthPipe
             tvAccuracySet.text = koordinate.accuracy
-            tvHeightSet.text = koordinate.height
-            tvSpeedSet.text = koordinate.speed
+            tvUppSet.text = koordinate.uppPipe
+            tvCurrentSet.text = koordinate.iPipe
+            tvDistanceSet.text = koordinate.distance.toString()
 
             buttonDel.setOnClickListener {
                 listener.onClickDelItem(koordinate.id!!)

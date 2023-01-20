@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.KYL.dao.Dao
 import com.example.KYL.entities.Coordinate
 
-@Database(entities = [Coordinate::class], version = 1)
+@Database(entities = [Coordinate::class], version = 2)
 abstract class MainDataBase : RoomDatabase() {
 
     abstract fun getDao(): Dao
@@ -20,7 +20,7 @@ abstract class MainDataBase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     contex.applicationContext,
-                    MainDataBase::class.java, "koordinate.db"
+                    MainDataBase::class.java, "coordinat.db"
                 ).build()
                 instance
             }

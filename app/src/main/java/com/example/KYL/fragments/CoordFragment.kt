@@ -2,6 +2,7 @@ package com.example.KYL.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -33,7 +34,7 @@ import java.io.IOException
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     private lateinit var binding: FragmentCoordBinding
-    private lateinit var koordResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: CoordAdapter
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -41,14 +42,34 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
 
     override fun onClickNew() {
-        koordResultLauncher.launch(Intent(activity, CoordActivity::class.java))
+        coordResultLauncher.launch(Intent(activity, CoordActivity::class.java))
     }
 
-    private fun onKoordResult() {
-        koordResultLauncher =
+    private fun onCoordResult() {
+        coordResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
-                    mainViewModel.insertKoord(it.data?.getSerializableExtra(KOORD_KEY) as Coordinate)
+                    val coordinate = it.data?.getSerializableExtra(KOORD_KEY) as Coordinate
+                    val koordList = adapter.currentList
+                    Log.d("MyLog", "onCoordResult koordList: $koordList")
+//                    var distance: Float
+                    if (koordList.size != 0) {
+                       var distance = koordList[koordList.size - 1].distance
+                       val _distance = getDistance(
+                            koordList[koordList.size - 1].latitude.toDouble(),
+                            koordList[koordList.size - 1].longitude.toDouble(),
+                            coordinate.latitude.toDouble(),
+                            coordinate.longitude.toDouble()
+                        )
+                        distance += _distance
+                        coordinate.distance = distance
+                        Log.d("MyLog", "onCoordResult distance: $distance")
+                        Log.d("MyLog", "onCoordResult coordinate: $coordinate")
+                        mainViewModel.insertKoord(coordinate)
+                    }else{
+                        mainViewModel.insertKoord(coordinate)
+                    }
+
                     Log.d(
                         "MyLog",
                         "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}"
@@ -65,7 +86,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        onKoordResult()
+        onCoordResult()
     }
 
     override fun onCreateView(
@@ -99,6 +120,25 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         mainViewModel.deleteKoord(id)
     }
 
+    //Расчитываем горизонтальную дистанцию
+    private fun getDistance(
+        startLatitude: Double,
+        startLongitude: Double,
+        endLatitude: Double,
+        endLongitude: Double
+    ): Float {
+        val arrayDistance: FloatArray = floatArrayOf(0f)
+        Location.distanceBetween(
+            startLatitude,
+            startLongitude,
+            endLatitude,
+            endLongitude,
+            arrayDistance
+        )
+        return arrayDistance[0]
+    }
+
+
     override fun createExcelTable() {
 
         val APP_NAME = context?.getString(R.string.app_name)
@@ -106,7 +146,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
         val koordList = adapter.currentList
 
-       // Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
+        // Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null

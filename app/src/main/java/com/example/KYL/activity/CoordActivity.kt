@@ -3,6 +3,7 @@ package com.example.KYL.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -16,27 +17,36 @@ import androidx.core.content.ContextCompat
 import com.example.KYL.R
 import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.constans.MainTime
+import com.example.KYL.database.MainDataBase_Impl
 import com.example.KYL.databinding.ActivityCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
+import dalvik.system.DelegateLastClassLoader
 
-class CoordActivity : AppCompatActivity(), LocListenerInterfase {
+
+class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
     private lateinit var binding: ActivityCoordBinding
+
+    //    private lateinit var sharedPreferences: SharedPreferences
+//    val SHARED_NAME = "sharedName"
+//    val SHARED_LATITUDE = "sharedLatitude"
+//    val SHARED_LONGITUDE = "sharedLongitude"
+    var _latitude: Double = 0.0
+    var _longitude: Double = 0.0
+//    private var distanceFirst: Float = 0f
+//    private var distanceSecond: Float = 0f
+//    private var distanceResult: Float = 0f
 
     private lateinit var locationManager: LocationManager
     private lateinit var myLocation: MyLocation
 
     private lateinit var height: String
     private lateinit var speed: String
-    private lateinit var latitude: String
-    private lateinit var longitude: String
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
     private lateinit var accuracy: String
-
-    private lateinit var loc: Location
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +56,75 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         initGPSService()
         actionBarSetting()
+//        initSharedPref()
 
         chekPermissionGetLocation()
 
         onClickKoordPointBotton()
     }
+//
+//    private fun initSharedPref() {
+//        sharedPreferences = getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
+//    }
+//
+//    fun setLatitudeSP(d: Double) {
+//        val spEditor = sharedPreferences.edit()
+//        spEditor.putFloat(SHARED_LATITUDE, d.toFloat())
+//        spEditor.apply()
+//    }
+//
+//    fun setLongitudeSP(d: Double) {
+//        val spEditor = sharedPreferences.edit()
+//        spEditor.putFloat(SHARED_LONGITUDE, d.toFloat())
+//        spEditor.apply()
+//    }
+//
+//    private fun getLatitudeSP(): Float {
+//        return sharedPreferences.getFloat(SHARED_LATITUDE, 0f)
+//    }
+//
+//    private fun getLongitudeSP(): Float {
+//        return sharedPreferences.getFloat(SHARED_LONGITUDE, 0f)
+//    }
+
+    //Получам из БД список объектов Coordinate
+//    private fun getCoordListInDB(): List<Coordinate> {
+//        return dao.getAllKoordinateList()
+//    }
+//
+//    //Получение последненй записи из DB
+//    private fun getLastCoord(): Coordinate {
+//        return dao.getLastCoordinate()
+//    }
+
+    //Получаем из списка по позиции широту
+    private fun getLat(position: Int, coorList: List<Coordinate>): Double {
+        return coorList[position].latitude.toDouble()
+    }
+
+    //Получаем из списка по позиции долготу
+    private fun getLong(position: Int, coorList: List<Coordinate>): Double {
+        return coorList[position].longitude.toDouble()
+    }
+
+    //Расчитываем горизонтальную дистанцию
+    private fun getDistance(
+        startLatitude: Double,
+        startLongitude: Double,
+        endLatitude: Double,
+        endLongitude: Double
+    ): Float {
+        val arrayDistance: FloatArray = floatArrayOf(0f)
+        Location.distanceBetween(
+            startLatitude,
+            startLongitude,
+            endLatitude,
+            endLongitude,
+            arrayDistance
+        )
+        return arrayDistance[0]
+    }
+
 
     // Создаем в активити верхнее меню
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -61,6 +135,21 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     //Добавляем слушатель нажатий меню
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.km_save) {
+//            val arrayDistance: FloatArray = floatArrayOf(0f)
+//            Location.distanceBetween(
+//                getLatitudeSP().toDouble(),
+//                getLongitudeSP().toDouble(),
+//                _latitude,
+//                _longitude,
+//                arrayDistance
+//            )
+//            distanceSecond = distanceFirst
+//            setLatitudeSP(_latitude)
+//            setLongitudeSP(_longitude)
+//            distanceFirst = arrayDistance[0]
+//            distanceResult = distanceFirst + distanceSecond
+            // getLastCoord()
+            // Log.d("MyTag", "onOptionsItemSelected: ${getLastCoord()}")
             setMainResult()
             finish()
         } else if (item.itemId == android.R.id.home) {
@@ -106,9 +195,12 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         speed = MainDecimalFormat.formatTVAcc(location.speed)
         height = MainDecimalFormat.formatTVAlt(location.altitude)
-        longitude = MainDecimalFormat.formatTV(location.longitude)
-        latitude = MainDecimalFormat.formatTV(location.latitude)
+        longitude = location.longitude
+        latitude = location.latitude
         accuracy = MainDecimalFormat.formatTVAcc(location.accuracy)
+
+        _latitude = location.latitude
+        _longitude = location.longitude
     }
 
     // Подключение стрелки назад в акшен баре, id этой стрелки home см. функцию onOptionsItemSelected
@@ -116,24 +208,25 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    //Передаем данные в KoordFragment из окошек заполнения
+    //Передаем данные в CoordFragment из окошек заполнения
     private fun setMainResult() {
-        val onCreateKoordinate = onCreateKoordinate()
+        val onCreateCoordinate = onCreateCoordinate()
         val i = Intent(this, MainActivity::class.java).apply {
-            putExtra(CoordFragment.KOORD_KEY, onCreateKoordinate)
+            putExtra(CoordFragment.KOORD_KEY, onCreateCoordinate)
         }
         Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
         setResult(RESULT_OK, i)
     }
 
 
-    // Функция заполнения класса Koordinate()
-    private fun onCreateKoordinate(): Coordinate {
+    // Функция заполнения класса Coordinate()
+    private fun onCreateCoordinate(): Coordinate {
         lateinit var coordinate: Coordinate
 
         coordinate = Coordinate(
-            null,
+            id = null,
             name = binding.tvKoordName.text.toString(),
+            distance = 0f,
             latitude = latitude,
             longitude = longitude,
             height = height,
@@ -160,7 +253,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         return coordinate
     }
 
-    private fun onClickKoordPointBotton(){
+    private fun onClickKoordPointBotton() {
         binding.btKIP.setOnClickListener {
             binding.tvKoordName.text = "КИП"
         }
