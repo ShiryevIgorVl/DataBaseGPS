@@ -20,7 +20,7 @@ abstract class MainDataBase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     contex.applicationContext,
-                    MainDataBase::class.java, "coordinat.db"
+                    MainDataBase::class.java, "coord.db"
                 ).build()
                 instance
             }

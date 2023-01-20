@@ -15,18 +15,18 @@ interface Dao {
 
     //Считывание все из DB (запрос) автоматически и постоянно при изменении в DB возвращает поток списков координат (Entities)
     // и запускаем не из корутин (не suspend функция)потому,что есть Flow
-    @Query("SELECT * FROM coordinat")
+    @Query("SELECT * FROM coord")
     fun getAllKoordinate(): Flow<List<Coordinate>>
 
     //Удаление из БД
-    @Query("DELETE FROM coordinat WHERE id IS :id")
+    @Query("DELETE FROM coord WHERE id IS :id")
     suspend fun deleteKoordinate(id: Int)
 
     // Получение всех записей
-    @Query("SELECT * FROM coordinat")
+    @Query("SELECT * FROM coord")
     fun getAllKoordinateList(): List<Coordinate>
 
     //Считывание последней записи из DB
-    @Query("SELECT * FROM coordinat WHERE distance = (SELECT MAX(distance) FROM coordinat)")
+    @Query("SELECT * FROM coord WHERE distance = (SELECT MAX(distance) FROM coord)")
     fun getLastCoordinate(): Coordinate?
 }

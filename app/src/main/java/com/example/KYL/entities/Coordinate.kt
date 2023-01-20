@@ -5,11 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity (tableName = "coordinat")
+@Entity (tableName = "coord")
 data class Coordinate(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?,
     @ColumnInfo(name = "name") val name: String = "",
-    @ColumnInfo(name = "distance") var distance: Float = 0f,
+    @ColumnInfo(name = "distance") var distance: Int = 0,
     @ColumnInfo(name = "operational_number_KIP") val operationalnumberKIP: String = "",
     @ColumnInfo(name = "operational_km") val operationalKM: String = "",
     @ColumnInfo(name = "uts_pipe") val utsPipe: String = "",

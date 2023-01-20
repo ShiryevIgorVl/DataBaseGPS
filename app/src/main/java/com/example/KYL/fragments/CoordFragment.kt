@@ -126,7 +126,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         startLongitude: Double,
         endLatitude: Double,
         endLongitude: Double
-    ): Float {
+    ): Int {
         val arrayDistance: FloatArray = floatArrayOf(0f)
         Location.distanceBetween(
             startLatitude,
@@ -135,7 +135,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
             endLongitude,
             arrayDistance
         )
-        return arrayDistance[0]
+        return arrayDistance[0].toInt()
     }
 
 
@@ -156,79 +156,79 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         val row: Row = sheet.createRow(0) // Создаем новую строку
 
         cell = row.createCell(0) //В этой строке создаем новую ячейку
-        cell.setCellValue("ID базы данных") //В ячейку пишем значение
+        cell.setCellValue("№ п.п.") //В ячейку пишем значение
 
         cell = row.createCell(1)
-        cell.setCellValue("Наименование")
+        cell.setCellValue("Дистанция, м")
 
         cell = row.createCell(2)
-        cell.setCellValue("Номер КИП")
+        cell.setCellValue("Наименование")
 
         cell = row.createCell(3)
-        cell.setCellValue("КИП км")
+        cell.setCellValue("Номер КИП")
 
         cell = row.createCell(4)
-        cell.setCellValue("Uтз, В")
+        cell.setCellValue("КИП км")
 
         cell = row.createCell(5)
-        cell.setCellValue("Uпп, В")
+        cell.setCellValue("Uтз, В")
 
         cell = row.createCell(6)
-        cell.setCellValue("Ток поляризации ВЭ, мА")
+        cell.setCellValue("Uпп, В")
 
         cell = row.createCell(7)
-        cell.setCellValue("Примечание")
+        cell.setCellValue("Ток поляризации ВЭ, мА")
 
         cell = row.createCell(8)
-        cell.setCellValue("Время")
+        cell.setCellValue("Примечание")
 
         cell = row.createCell(9)
-        cell.setCellValue("Uт-патрон, В")
+        cell.setCellValue("Время")
 
         cell = row.createCell(10)
-        cell.setCellValue("Uпп патрон, В")
+        cell.setCellValue("Uт-патрон, В")
 
         cell = row.createCell(11)
-        cell.setCellValue(
-            "Ток поляризации" +
-                    "\n" +
-                    "ВЭ патрон, мА"
-        )
+        cell.setCellValue("Uпп патрон, В")
 
         cell = row.createCell(12)
-        cell.setCellValue("Rтп, Ом")
+        cell.setCellValue(
+            "Ток поляризации ВЭ патрон, мА")
 
         cell = row.createCell(13)
-        cell.setCellValue("Uп-з, Ом")
+        cell.setCellValue("Rтп, Ом")
 
         cell = row.createCell(14)
-        cell.setCellValue("Iпр-с, мА")
+        cell.setCellValue("Uп-з, Ом")
 
         cell = row.createCell(15)
-        cell.setCellValue("Глубина, м")
+        cell.setCellValue("Iпр-с, мА")
 
         cell = row.createCell(16)
-        cell.setCellValue("Ток в трубе, мА")
+        cell.setCellValue("Глубина, м")
 
         cell = row.createCell(17)
-        cell.setCellValue("УЭС, Омхм")
+        cell.setCellValue("Ток в трубе, мА")
 
         cell = row.createCell(18)
-        cell.setCellValue("Повреждение ИП, м")
+        cell.setCellValue("УЭС, Омхм")
 
         cell = row.createCell(19)
-        cell.setCellValue("Широта")
+        cell.setCellValue("Повреждение ИП, м")
 
         cell = row.createCell(20)
-        cell.setCellValue("Долгота")
+        cell.setCellValue("Широта")
 
         cell = row.createCell(21)
-        cell.setCellValue("Высота, м")
+        cell.setCellValue("Долгота")
 
         cell = row.createCell(22)
-        cell.setCellValue("Точность, м")
+        cell.setCellValue("Высота, м")
 
         cell = row.createCell(23)
+        cell.setCellValue("Точность, м")
+
+        cell = row.createCell(24)
         cell.setCellValue("Скорость, м/с")
 
         sheet.setColumnWidth(0, (30 * 200))
@@ -255,6 +255,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         sheet.setColumnWidth(21, (30 * 200))
         sheet.setColumnWidth(22, (30 * 200))
         sheet.setColumnWidth(23, (30 * 200))
+        sheet.setColumnWidth(23, (30 * 200))
 
         //Проходим циклом создаем и записываем их в соотвтетствующие ячейки и строки
         if (koordList.size > 0) {
@@ -266,72 +267,75 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 cell.setCellValue("${i + 1}")
 
                 cell = rowNext.createCell(1)
-                cell.setCellValue(koordList[i].name)
+                cell.setCellValue(koordList[i].distance.toString())
 
                 cell = rowNext.createCell(2)
-                cell.setCellValue(koordList[i].operationalnumberKIP)
+                cell.setCellValue(koordList[i].name)
 
                 cell = rowNext.createCell(3)
-                cell.setCellValue(koordList[i].operationalKM)
+                cell.setCellValue(koordList[i].operationalnumberKIP)
 
                 cell = rowNext.createCell(4)
-                cell.setCellValue(koordList[i].utsPipe)
+                cell.setCellValue(koordList[i].operationalKM)
 
                 cell = rowNext.createCell(5)
-                cell.setCellValue(koordList[i].uppPipe)
+                cell.setCellValue(koordList[i].utsPipe)
 
                 cell = rowNext.createCell(6)
-                cell.setCellValue(koordList[i].ipolPipe)
+                cell.setCellValue(koordList[i].uppPipe)
 
                 cell = rowNext.createCell(7)
-                cell.setCellValue(koordList[i].note)
+                cell.setCellValue(koordList[i].ipolPipe)
 
                 cell = rowNext.createCell(8)
-                cell.setCellValue(koordList[i].time)
+                cell.setCellValue(koordList[i].note)
 
                 cell = rowNext.createCell(9)
-                cell.setCellValue(koordList[i].utsСover)
+                cell.setCellValue(koordList[i].time)
 
                 cell = rowNext.createCell(10)
-                cell.setCellValue(koordList[i].uppCover)
+                cell.setCellValue(koordList[i].utsСover)
 
                 cell = rowNext.createCell(11)
-                cell.setCellValue(koordList[i].ipolCover)
+                cell.setCellValue(koordList[i].uppCover)
 
                 cell = rowNext.createCell(12)
-                cell.setCellValue(koordList[i].rPipeCover)
+                cell.setCellValue(koordList[i].ipolCover)
 
                 cell = rowNext.createCell(13)
-                cell.setCellValue(koordList[i].ups)
+                cell.setCellValue(koordList[i].rPipeCover)
 
                 cell = rowNext.createCell(14)
-                cell.setCellValue(koordList[i].iprot)
+                cell.setCellValue(koordList[i].ups)
 
                 cell = rowNext.createCell(15)
-                cell.setCellValue(koordList[i].depthPipe)
+                cell.setCellValue(koordList[i].iprot)
 
                 cell = rowNext.createCell(16)
-                cell.setCellValue(koordList[i].iPipe)
+                cell.setCellValue(koordList[i].depthPipe)
 
                 cell = rowNext.createCell(17)
-                cell.setCellValue(koordList[i].ues)
+                cell.setCellValue(koordList[i].iPipe)
 
                 cell = rowNext.createCell(18)
-                cell.setCellValue(koordList[i].damageIP)
+                cell.setCellValue(koordList[i].ues)
 
                 cell = rowNext.createCell(19)
-                cell.setCellValue(koordList[i].latitude)
+                cell.setCellValue(koordList[i].damageIP)
 
                 cell = rowNext.createCell(20)
-                cell.setCellValue(koordList[i].longitude)
+                cell.setCellValue(koordList[i].latitude)
 
                 cell = rowNext.createCell(21)
-                cell.setCellValue(koordList[i].height)
+                cell.setCellValue(koordList[i].longitude)
 
                 cell = rowNext.createCell(22)
-                cell.setCellValue(koordList[i].accuracy)
+                cell.setCellValue(koordList[i].height)
 
                 cell = rowNext.createCell(23)
+                cell.setCellValue(koordList[i].accuracy)
+
+                cell = rowNext.createCell(24)
                 cell.setCellValue(koordList[i].speed)
 
                 sheet.setColumnWidth(0, (30 * 100))
@@ -358,8 +362,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 sheet.setColumnWidth(21, (30 * 100))
                 sheet.setColumnWidth(22, (30 * 100))
                 sheet.setColumnWidth(23, (30 * 100))
+                sheet.setColumnWidth(23, (30 * 100))
             }
-            //Запись файла Excel в папку Докуметы телефона
+            //Запись файла Excel в папку "Докуметы" телефона
             val path =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
