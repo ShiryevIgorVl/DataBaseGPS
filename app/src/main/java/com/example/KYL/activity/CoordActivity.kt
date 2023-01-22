@@ -37,6 +37,8 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
     private var longitude: Double = 0.0
     private lateinit var accuracy: String
 
+    private var coordinate: Coordinate? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +50,37 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
 
         chekPermissionGetLocation()
 
+        getCoordinate()
         onClickKoordPointBotton()
     }
 
-    //Получаем из списка по позиции широту
-    private fun getLat(position: Int, coorList: List<Coordinate>): Double {
-        return coorList[position].latitude.toDouble()
+    //Получаем Coordinate для редакирования из CoordFragment
+    private fun getCoordinate() {
+        val serializableCoordinate = intent.getSerializableExtra(CoordFragment.KOORD_KEY)
+        if (serializableCoordinate != null) {
+            coordinate = serializableCoordinate as Coordinate
+            fillCoordinate()
+        }
     }
 
-    //Получаем из списка по позиции долготу
-    private fun getLong(position: Int, coorList: List<Coordinate>): Double {
-        return coorList[position].longitude.toDouble()
+    //Записываем из переданного для редактирования Coordinate данные в EditText этого активити
+    private fun fillCoordinate() = with(binding) {
+        etUtsPipe.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает хер знает
+        etUppPipe.setText(coordinate?.uppPipe)
+        etiPolPipe.setText(coordinate?.ipolPipe)
+        etUtsOver.setText(coordinate?.utsСover)
+        etUppCover.setText(coordinate?.uppCover)
+        etIpolCover.setText(coordinate?.ipolCover)
+        etRPipeCover.setText(coordinate?.rPipeCover)
+        etIprot.setText(coordinate?.iprot)
+        etUps.setText(coordinate?.ups)
+        etDepthPipe.setText(coordinate?.depthPipe)
+        etIPipe.setText(coordinate?.iPipe)
+        etUES.setText(coordinate?.ues)
+        etDamageIP.setText(coordinate?.damageIP)
+        etOperationalnumberKIP.setText(coordinate?.operationalnumberKIP)
+        etOperationalKM.setText(coordinate?.operationalKM)
+        etNote.setText(coordinate?.note)
     }
 
     // Создаем в активити верхнее меню
@@ -128,14 +150,46 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    //Передаем данные в CoordFragment из окошек заполнения
+    //Передаем данные в CoordFragment из окошек заполнения для записи в DB
     private fun setMainResult() {
-        val onCreateCoordinate = onCreateCoordinate()
+        var editState = "new"
+
+        val tempCoordinate: Coordinate?
+        if (coordinate == null) {
+            tempCoordinate = onCreateCoordinate()
+        } else {
+            tempCoordinate = updateCootdinate()
+            editState = "update"
+        }
         val i = Intent(this, MainActivity::class.java).apply {
-            putExtra(CoordFragment.KOORD_KEY, onCreateCoordinate)
+            putExtra(CoordFragment.KOORD_KEY, tempCoordinate)
+            putExtra(CoordFragment.STATE_KOORD, editState)
         }
         Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
         setResult(RESULT_OK, i)
+    }
+
+    //Передаем данные в CoordFragment из окошек заполнения для редактирования записей в DB
+    private fun updateCootdinate(): Coordinate? {
+        return coordinate?.copy(
+            name = binding.tvKoordName.text.toString(),
+            note = binding.etNote.text.toString(),
+            operationalnumberKIP = binding.etOperationalnumberKIP.text.toString(),
+            operationalKM = binding.etOperationalKM.text.toString(),
+            utsPipe = binding.etUtsPipe.text.toString(),
+            uppPipe = binding.etUppPipe.text.toString(),
+            ipolPipe = binding.etiPolPipe.text.toString(),
+            utsСover = binding.etUtsOver.text.toString(),
+            uppCover = binding.etUppCover.text.toString(),
+            ipolCover = binding.etIpolCover.text.toString(),
+            rPipeCover = binding.etRPipeCover.text.toString(),
+            ups = binding.etUps.text.toString(),
+            iprot = binding.etIprot.text.toString(),
+            depthPipe = binding.etDepthPipe.text.toString(),
+            iPipe = binding.etIPipe.text.toString(),
+            ues = binding.etUES.text.toString(),
+            damageIP = binding.etDamageIP.text.toString()
+        )
     }
 
 

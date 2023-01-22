@@ -49,27 +49,31 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         coordResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
+                    val editState = it.data?.getStringExtra(STATE_KOORD)
                     val coordinate = it.data?.getSerializableExtra(KOORD_KEY) as Coordinate
                     val koordList = adapter.currentList
                     Log.d("MyLog", "onCoordResult koordList: $koordList")
-//                    var distance: Float
-                    if (koordList.size != 0) {
-                       var distance = koordList[koordList.size - 1].distance
-                       val _distance = getDistance(
-                            koordList[koordList.size - 1].latitude.toDouble(),
-                            koordList[koordList.size - 1].longitude.toDouble(),
-                            coordinate.latitude.toDouble(),
-                            coordinate.longitude.toDouble()
-                        )
-                        distance += _distance
-                        coordinate.distance = distance
-                        Log.d("MyLog", "onCoordResult distance: $distance")
-                        Log.d("MyLog", "onCoordResult coordinate: $coordinate")
-                        mainViewModel.insertKoord(coordinate)
-                    }else{
-                        mainViewModel.insertKoord(coordinate)
-                    }
 
+                    if (editState == "update") {
+                        mainViewModel.updateKoord(coordinate)
+                    } else {
+                        if (koordList.size != 0) {
+                            var distance = koordList[koordList.size - 1].distance
+                            val _distance = getDistance(
+                                koordList[koordList.size - 1].latitude.toDouble(),
+                                koordList[koordList.size - 1].longitude.toDouble(),
+                                coordinate.latitude.toDouble(),
+                                coordinate.longitude.toDouble()
+                            )
+                            distance += _distance
+                            coordinate.distance = distance
+                            Log.d("MyLog", "onCoordResult distance: $distance")
+                            Log.d("MyLog", "onCoordResult coordinate: $coordinate")
+                            mainViewModel.insertKoord(coordinate)
+                        } else {
+                            mainViewModel.insertKoord(coordinate)
+                        }
+                    }
                     Log.d(
                         "MyLog",
                         "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}"
@@ -90,12 +94,12 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCoordBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,20 +124,21 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         mainViewModel.deleteKoord(id)
     }
 
+    override fun onClickCoordinate(koordinate: Coordinate) {
+        val intent = Intent(activity, CoordActivity::class.java).apply {
+            putExtra(KOORD_KEY, koordinate)
+        }
+        coordResultLauncher.launch(intent)
+    }
+
+
     //Расчитываем горизонтальную дистанцию
     private fun getDistance(
-        startLatitude: Double,
-        startLongitude: Double,
-        endLatitude: Double,
-        endLongitude: Double
+        startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double
     ): Int {
         val arrayDistance: FloatArray = floatArrayOf(0f)
         Location.distanceBetween(
-            startLatitude,
-            startLongitude,
-            endLatitude,
-            endLongitude,
-            arrayDistance
+            startLatitude, startLongitude, endLatitude, endLongitude, arrayDistance
         )
         return arrayDistance[0].toInt()
     }
@@ -186,14 +191,15 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         cell.setCellValue("Время")
 
         cell = row.createCell(10)
-        cell.setCellValue("Uт-патрон, В")
+        cell.setCellValue("Uпатрон-земля, В")
 
         cell = row.createCell(11)
         cell.setCellValue("Uпп патрон, В")
 
         cell = row.createCell(12)
         cell.setCellValue(
-            "Ток поляризации ВЭ патрон, мА")
+            "Ток поляризации ВЭ патрон, мА"
+        )
 
         cell = row.createCell(13)
         cell.setCellValue("Rтп, Ом")
@@ -393,6 +399,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     companion object {
         const val KOORD_KEY = "koord_key"
+        const val STATE_KOORD = "koord_state"
 
         @JvmStatic
         fun newInstance() = CoordFragment()

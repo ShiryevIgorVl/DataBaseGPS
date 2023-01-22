@@ -27,26 +27,10 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
 
-    //   private val locationViewModel: LocationViewModel by viewModels()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    //Чтобы обойти проблемы с поиском подходящего анализатора XML добовляем эти настройки
-//        System.setProperty(
-//            "org.apache.poi.javax.xml.stream.XMLInputFactory",
-//            "com.fasterxml.aalto.stax.InputFactoryImpl"
-//        )
-//        System.setProperty(
-//            "org.apache.poi.javax.xml.stream.XMLOutputFactory",
-//            "com.fasterxml.aalto.stax.OutputFactoryImpl"
-//        )
-//        System.setProperty(
-//            "org.apache.poi.javax.xml.stream.XMLEventFactory",
-//            "com.fasterxml.aalto.stax.EventFactoryImpl"
-//        )
 
         setButtonNavListener()
 
@@ -107,11 +91,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
     //Метод получает локацию при ее изменении и выполняет действия в теле метода
     override fun onGetLocation(location: Location) {
-        binding.latitude.text = location.latitude.toString()
-        binding.longitude.text = location.longitude.toString()
-        binding.speed.text = location.speed.toString()
-        binding.accuracy.text = location.accuracy.toString()
-    }
+      }
 
     // слушатель нажатий items Button Navigation View
     private fun setButtonNavListener() {

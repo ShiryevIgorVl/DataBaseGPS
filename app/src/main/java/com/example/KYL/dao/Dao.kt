@@ -3,6 +3,7 @@ package com.example.KYL.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.KYL.entities.Coordinate
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +13,10 @@ interface Dao {
     //Запись в DB
     @Insert
     suspend fun insertKoordinate(koordinate: Coordinate)
+
+    //Обновление элементов DB
+    @Update
+    suspend fun updateKoordinate (koordinate: Coordinate)
 
     //Считывание все из DB (запрос) автоматически и постоянно при изменении в DB возвращает поток списков координат (Entities)
     // и запускаем не из корутин (не suspend функция)потому,что есть Flow

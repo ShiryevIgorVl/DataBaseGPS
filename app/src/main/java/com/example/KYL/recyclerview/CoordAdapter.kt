@@ -1,4 +1,5 @@
 package com.example.KYL.recyclerview
+import android.content.Intent
 import android.location.Location
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,10 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
             buttonDel.setOnClickListener {
                 listener.onClickDelItem(koordinate.id!!)
             }
+
+            cdKoordinate.setOnClickListener {
+                listener.onClickCoordinate(koordinate)
+            }
         }
 
         companion object{
@@ -61,6 +66,7 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
 
     interface Listener{
         fun onClickDelItem(id: Int)
+        fun onClickCoordinate(koordinate: Coordinate)
     }
 
 
