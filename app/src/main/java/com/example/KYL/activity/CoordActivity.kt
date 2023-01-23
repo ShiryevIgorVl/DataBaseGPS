@@ -65,7 +65,8 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
 
     //Записываем из переданного для редактирования Coordinate данные в EditText этого активити
     private fun fillCoordinate() = with(binding) {
-        etUtsPipe.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает хер знает
+        tvKoordName.text = coordinate?.name
+        etUtsPipe.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
         etUppPipe.setText(coordinate?.uppPipe)
         etiPolPipe.setText(coordinate?.ipolPipe)
         etUtsOver.setText(coordinate?.utsСover)
