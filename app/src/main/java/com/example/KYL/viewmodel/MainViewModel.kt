@@ -24,6 +24,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         dao.deleteKoordinate(id)
     }
 
+    fun deleteTable() = viewModelScope.launch {
+        dao.deleteAllTable()
+    }
+
     fun getCoordinatList() = dao.getAllKoordinateList()
 
     fun getLastCoordinate() = dao.getLastCoordinate()

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
@@ -21,14 +22,12 @@ import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.recyclerview.CoordAdapter
 import com.example.KYL.viewmodel.MainViewModel
+import com.example.KYL.writerXLS.WriteExcel
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -60,10 +59,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                         if (koordList.size != 0) {
                             var distance = koordList[koordList.size - 1].distance
                             val _distance = getDistance(
-                                koordList[koordList.size - 1].latitude.toDouble(),
-                                koordList[koordList.size - 1].longitude.toDouble(),
-                                coordinate.latitude.toDouble(),
-                                coordinate.longitude.toDouble()
+                                koordList[koordList.size - 1].latitude,
+                                koordList[koordList.size - 1].longitude,
+                                coordinate.latitude,
+                                coordinate.longitude
                             )
                             distance += _distance
                             coordinate.distance = distance
@@ -131,6 +130,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         coordResultLauncher.launch(intent)
     }
 
+    override fun deleteTable() {
+        mainViewModel.deleteTable()
+    }
+
 
     //Расчитываем горизонтальную дистанцию
     private fun getDistance(
@@ -145,13 +148,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
 
     override fun createExcelTable() {
-
         val APP_NAME = context?.getString(R.string.app_name)
         val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
 
         val koordList = adapter.currentList
-
-        // Log.d("MyLog", "createExcelTable: ${koordList.toString()}")
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null
@@ -237,31 +237,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         cell = row.createCell(24)
         cell.setCellValue("Скорость, м/с")
 
-        sheet.setColumnWidth(0, (30 * 200))
-        sheet.setColumnWidth(1, (30 * 200))
-        sheet.setColumnWidth(2, (30 * 200))
-        sheet.setColumnWidth(3, (30 * 200))
-        sheet.setColumnWidth(4, (30 * 200))
-        sheet.setColumnWidth(5, (30 * 200))
-        sheet.setColumnWidth(6, (30 * 200))
-        sheet.setColumnWidth(7, (30 * 200))
-        sheet.setColumnWidth(8, (30 * 200))
-        sheet.setColumnWidth(9, (30 * 200))
-        sheet.setColumnWidth(10, (30 * 200))
-        sheet.setColumnWidth(11, (30 * 200))
-        sheet.setColumnWidth(12, (30 * 200))
-        sheet.setColumnWidth(13, (30 * 200))
-        sheet.setColumnWidth(14, (30 * 200))
-        sheet.setColumnWidth(15, (30 * 200))
-        sheet.setColumnWidth(16, (30 * 200))
-        sheet.setColumnWidth(17, (30 * 200))
-        sheet.setColumnWidth(18, (30 * 200))
-        sheet.setColumnWidth(19, (30 * 200))
-        sheet.setColumnWidth(20, (30 * 200))
-        sheet.setColumnWidth(21, (30 * 200))
-        sheet.setColumnWidth(22, (30 * 200))
-        sheet.setColumnWidth(23, (30 * 200))
-        sheet.setColumnWidth(23, (30 * 200))
+        for (i in 0..24){
+               sheet.setColumnWidth(i, (30 * 200))
+            }
+
 
         //Проходим циклом создаем и записываем их в соотвтетствующие ячейки и строки
         if (koordList.size > 0) {
@@ -344,56 +323,26 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 cell = rowNext.createCell(24)
                 cell.setCellValue(koordList[i].speed)
 
-                sheet.setColumnWidth(0, (30 * 100))
-                sheet.setColumnWidth(1, (30 * 100))
-                sheet.setColumnWidth(2, (30 * 100))
-                sheet.setColumnWidth(3, (30 * 100))
-                sheet.setColumnWidth(4, (30 * 100))
-                sheet.setColumnWidth(5, (30 * 100))
-                sheet.setColumnWidth(6, (30 * 100))
-                sheet.setColumnWidth(7, (30 * 100))
-                sheet.setColumnWidth(8, (30 * 100))
-                sheet.setColumnWidth(9, (30 * 100))
-                sheet.setColumnWidth(10, (30 * 100))
-                sheet.setColumnWidth(11, (30 * 100))
-                sheet.setColumnWidth(12, (30 * 100))
-                sheet.setColumnWidth(13, (30 * 100))
-                sheet.setColumnWidth(14, (30 * 100))
-                sheet.setColumnWidth(15, (30 * 100))
-                sheet.setColumnWidth(16, (30 * 100))
-                sheet.setColumnWidth(17, (30 * 100))
-                sheet.setColumnWidth(18, (30 * 100))
-                sheet.setColumnWidth(19, (30 * 100))
-                sheet.setColumnWidth(20, (30 * 100))
-                sheet.setColumnWidth(21, (30 * 100))
-                sheet.setColumnWidth(22, (30 * 100))
-                sheet.setColumnWidth(23, (30 * 100))
-                sheet.setColumnWidth(23, (30 * 100))
+                for (i in 0..24){
+                        sheet.setColumnWidth(i, (30 * 100))
+                    }
             }
-            //Запись файла Excel в папку "Докуметы" телефона
-            val path =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
-            val file = File(path, FILE_NAME)
+            //Запись файла Excel в папку "Документы" телефона
+            val writeExcel = APP_NAME?.let { WriteExcel(APP_NAME = it) }
+            writeExcel?.writeExcel(wb)
+            Toast.makeText(
+                context?.applicationContext,
+                "Файл ${FILE_NAME} сохранен в ${Environment.DIRECTORY_DOCUMENTS}",
+                Toast.LENGTH_SHORT
+            ).show()
 
-            val streamWrite: FileOutputStream
-            try {
-                if (!path.exists()) {
-                    path.mkdirs()
-                }
-
-                streamWrite = FileOutputStream(file)
-                wb.write(streamWrite)
-                streamWrite.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
 
         } else {
-            //  Toast.makeText(applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context?.applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT)
+                .show()
             return
         }
-
     }
 
 

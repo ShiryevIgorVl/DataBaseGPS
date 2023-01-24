@@ -91,14 +91,14 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
     //Метод получает локацию при ее изменении и выполняет действия в теле метода
     override fun onGetLocation(location: Location) {
-      }
+    }
 
     // слушатель нажатий items Button Navigation View
     private fun setButtonNavListener() {
         binding.bnMenu.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.settings -> {
-                    Log.d("MyLog", "нажали settings")
+                R.id.delete -> {
+                    FragmentManager.currentFragment?.deleteTable()
                 }
                 R.id.list -> {
                     FragmentManager.setFragment(CoordFragment.newInstance(), this)
@@ -107,7 +107,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                     FragmentManager.currentFragment?.onClickNew()
                 }
                 R.id.upload -> {
-                    Log.d("MyLog", "нажали settings")
                     FragmentManager.currentFragment?.createExcelTable()
                 }
             }

@@ -1,9 +1,7 @@
 package com.example.KYL.dao
 
+import androidx.room.*
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
 import com.example.KYL.entities.Coordinate
 import kotlinx.coroutines.flow.Flow
 
@@ -26,6 +24,10 @@ interface Dao {
     //Удаление из БД
     @Query("DELETE FROM coord WHERE id IS :id")
     suspend fun deleteKoordinate(id: Int)
+
+    //Удаление всей DB
+    @Query("DELETE FROM coord")
+    suspend fun deleteAllTable()
 
     // Получение всех записей
     @Query("SELECT * FROM coord")
