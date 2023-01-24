@@ -12,10 +12,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentTransaction
 import com.example.KYL.R
 import com.example.KYL.databinding.ActivityMainBinding
 import com.example.KYL.fragments.FragmentManager
 import com.example.KYL.fragments.CoordFragment
+import com.example.KYL.fragments.MyDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 
@@ -98,7 +100,10 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         binding.bnMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.delete -> {
-                    FragmentManager.currentFragment?.deleteTable()
+                    val myDialogFragment = MyDialogFragment()
+                    val manager = supportFragmentManager
+                    val transaction: FragmentTransaction = manager.beginTransaction()
+                    myDialogFragment.show(transaction, "dialog")
                 }
                 R.id.list -> {
                     FragmentManager.setFragment(CoordFragment.newInstance(), this)
