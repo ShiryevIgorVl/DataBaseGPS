@@ -39,7 +39,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
     }
 
-
     override fun onClickNew() {
         coordResultLauncher.launch(Intent(activity, CoordActivity::class.java))
     }
@@ -133,7 +132,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun deleteTable() {
         mainViewModel.deleteTable()
     }
-
 
     //Расчитываем горизонтальную дистанцию
     private fun getDistance(
@@ -241,7 +239,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                sheet.setColumnWidth(i, (30 * 200))
             }
 
-
         //Проходим циклом создаем и записываем их в соотвтетствующие ячейки и строки
         if (koordList.size > 0) {
 
@@ -336,8 +333,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 "Файл ${FILE_NAME} сохранен в ${Environment.DIRECTORY_DOCUMENTS}",
                 Toast.LENGTH_SHORT
             ).show()
-
-
         } else {
             Toast.makeText(context?.applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT)
                 .show()
@@ -352,6 +347,5 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
         @JvmStatic
         fun newInstance() = CoordFragment()
-
     }
 }

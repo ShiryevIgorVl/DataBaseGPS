@@ -28,6 +28,7 @@
         app:menu="@menu/button_menu"
         app:itemTextColor="@color/selector"
         app:itemIconTint="@color/selector"
+        app:labelVisibilityMode="labeled"
         />
 
 

@@ -8,6 +8,8 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +44,29 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         FragmentManager.setFragment(CoordFragment.newInstance(), this)
+    }
+
+    // Создаем в активити верхнее меню
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //Добавляем слушатель нажатий меню
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+       when(item.itemId){
+           R.id.delete_all -> {
+               val myDialogFragment = MyDialogFragment()
+               val manager = supportFragmentManager
+               val transaction: FragmentTransaction = manager.beginTransaction()
+               myDialogFragment.show(transaction, "dialog")
+           }
+           R.id.upload -> {
+               FragmentManager.currentFragment?.createExcelTable()
+           }
+       }
+
+        return super.onOptionsItemSelected(item)
     }
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
@@ -103,17 +128,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 R.id.list -> {
                     FragmentManager.setFragment(CoordFragment.newInstance(), this)
                 }
-                R.id.delete -> {
-                    val myDialogFragment = MyDialogFragment()
-                    val manager = supportFragmentManager
-                    val transaction: FragmentTransaction = manager.beginTransaction()
-                    myDialogFragment.show(transaction, "dialog")
-                }
                 R.id.save -> {
                     FragmentManager.currentFragment?.onClickNew()
-                }
-                R.id.upload -> {
-                    FragmentManager.currentFragment?.createExcelTable()
                 }
             }
             true
