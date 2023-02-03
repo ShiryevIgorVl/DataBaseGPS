@@ -193,12 +193,9 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
         )
     }
 
-
     // Функция заполнения класса Coordinate()
     private fun onCreateCoordinate(): Coordinate {
-        lateinit var coordinate: Coordinate
-
-        coordinate = Coordinate(
+        return Coordinate(
             id = null,
             name = binding.tvKoordName.text.toString(),
             distance = 0,
@@ -225,7 +222,6 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
             ues = binding.etUES.text.toString(),
             damageIP = binding.etDamageIP.text.toString()
         )
-        return coordinate
     }
 
     private fun onClickKoordPointBotton() {
