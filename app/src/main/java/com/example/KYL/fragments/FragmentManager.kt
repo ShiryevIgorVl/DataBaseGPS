@@ -11,5 +11,6 @@ object FragmentManager {
         transaction.replace(R.id.placeHolder, newFragment)
         transaction.commit()
         currentFragment = newFragment
+
     }
 }

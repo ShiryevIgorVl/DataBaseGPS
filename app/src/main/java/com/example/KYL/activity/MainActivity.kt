@@ -20,6 +20,7 @@ import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.fragments.MyDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
+import com.google.android.material.bottomappbar.BottomAppBar
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -99,14 +100,14 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private fun setButtonNavListener() {
         binding.bnMenu.setOnItemSelectedListener {
             when (it.itemId) {
+                R.id.list -> {
+                    FragmentManager.setFragment(CoordFragment.newInstance(), this)
+                }
                 R.id.delete -> {
                     val myDialogFragment = MyDialogFragment()
                     val manager = supportFragmentManager
                     val transaction: FragmentTransaction = manager.beginTransaction()
                     myDialogFragment.show(transaction, "dialog")
-                }
-                R.id.list -> {
-                    FragmentManager.setFragment(CoordFragment.newInstance(), this)
                 }
                 R.id.save -> {
                     FragmentManager.currentFragment?.onClickNew()

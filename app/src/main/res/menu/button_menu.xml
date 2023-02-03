@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/delete"
-        android:title="@string/delete"
-        android:icon="@drawable/ic_baseline_delete_24"
+        android:id="@+id/list"
+        android:actionLayout="@layout/fragment_coord"
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="@string/list"
         app:showAsAction="ifRoom"
         />
     <item
-        android:id="@+id/list"
-        android:title="@string/list"
-        android:icon="@drawable/ic_baseline_list_24"
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title="@string/delete"
         app:showAsAction="ifRoom"
+
         />
     <item
         android:id="@+id/upload"
-        android:title="@string/upload"
         android:icon="@drawable/ic_baseline_cloud_upload_24"
+        android:title="@string/upload"
         app:showAsAction="ifRoom"
+
         />
     <item
         android:id="@+id/save"
-        android:title="@string/save"
+        android:actionLayout="@layout/activity_coord"
         android:icon="@drawable/ic_baseline_save_24"
-        app:showAsAction="ifRoom"
-        />
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
 </menu>
+
