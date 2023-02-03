@@ -1,21 +1,27 @@
 <resources>
-    <string name="app_name">DataBaseGPS</string>
-    <string name="settings">Настройки</string>
+    <string name="app_name">КЯЛ-1</string>
+    <string name="delete">Удалить все</string>
     <string name="list">Список точек</string>
-    <string name="upload">Выгрузить в Excle</string>
+    <string name="upload">Выгрузить точки в Excle</string>
     <string name="save">Сохранить точку</string>
     <string name="name">Наименование: </string>
     <string name="name_set">КИП</string>
-    <string name="latitude">Широта: </string>
-    <string name="latitude_set">00.000000</string>
-    <string name="longitude">Долгота: </string>
-    <string name="longitude_set">00.000000</string>
-    <string name="height">Высота, м: </string>
-    <string name="height_set">00.0</string>
+    <string name="id_set">№</string>
+    <string name="upp">Uпп, В: </string>
+    <string name="upp_set">0.00</string>
+    <string name="depth">Глубина, м: </string>
+    <string name="depth_set">0.0</string>
+    <string name="uts">Uтз, В: </string>
+    <string name="uts_set">0.00</string>
     <string name="accuracy">Точность, м: </string>
     <string name="accuracy_set">00.0</string>
-    <string name="speed">Скорость, м/с: </string>
-    <string name="speed_set">00.0</string>
+    <string name="current">Ток в трубе, мА: </string>
+    <string name="current_set">000.0</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kt">КТ</string>
+    <string name="kip">КИП</string>
+    <string name="river">Река</string>
+    <string name="ad">АД</string>
+    <string name="delete_all">Удалить все точки</string>
 </resources>
