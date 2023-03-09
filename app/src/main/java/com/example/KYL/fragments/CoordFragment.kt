@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.startForegroundService
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.KYL.R
@@ -21,6 +22,7 @@ import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.recyclerview.CoordAdapter
+import com.example.KYL.service.LocationService
 import com.example.KYL.viewmodel.MainViewModel
 import com.example.KYL.writerXLS.WriteExcel
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
@@ -28,6 +30,7 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
+
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -98,12 +101,13 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
         observer()
+
+        activity?.startForegroundService(Intent(activity, LocationService::class.java))
     }
 
     private fun observer() {
@@ -133,7 +137,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         mainViewModel.deleteTable()
     }
 
-    //Расчитываем горизонтальную дистанцию
+    //Расчитываем горизонтальную дистанцию в метрах
     private fun getDistance(
         startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double
     ): Int {
@@ -149,7 +153,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         val APP_NAME = context?.getString(R.string.app_name)
         val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
 
-        val koordList = adapter.currentList
+        val koordList = adapter.currentList  //Получаем из адаптера список Coordinate
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null
@@ -334,7 +338,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            Toast.makeText(context?.applicationContext, "Нет сохранненых точек", Toast.LENGTH_SHORT)
+            Toast.makeText(context?.applicationContext, "Нет сохраненых точек", Toast.LENGTH_SHORT)
                 .show()
             return
         }

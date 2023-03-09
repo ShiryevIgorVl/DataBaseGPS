@@ -2,7 +2,7 @@
     <string name="app_name">КЯЛ-1</string>
     <string name="delete">Удалить все</string>
     <string name="list">Список точек</string>
-    <string name="upload">Выгрузить точки в Excle</string>
+    <string name="upload">Экспорт точек в Excle</string>
     <string name="save">Сохранить точку</string>
     <string name="name">Наименование: </string>
     <string name="name_set">КИП</string>

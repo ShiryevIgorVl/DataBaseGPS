@@ -15,21 +15,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-    </FrameLayout>
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/button_menu"
-        app:itemTextColor="@color/selector"
-        app:itemIconTint="@color/selector"
-        app:labelVisibilityMode="labeled"
-        />
-
+        app:menu="@menu/button_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

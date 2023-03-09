@@ -2,12 +2,12 @@ package com.example.KYL.activity
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -22,7 +22,7 @@ import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.fragments.MyDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
-import com.google.android.material.bottomappbar.BottomAppBar
+import com.example.KYL.service.LocationService
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         FragmentManager.setFragment(CoordFragment.newInstance(), this)
+
+
     }
 
     // Создаем в активити верхнее меню
@@ -54,17 +56,17 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
     //Добавляем слушатель нажатий меню
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       when(item.itemId){
-           R.id.delete_all -> {
-               val myDialogFragment = MyDialogFragment()
-               val manager = supportFragmentManager
-               val transaction: FragmentTransaction = manager.beginTransaction()
-               myDialogFragment.show(transaction, "dialog")
-           }
-           R.id.upload -> {
-               FragmentManager.currentFragment?.createExcelTable()
-           }
-       }
+        when (item.itemId) {
+            R.id.delete_all -> {
+                val myDialogFragment = MyDialogFragment()
+                val manager = supportFragmentManager
+                val transaction: FragmentTransaction = manager.beginTransaction()
+                myDialogFragment.show(transaction, "dialog")
+            }
+            R.id.upload -> {
+                FragmentManager.currentFragment?.createExcelTable()
+            }
+        }
 
         return super.onOptionsItemSelected(item)
     }
@@ -135,4 +137,9 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             true
         }
     }
+
+//    private fun setColorItem() {
+//        binding.bnMenu.menu.getItem(R.id.list).setIcon(R.color.selector)
+//
+//    }
 }

@@ -22,7 +22,7 @@ import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 
-class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
+class CoordActivity: AppCompatActivity(), LocListenerInterfase {
     private lateinit var binding: ActivityCoordBinding
 
     var _latitude: Double = 0.0
@@ -54,7 +54,7 @@ class CoordActivity() : AppCompatActivity(), LocListenerInterfase {
         onClickKoordPointBotton()
     }
 
-    //Получаем Coordinate для редакирования из CoordFragment
+    //Получаем Coordinate для редактирования из CoordFragment
     private fun getCoordinate() {
         val serializableCoordinate = intent.getSerializableExtra(CoordFragment.KOORD_KEY)
         if (serializableCoordinate != null) {
