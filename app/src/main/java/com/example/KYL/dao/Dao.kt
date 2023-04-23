@@ -36,4 +36,12 @@ interface Dao {
     //Считывание последней записи из DB
     @Query("SELECT * FROM coord WHERE distance = (SELECT MAX(distance) FROM coord)")
     fun getLastCoordinate(): Coordinate?
+
+    //Обнавление DB при замене местами двух записей
+    @Update
+    suspend fun updateСhangeCoordinate(listCoord: List<Coordinate>)
+
+    //Полечени двух записей Coordinate для обмена местами в DB
+    @Query("SELECT * FROM coord WHERE id IN (:id1, :id2)")
+    suspend fun getCoordinateFromChange(id1: Int, id2: Int): List<Coordinate>
 }

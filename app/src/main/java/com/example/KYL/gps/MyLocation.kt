@@ -14,6 +14,4 @@ class MyLocation : LocationListener {
     fun setLocListenerInterface(locListenerInterfase: LocListenerInterfase) {
         this.locListenerInterfase = locListenerInterfase
     }
-
-
 }

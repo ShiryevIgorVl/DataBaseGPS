@@ -9,12 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.KYL.R
 import com.example.KYL.activity.App
 import com.example.KYL.activity.CoordActivity
@@ -30,7 +32,6 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
-
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -98,6 +99,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCoordBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -106,20 +108,29 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
         initAdapter()
         observer()
-
-        activity?.startForegroundService(Intent(activity, LocationService::class.java))
+        scrollToBottom()
+        //  activity?.startForegroundService(Intent(activity, LocationService::class.java))
     }
 
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            scrollToBottom()
         }
     }
 
-    private fun initAdapter() = with(binding) {
-        rvKoord.layoutManager = LinearLayoutManager(activity)
+    private fun initAdapter() {
+        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.rvKoord.layoutManager = layoutManager
         adapter = CoordAdapter(this@CoordFragment)
-        rvKoord.adapter = adapter
+        binding.rvKoord.adapter = adapter
+
+    }
+
+    //Скроллинг в конец списка точек при добавленни точек в адаптер
+    private fun scrollToBottom() {
+        val lastPosition = adapter.itemCount
+        binding.rvKoord.smoothScrollToPosition(lastPosition)
     }
 
     override fun onClickDelItem(id: Int) {
@@ -239,9 +250,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         cell = row.createCell(24)
         cell.setCellValue("Скорость, м/с")
 
-        for (i in 0..24){
-               sheet.setColumnWidth(i, (30 * 200))
-            }
+        for (i in 0..24) {
+            sheet.setColumnWidth(i, (30 * 200))
+        }
 
         //Проходим циклом создаем и записываем их в соотвтетствующие ячейки и строки
         if (koordList.size > 0) {
@@ -324,9 +335,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 cell = rowNext.createCell(24)
                 cell.setCellValue(koordList[i].speed)
 
-                for (i in 0..24){
-                        sheet.setColumnWidth(i, (30 * 100))
-                    }
+                for (i in 0..24) {
+                    sheet.setColumnWidth(i, (30 * 100))
+                    //sheet.autoSizeColumn(i)
+                }
             }
 
             //Запись файла Excel в папку "Документы" телефона

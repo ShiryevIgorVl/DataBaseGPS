@@ -24,7 +24,6 @@ class LocationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
         Log.d("Mytag", "onCreate: ON")
     }
 
@@ -34,7 +33,6 @@ class LocationService : Service() {
     }
 
     private fun startNotification() {
-
         val nChannel = NotificationChannel(
             CHANNEL_ID,
             "Сервис геолокации",
