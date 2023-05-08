@@ -31,6 +31,7 @@ import com.example.KYL.recyclerview.ItemTouchHelperCallback
 import com.example.KYL.service.LocationService
 import com.example.KYL.viewmodel.MainViewModel
 import com.example.KYL.writerXLS.WriteExcel
+import kotlinx.coroutines.delay
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
@@ -39,7 +40,7 @@ import org.apache.poi.ss.usermodel.Workbook
 import java.util.Collections
 
 
-class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdapter {
+class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     private lateinit var binding: FragmentCoordBinding
     private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
@@ -169,7 +170,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
         return arrayDistance[0].toInt()
     }
 
-
+    //Создаем и записываем файл Excel
     override fun createExcelTable() {
         val APP_NAME = context?.getString(R.string.app_name)
         val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
@@ -366,19 +367,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
         }
     }
 
-    override fun onItemDismiss(position: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onItemMove(fromPosition: Int, toPosition: Int) {
-//        Collections.swap(adapter.getData(), fromPosition, toPosition)
-//        Log.d("MyTag", "onItemMove: список до обновлениея позиции ${adapter.getData()}")
-//       adapter.notifyItemMoved(fromPosition, toPosition)
-//        Log.d("MyTag", "onItemMove: список после обновлениея позиции ${adapter.getData()}")
-//       mainViewModel.deleteTable()
-//       mainViewModel.insertKoordList(adapter.getData())
-      }
-
+// Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
     override fun confirmationAction() {
         val dataList = adapter.getData()
         for (i in 0..dataList.size-1){
@@ -392,7 +381,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
                    dataList[i].id = i
                     mainViewModel.insertKoord(dataList[i])
                }else{
-                    var distance = dataList[i].distance
+                    var distance = dataList[i-1].distance
                     val _distance = getDistance(
                         dataList[i-1].latitude,
                         dataList[i-1].longitude,
@@ -411,8 +400,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
                 return
             }
         }
-
-
 
     companion object {
         const val KOORD_KEY = "koord_key"

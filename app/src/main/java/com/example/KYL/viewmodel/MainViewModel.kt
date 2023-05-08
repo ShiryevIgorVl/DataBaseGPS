@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.KYL.database.MainDataBase
 
 import com.example.KYL.entities.Coordinate
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
