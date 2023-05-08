@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity (tableName = "coord")
+@Entity (tableName = "coordinate")
 data class Coordinate(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int?,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") var id: Int = 0,
     @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "distance") var distance: Int = 0,
     @ColumnInfo(name = "operational_number_KIP") val operationalnumberKIP: String = "",

@@ -196,7 +196,7 @@ class CoordActivity: AppCompatActivity(), LocListenerInterfase {
     // Функция заполнения класса Coordinate()
     private fun onCreateCoordinate(): Coordinate {
         return Coordinate(
-            id = null,
+            id = 0,
             name = binding.tvKoordName.text.toString(),
             distance = 0,
             latitude = latitude,

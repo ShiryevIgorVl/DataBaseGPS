@@ -269,6 +269,7 @@
             android:ems="10"
             android:hint="№ КИП"
             android:inputType="number"
+            android:digits="0123456789.-"
             android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@+id/etOperationalKM"
             app:layout_constraintStart_toEndOf="@+id/etDamageIP"

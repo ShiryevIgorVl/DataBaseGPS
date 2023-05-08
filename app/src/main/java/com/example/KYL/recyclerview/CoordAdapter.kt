@@ -15,16 +15,29 @@ import com.example.KYL.entities.Coordinate
 import java.util.Collections
 
 
-class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, CoordAdapter.ItemHolder>(
-    ItemComporator()
-), ItemTouchHelperAdapter {
+class CoordAdapter(private val listener: Listener) :
+    RecyclerView.Adapter<CoordAdapter.ItemHolder>(), ItemTouchHelperAdapter {
 
+    private var coordList = emptyList<Coordinate>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
+    override fun getItemCount(): Int {
+        return coordList.size
+    }
+
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        return holder.setData(getItem(position), position, listener)
+        return holder.setData(coordList[position], position, listener)
+    }
+
+    fun getData(): List<Coordinate>{
+        return coordList
+    }
+
+    fun setItem(newCoordList: MutableList<Coordinate>){
+        this.coordList = newCoordList
+        notifyDataSetChanged()
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -61,24 +74,9 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
 
     }
 
-    class ItemComporator : DiffUtil.ItemCallback<Coordinate>(){
-        override fun areItemsTheSame(oldItem: Coordinate, newItem: Coordinate): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Coordinate, newItem: Coordinate): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    interface Listener{
-        fun onClickDelItem(id: Int)
-        fun onClickCoordinate(koordinate: Coordinate)
-    }
-
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         // перемещаем элементы в списке
-        currentList?.let { Collections.swap(it, fromPosition, toPosition) }
+        coordList?.let { Collections.swap(it, fromPosition, toPosition) }
         // обновляем RecyclerView
         notifyItemMoved(fromPosition, toPosition)
 
@@ -91,5 +89,8 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
         notifyItemRemoved(position)
     }
 
-
+    interface Listener {
+        fun onClickDelItem(id: Int)
+        fun onClickCoordinate(koordinate: Coordinate)
+    }
 }

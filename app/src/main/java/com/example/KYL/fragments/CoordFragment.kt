@@ -2,6 +2,7 @@ package com.example.KYL.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException
 import android.location.Location
 import android.os.Bundle
 import android.os.Environment
@@ -57,7 +58,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
                 if (it.resultCode == Activity.RESULT_OK) {
                     val editState = it.data?.getStringExtra(STATE_KOORD)
                     val coordinate = it.data?.getSerializableExtra(KOORD_KEY) as Coordinate
-                    val koordList = adapter.currentList
+                    val koordList = adapter.getData()
                     Log.d("MyLog", "onCoordResult koordList: $koordList")
 
                     if (editState == "update") {
@@ -73,6 +74,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
                             )
                             distance += _distance
                             coordinate.distance = distance
+                            coordinate.id = koordList.size
                             Log.d("MyLog", "onCoordResult distance: $distance")
                             Log.d("MyLog", "onCoordResult coordinate: $coordinate")
                             mainViewModel.insertKoord(coordinate)
@@ -118,8 +120,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
 
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-     //       Log.d("MyTag", "observer: $it")
+            adapter.setItem(it as MutableList<Coordinate>)
             scrollToBottom()
         }
     }
@@ -173,7 +174,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
         val APP_NAME = context?.getString(R.string.app_name)
         val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
 
-        val koordList = adapter.currentList  //Получаем из адаптера список Coordinate
+        val koordList = adapter.getData()  //Получаем из адаптера список Coordinate
 
         val wb: Workbook = HSSFWorkbook()
         var cell: Cell? = null
@@ -368,17 +369,49 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
     override fun onItemDismiss(position: Int) {
         TODO("Not yet implemented")
     }
-    override fun onItemMove(fromPosition: Int, toPosition: Int) {
-//        Collections.swap(adapter.currentList, fromPosition, toPosition)
-//        Log.d("MyTag", "onItemMove: список до обновлениея позиции ${adapter.currentList}")
-//        adapter.notifyItemMoved(fromPosition, toPosition)
-//        Log.d("MyTag", "onItemMove: список после обновлениея позиции ${adapter.currentList}")
-//        mainViewModel.deleteTable()
- //       mainViewModel.insertKoordList(adapter.currentList)
-    }
-    override fun confirmationAction() {
 
-    }
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+//        Collections.swap(adapter.getData(), fromPosition, toPosition)
+//        Log.d("MyTag", "onItemMove: список до обновлениея позиции ${adapter.getData()}")
+//       adapter.notifyItemMoved(fromPosition, toPosition)
+//        Log.d("MyTag", "onItemMove: список после обновлениея позиции ${adapter.getData()}")
+//       mainViewModel.deleteTable()
+//       mainViewModel.insertKoordList(adapter.getData())
+      }
+
+    override fun confirmationAction() {
+        val dataList = adapter.getData()
+        for (i in 0..dataList.size-1){
+            dataList[i].distance = 0
+        }
+        if (dataList.size != 0) {
+            mainViewModel.deleteTable()
+            for (i in 0..dataList.size - 1) {
+                if (i == 0){
+                   dataList[i].distance = 0
+                   dataList[i].id = i
+                    mainViewModel.insertKoord(dataList[i])
+               }else{
+                    var distance = dataList[i].distance
+                    val _distance = getDistance(
+                        dataList[i-1].latitude,
+                        dataList[i-1].longitude,
+                        dataList[i].latitude,
+                        dataList[i].longitude
+                    )
+                    distance += _distance
+                    dataList[i].distance = distance
+                    dataList[i].id = i
+                    Log.d("MyTag", "onCoordResult distance: $distance")
+
+                    mainViewModel.insertKoord(dataList[i])
+                }
+            }
+        }else {
+                return
+            }
+        }
+
 
 
     companion object {
