@@ -228,7 +228,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdap
         cell.setCellValue("Rтп, Ом")
 
         cell = row.createCell(14)
-        cell.setCellValue("Uп-з, Ом")
+        cell.setCellValue("Uп-з, В")
 
         cell = row.createCell(15)
         cell.setCellValue("Iпр-с, мА")
