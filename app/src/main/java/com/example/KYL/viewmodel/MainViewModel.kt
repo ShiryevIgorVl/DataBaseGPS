@@ -16,8 +16,16 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         dao.insertKoordinate(koordinate)
     }
 
+    fun insertKoordList(listCoord: List<Coordinate>) = viewModelScope.launch {
+        dao.insertListKoordinate(listCoord)
+    }
+
     fun updateKoord(koordinate: Coordinate) = viewModelScope.launch {
         dao.updateKoordinate(koordinate)
+    }
+
+    fun updateAllKoord(listCoord: List<Coordinate>) = viewModelScope.launch {
+        dao.updateСhangeCoordinate(listCoord)
     }
 
     fun deleteKoord(id: Int) = viewModelScope.launch {

@@ -1,4 +1,6 @@
 package com.example.KYL.recyclerview
+
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.KYL.R
 import com.example.KYL.databinding.CoordListItemBinding
 import com.example.KYL.entities.Coordinate
+import java.util.Collections
 
 
 class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, CoordAdapter.ItemHolder>(
     ItemComporator()
-) {
+), ItemTouchHelperAdapter {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
@@ -25,10 +29,6 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CoordListItemBinding.bind(view)
-
-        fun LinearLayoutManager.scrollToLastPosition() {
-            scrollToPosition(itemCount - 1)
-        }
 
         fun setData(koordinate: Coordinate, position: Int, listener: Listener) = with(binding) {
             tvNameSet.text = koordinate.name
@@ -49,6 +49,7 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
             cdKoordinate.setOnClickListener {
                 listener.onClickCoordinate(koordinate)
             }
+
         }
 
         companion object{
@@ -66,13 +67,28 @@ class CoordAdapter(private val listener: Listener) : ListAdapter<Coordinate, Coo
         }
 
         override fun areContentsTheSame(oldItem: Coordinate, newItem: Coordinate): Boolean {
-         return oldItem == newItem
+            return oldItem == newItem
         }
     }
 
     interface Listener{
         fun onClickDelItem(id: Int)
         fun onClickCoordinate(koordinate: Coordinate)
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        // перемещаем элементы в списке
+        currentList?.let { Collections.swap(it, fromPosition, toPosition) }
+        // обновляем RecyclerView
+        notifyItemMoved(fromPosition, toPosition)
+
+    }
+
+    override fun onItemDismiss(position: Int) {
+        // удаляем элемент из списка
+        listener.onClickDelItem(position)
+        // обновляем RecyclerView
+        notifyItemRemoved(position)
     }
 
 

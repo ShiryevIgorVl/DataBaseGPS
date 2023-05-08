@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startForegroundService
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.KYL.R
@@ -24,6 +25,8 @@ import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.recyclerview.CoordAdapter
+import com.example.KYL.recyclerview.ItemTouchHelperAdapter
+import com.example.KYL.recyclerview.ItemTouchHelperCallback
 import com.example.KYL.service.LocationService
 import com.example.KYL.viewmodel.MainViewModel
 import com.example.KYL.writerXLS.WriteExcel
@@ -32,9 +35,10 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
+import java.util.Collections
 
 
-class CoordFragment : BaseFragment(), CoordAdapter.Listener {
+class CoordFragment : BaseFragment(), CoordAdapter.Listener, ItemTouchHelperAdapter {
 
     private lateinit var binding: FragmentCoordBinding
     private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
@@ -115,6 +119,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+     //       Log.d("MyTag", "observer: $it")
             scrollToBottom()
         }
     }
@@ -124,6 +129,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         binding.rvKoord.layoutManager = layoutManager
         adapter = CoordAdapter(this@CoordFragment)
         binding.rvKoord.adapter = adapter
+
+        val callback = ItemTouchHelperCallback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(binding.rvKoord)
 
     }
 
@@ -354,6 +363,21 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 .show()
             return
         }
+    }
+
+    override fun onItemDismiss(position: Int) {
+        TODO("Not yet implemented")
+    }
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+//        Collections.swap(adapter.currentList, fromPosition, toPosition)
+//        Log.d("MyTag", "onItemMove: список до обновлениея позиции ${adapter.currentList}")
+//        adapter.notifyItemMoved(fromPosition, toPosition)
+//        Log.d("MyTag", "onItemMove: список после обновлениея позиции ${adapter.currentList}")
+//        mainViewModel.deleteTable()
+ //       mainViewModel.insertKoordList(adapter.currentList)
+    }
+    override fun confirmationAction() {
+
     }
 
 

@@ -8,6 +8,7 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -63,8 +64,13 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 val transaction: FragmentTransaction = manager.beginTransaction()
                 myDialogFragment.show(transaction, "dialog")
             }
+
             R.id.upload -> {
                 FragmentManager.currentFragment?.createExcelTable()
+            }
+
+            R.id.ok -> {
+                FragmentManager.currentFragment?.confirmationAction()
             }
         }
 
@@ -130,6 +136,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 R.id.list -> {
                     FragmentManager.setFragment(CoordFragment.newInstance(), this)
                 }
+
                 R.id.save -> {
                     FragmentManager.currentFragment?.onClickNew()
                 }
