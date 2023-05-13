@@ -2,8 +2,8 @@
     <string name="app_name">КЯЛ-1</string>
     <string name="delete">Удалить все</string>
     <string name="list">Список точек</string>
-    <string name="upload">Экспорт точек в Excle.xlsx</string>
-    <string name="load">Импорт точек из Excle.xlsx</string>
+    <string name="upload">Экспорт точек в Excel.xlsx</string>
+    <string name="load">Импорт точек из Excel.xlsx</string>
     <string name="save">Сохранить точку</string>
     <string name="name">Наименование: </string>
     <string name="name_set">КИП</string>

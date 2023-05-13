@@ -4,21 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.KYL.database.MainDataBase
-
 import com.example.KYL.entities.Coordinate
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 
-//@Suppress("UNREACHABLE_CODE", "UNCHECKED_CAST")
+
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     val dao = dataBase.getDao()
     val allKoord: LiveData<List<Coordinate>> = dao.getAllKoordinate().asLiveData()
@@ -84,7 +80,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
         val listCoordinate = createListCoordinate(cellStringList)
         Log.d("MyTag", "importDataBase importList: ${listCoordinate}")
-        updateAllKoord(listCoordinate)
+
+        listCoordinate.forEach {
+            insertKoord(it)
+        }
     }
 
     private fun createListCoordinate(cellStringList: List<String>): List<Coordinate> {
@@ -94,59 +93,59 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         val idList =
             cellList.slice(0..cellList.size - 1 step 25)
         val distanceList =
-            cellList.slice(1..cellList.size - 1 step 25)
+            cellList.slice(1 until cellList.size step 25)
         val nameList =
-            cellList.slice(2..cellList.size - 1 step 25)
+            cellList.slice(2 until cellList.size step 25)
         val operationalnumberKIPList =
-            cellList.slice(3..cellList.size - 1 step 25)
+            cellList.slice(3 until cellList.size step 25)
         val operationalKMList =
-            cellList.slice(4..cellList.size - 1 step 25)
+            cellList.slice(4 until cellList.size step 25)
         val utsPipeList =
-            cellList.slice(5..cellList.size - 1 step 25)
+            cellList.slice(5 until cellList.size step 25)
         val uppPipeList =
-            cellList.slice(6..cellList.size - 1 step 25)
+            cellList.slice(6 until cellList.size step 25)
         val ipolPipeList =
-            cellList.slice(7..cellList.size - 1 step 25)
+            cellList.slice(7 until cellList.size step 25)
         val noteList =
-            cellList.slice(8..cellList.size - 1 step 25)
+            cellList.slice(8 until cellList.size step 25)
         val timeList =
-            cellList.slice(9..cellList.size - 1 step 25)
+            cellList.slice(9 until cellList.size step 25)
         val utsСoverList =
-            cellList.slice(10..cellList.size - 1 step 25)
+            cellList.slice(10 until cellList.size step 25)
         val uppCoverList =
-            cellList.slice(11..cellList.size - 1 step 25)
+            cellList.slice(11 until cellList.size step 25)
         val ipolCoverList =
-            cellList.slice(12..cellList.size - 1 step 25)
+            cellList.slice(12 until cellList.size step 25)
         val rPipeCoverList =
-            cellList.slice(13..cellList.size - 1 step 25)
+            cellList.slice(13 until cellList.size step 25)
         val upsList =
-            cellList.slice(14..cellList.size - 1 step 25)
+            cellList.slice(14 until cellList.size step 25)
         val iprotList =
-            cellList.slice(15..cellList.size - 1 step 25)
+            cellList.slice(15 until cellList.size step 25)
         val depthPipeList =
-            cellList.slice(16..cellList.size - 1 step 25)
+            cellList.slice(16 until cellList.size step 25)
         val iPipeList =
-            cellList.slice(17..cellList.size - 1 step 25)
+            cellList.slice(17 until cellList.size step 25)
         val uesList =
-            cellList.slice(18..cellList.size - 1 step 25)
+            cellList.slice(18 until cellList.size step 25)
         val damageIPList =
-            cellList.slice(19..cellList.size - 1 step 25)
+            cellList.slice(19 until cellList.size step 25)
         val latitudeList =
-            cellList.slice(20..cellList.size - 1 step 25)
+            cellList.slice(20 until cellList.size step 25)
         val longitudeList =
-            cellList.slice(21..cellList.size - 1 step 25)
+            cellList.slice(21 until cellList.size step 25)
         val heightList =
-            cellList.slice(22..cellList.size - 1 step 25)
+            cellList.slice(22 until cellList.size step 25)
         val accuracyList =
-            cellList.slice(23..cellList.size - 1 step 25)
+            cellList.slice(23 until cellList.size step 25)
         val speedList =
-            cellList.slice(24..cellList.size - 1 step 25)
+            cellList.slice(24 until cellList.size step 25)
 
 //        Log.d("MyTag", "createListPoint speedList: ${speedList}")
 //        Log.d(TAG, "createListPoint nameList: ${nameList}")
 //        Log.d(TAG, "createListPoint ageList: ${ageList}")
 //        Log.d(TAG, "createListPoint размер: ${cellList.size}")
-        for (i in 0..idList.size-1) {
+        for (i in idList.indices) {
                   Log.d("MyTag", "idListToInt: ${idList}")
             try {
                 coordListBackup.add(
