@@ -41,7 +41,7 @@ interface Dao {
     fun getLastCoordinate(): Coordinate?
 
     //Обнавление DB при замене местами двух записей
-    @Update
+    @Update (onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateСhangeCoordinate(listCoord: List<Coordinate>)
 
     //Полечени двух записей Coordinate для обмена местами в DB

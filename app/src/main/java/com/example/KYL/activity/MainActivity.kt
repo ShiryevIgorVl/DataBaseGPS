@@ -1,6 +1,7 @@
 package com.example.KYL.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
             R.id.upload -> {
                 FragmentManager.currentFragment?.createExcelTable()
+            }
+
+            R.id.download -> {
+                FragmentManager.currentFragment?.onActionImport()
             }
 
             R.id.ok -> {
@@ -149,4 +155,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 //        binding.bnMenu.menu.getItem(R.id.list).setIcon(R.color.selector)
 //
 //    }
+
+
 }

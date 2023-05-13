@@ -8,5 +8,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun createExcelTable()
     abstract fun deleteTable()
     abstract fun confirmationAction()
+    abstract fun onActionImport()
 
 }

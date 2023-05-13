@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startForegroundService
@@ -37,6 +38,7 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.util.Collections
 
 
@@ -173,11 +175,11 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     //Создаем и записываем файл Excel
     override fun createExcelTable() {
         val APP_NAME = context?.getString(R.string.app_name)
-        val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
+        val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xlsx"
 
         val koordList = adapter.getData()  //Получаем из адаптера список Coordinate
 
-        val wb: Workbook = HSSFWorkbook()
+        val wb: Workbook = XSSFWorkbook()
         var cell: Cell? = null
         var sheet: Sheet? = null
 
@@ -367,39 +369,60 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
-// Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
+    // Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
     override fun confirmationAction() {
         val dataList = adapter.getData()
-        for (i in 0..dataList.size-1){
+        for (i in 0..dataList.size - 1) {
             dataList[i].distance = 0
         }
         if (dataList.size != 0) {
             mainViewModel.deleteTable()
             for (i in 0..dataList.size - 1) {
-                if (i == 0){
-                   dataList[i].distance = 0
-                   dataList[i].id = i
+                if (i == 0) {
+                    dataList[i].distance = 0
+                    dataList[i].id = i
                     mainViewModel.insertKoord(dataList[i])
-               }else{
-                    var distance = dataList[i-1].distance
+                } else {
+                    var distance = dataList[i - 1].distance
                     val _distance = getDistance(
-                        dataList[i-1].latitude,
-                        dataList[i-1].longitude,
+                        dataList[i - 1].latitude,
+                        dataList[i - 1].longitude,
                         dataList[i].latitude,
                         dataList[i].longitude
                     )
                     distance += _distance
                     dataList[i].distance = distance
                     dataList[i].id = i
-                    Log.d("MyTag", "onCoordResult distance: $distance")
+//                    Log.d("MyTag", "onCoordResult distance: $distance")
 
                     mainViewModel.insertKoord(dataList[i])
                 }
             }
-        }else {
-                return
+        } else {
+            return
+        }
+    }
+
+    val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // получаем  Uri из intent
+                val intent = result.data
+                val uri = intent?.data!!
+                // запускаем чтение файла .xlsx по полученному Uri
+                context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
             }
         }
+
+   override fun onActionImport() {
+        // настраиваем фильтры intent
+        val intent = Intent()
+            .setType("*/*")
+            .setAction(Intent.ACTION_GET_CONTENT)
+
+        // запускаем контракт
+        startForResult.launch(intent)
+    }
 
     companion object {
         const val KOORD_KEY = "koord_key"
