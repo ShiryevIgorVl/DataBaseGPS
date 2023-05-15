@@ -3,16 +3,19 @@ package com.example.KYL.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
+import com.example.KYL.writerXLSX.WriteExcel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-
 
 
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
@@ -48,7 +51,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     fun getLastCoordinate() = dao.getLastCoordinate()
 
     @SuppressLint("SuspiciousIndentation")
-    fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
+   fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
         val cellStringList: MutableList<String> = mutableListOf()
         val inputStream = context.contentResolver.openInputStream(uri)
         val wbImport = XSSFWorkbook(inputStream)
@@ -79,7 +82,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         wbImport.close()
 
         val listCoordinate = createListCoordinate(cellStringList)
-        Log.d("MyTag", "importDataBase importList: ${listCoordinate}")
+//        Log.d("MyTag", "importDataBase importList: ${listCoordinate}")
 
         listCoordinate.forEach {
             insertKoord(it)
@@ -146,7 +149,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 //        Log.d(TAG, "createListPoint ageList: ${ageList}")
 //        Log.d(TAG, "createListPoint размер: ${cellList.size}")
         for (i in idList.indices) {
-                  Log.d("MyTag", "idListToInt: ${idList}")
+//                  Log.d("MyTag", "idListToInt: ${idList}")
             try {
                 coordListBackup.add(
                     Coordinate(
@@ -211,15 +214,197 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 //                    )
 //                )
 
-                Log.d("MyTag", "createListCoordinate Coordinate Exception : ${e}")
+//                Log.d("MyTag", "createListCoordinate Coordinate Exception : ${e}")
             }
 
-            Log.d("MyTag", "createListCoordinate Coordinate Exception : ${coordListBackup}")
+//            Log.d("MyTag", "createListCoordinate Coordinate Exception : ${coordListBackup}")
         }
 //        Log.d(TAG, "createListPoint Point после for: ${pointListBackup}")
         return coordListBackup
     }
 
+   suspend fun createExcleTable(
+        koordList: List<Coordinate>,
+        APP_NAME: String
+    ) = withContext(Dispatchers.IO) {
+        val wb: Workbook = XSSFWorkbook()
+        var cell: Cell? = null
+        var sheet: Sheet? = null
+
+        sheet = wb.createSheet("$APP_NAME") // Создаем новый лист Excel
+        val row: Row = sheet.createRow(0) // Создаем новую строку
+
+        cell = row.createCell(0) //В этой строке создаем новую ячейку
+        cell.setCellValue("№ п.п.") //В ячейку пишем значение
+
+        cell = row.createCell(1)
+        cell.setCellValue("Дистанция, м")
+
+        cell = row.createCell(2)
+        cell.setCellValue("Наименование")
+
+        cell = row.createCell(3)
+        cell.setCellValue("Номер КИП")
+
+        cell = row.createCell(4)
+        cell.setCellValue("КИП км")
+
+        cell = row.createCell(5)
+        cell.setCellValue("Uтз, В")
+
+        cell = row.createCell(6)
+        cell.setCellValue("Uпп, В")
+
+        cell = row.createCell(7)
+        cell.setCellValue("Ток поляризации ВЭ, мА")
+
+        cell = row.createCell(8)
+        cell.setCellValue("Примечание")
+
+        cell = row.createCell(9)
+        cell.setCellValue("Время")
+
+        cell = row.createCell(10)
+        cell.setCellValue("Uпатрон-земля, В")
+
+        cell = row.createCell(11)
+        cell.setCellValue("Uпп патрон, В")
+
+        cell = row.createCell(12)
+        cell.setCellValue(
+            "Ток поляризации ВЭ патрон, мА"
+        )
+
+        cell = row.createCell(13)
+        cell.setCellValue("Rтп, Ом")
+
+        cell = row.createCell(14)
+        cell.setCellValue("Uп-з, В")
+
+        cell = row.createCell(15)
+        cell.setCellValue("Iпр-с, мА")
+
+        cell = row.createCell(16)
+        cell.setCellValue("Глубина, м")
+
+        cell = row.createCell(17)
+        cell.setCellValue("Ток в трубе, мА")
+
+        cell = row.createCell(18)
+        cell.setCellValue("УЭС, Омхм")
+
+        cell = row.createCell(19)
+        cell.setCellValue("Повреждение ИП, м")
+
+        cell = row.createCell(20)
+        cell.setCellValue("Широта")
+
+        cell = row.createCell(21)
+        cell.setCellValue("Долгота")
+
+        cell = row.createCell(22)
+        cell.setCellValue("Высота, м")
+
+        cell = row.createCell(23)
+        cell.setCellValue("Точность, м")
+
+        cell = row.createCell(24)
+        cell.setCellValue("Скорость, м/с")
+
+        for (i in 0..24) {
+            sheet.setColumnWidth(i, (30 * 200))
+        }
+        //Проходим циклом, создаем и заполняем из коллекции таблицу Excel
+
+
+        for (i in 0..(koordList.size - 1)) {
+            val rowNext = sheet.createRow(i + 1)
+
+            cell = rowNext.createCell(0)
+            cell.setCellValue("$i")
+
+            cell = rowNext.createCell(1)
+            cell.setCellValue(koordList[i].distance.toString())
+
+            cell = rowNext.createCell(2)
+            cell.setCellValue(koordList[i].name)
+
+            cell = rowNext.createCell(3)
+            cell.setCellValue(koordList[i].operationalnumberKIP)
+
+            cell = rowNext.createCell(4)
+            cell.setCellValue(koordList[i].operationalKM)
+
+            cell = rowNext.createCell(5)
+            cell.setCellValue(koordList[i].utsPipe)
+
+            cell = rowNext.createCell(6)
+            cell.setCellValue(koordList[i].uppPipe)
+
+            cell = rowNext.createCell(7)
+            cell.setCellValue(koordList[i].ipolPipe)
+
+            cell = rowNext.createCell(8)
+            cell.setCellValue(koordList[i].note)
+
+            cell = rowNext.createCell(9)
+            cell.setCellValue(koordList[i].time)
+
+            cell = rowNext.createCell(10)
+            cell.setCellValue(koordList[i].utsСover)
+
+            cell = rowNext.createCell(11)
+            cell.setCellValue(koordList[i].uppCover)
+
+            cell = rowNext.createCell(12)
+            cell.setCellValue(koordList[i].ipolCover)
+
+            cell = rowNext.createCell(13)
+            cell.setCellValue(koordList[i].rPipeCover)
+
+            cell = rowNext.createCell(14)
+            cell.setCellValue(koordList[i].ups)
+
+            cell = rowNext.createCell(15)
+            cell.setCellValue(koordList[i].iprot)
+
+            cell = rowNext.createCell(16)
+            cell.setCellValue(koordList[i].depthPipe)
+
+            cell = rowNext.createCell(17)
+            cell.setCellValue(koordList[i].iPipe)
+
+            cell = rowNext.createCell(18)
+            cell.setCellValue(koordList[i].ues)
+
+            cell = rowNext.createCell(19)
+            cell.setCellValue(koordList[i].damageIP)
+
+            cell = rowNext.createCell(20)
+            cell.setCellValue(koordList[i].latitude)
+
+            cell = rowNext.createCell(21)
+            cell.setCellValue(koordList[i].longitude)
+
+            cell = rowNext.createCell(22)
+            cell.setCellValue(koordList[i].height)
+
+            cell = rowNext.createCell(23)
+            cell.setCellValue(koordList[i].accuracy)
+
+            cell = rowNext.createCell(24)
+            cell.setCellValue(koordList[i].speed)
+
+            for (i in 0..24) {
+                sheet.setColumnWidth(i, (30 * 100))
+                //sheet.autoSizeColumn(i)
+            }
+        }
+
+        //Запись файла Excel в папку "Документы" телефона
+        val writeExcel = APP_NAME?.let { WriteExcel(APP_NAME = it) }
+       viewModelScope.launch {  writeExcel?.writeExcel(wb) }
+    }
 
     @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android

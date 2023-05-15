@@ -1,4 +1,4 @@
-package com.example.KYL.writerXLS
+package com.example.KYL.writerXLSX
 
 import android.os.Environment
 import com.example.KYL.constans.MainTime
@@ -10,9 +10,9 @@ import java.io.IOException
 
 class WriteExcel(APP_NAME: String) {
 
-    val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xls"
+    val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xlsx"
 
-    fun writeExcel(wb: Workbook) {
+   fun writeExcel(wb: Workbook) {
         val path =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 

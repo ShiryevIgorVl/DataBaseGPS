@@ -26,6 +26,8 @@ import com.example.KYL.fragments.MyDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 import com.example.KYL.service.LocationService
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             }
 
             R.id.upload -> {
-                FragmentManager.currentFragment?.createExcelTable()
+              GlobalScope.launch { FragmentManager.currentFragment?.createExcelTable() }
             }
 
             R.id.download -> {

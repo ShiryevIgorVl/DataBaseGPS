@@ -5,7 +5,7 @@ import com.example.KYL.entities.Coordinate
 
 abstract class BaseFragment : Fragment() {
     abstract fun onClickNew()
-    abstract fun createExcelTable()
+    abstract suspend fun createExcelTable()
     abstract fun deleteTable()
     abstract fun confirmationAction()
     abstract fun onActionImport()
