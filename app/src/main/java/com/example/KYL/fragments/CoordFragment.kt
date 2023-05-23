@@ -233,20 +233,18 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
-    val startForResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // получаем  Uri из intent
-                val intent = result.data
-                val uri = intent?.data!!
-                // запускаем чтение файла .xlsx по полученному Uri
-                context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
-            }
+ val   startForResult =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // получаем  Uri из intent
+            val intent = result.data
+            val uri = intent?.data!!
+            // запускаем чтение файла .xlsx по полученному Uri
+            context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
         }
+    }
 
     override fun onActionImport()  {
-
-
         // настраиваем фильтры intent
         val intent = Intent()
             .setType("*/*")

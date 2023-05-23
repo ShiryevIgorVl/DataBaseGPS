@@ -3,6 +3,7 @@ package com.example.KYL.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
@@ -10,12 +11,14 @@ import com.example.KYL.writerXLSX.WriteExcel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import java.io.IOException
 
 
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
@@ -54,8 +57,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
    fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
         val cellStringList: MutableList<String> = mutableListOf()
         val inputStream = context.contentResolver.openInputStream(uri)
-        val wbImport = XSSFWorkbook(inputStream)
-        val sheet = wbImport.getSheetAt(0)
+        try {
+
+            val wbImport = XSSFWorkbook(inputStream)
+            val sheet = wbImport.getSheetAt(0)
 //        cellStringList.clear()
 //        val firstRow: Row = sheet.getRow(0)      //первая строка в первом листе
 //        val lastNumRow = sheet.lastRowNum.toInt()       //номер  последней строки в первом листе
@@ -65,21 +70,28 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 //        Log.d(TAG, "importDataBase lastNumRow: $lastNumRow")
 //        Log.d(TAG, "importDataBase lastNumCeel: $lastNumCeel")
 
-        for (row: Row in sheet) {
-            for (cell: Cell in row) {
-                if (cell.cellType == CellType.BLANK) {
-                    cellStringList.add("пусто")
-                } else {
-                    when (cell.cellType) {
-                        CellType.NUMERIC -> cellStringList.add(cell.numericCellValue.toString())
-                        CellType.STRING -> cellStringList.add(cell.stringCellValue)
-                        else -> break
+            for (row: Row in sheet) {
+                for (cell: Cell in row) {
+                    if (cell.cellType == CellType.BLANK) {
+                        cellStringList.add("пусто")
+                    } else {
+                        when (cell.cellType) {
+                            CellType.NUMERIC -> cellStringList.add(cell.numericCellValue.toString())
+                            CellType.STRING -> cellStringList.add(cell.stringCellValue)
+                            else -> break
+                        }
                     }
                 }
+                wbImport.close()
             }
+        }catch (e: OLE2NotOfficeXmlFileException){
+            withContext(Dispatchers.Main){ Toast.makeText(context, "Выбранный файл должен иметь раcширение .xlsx", Toast.LENGTH_LONG).show()}
+        }catch (e: Exception){
+            withContext(Dispatchers.Main){ Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()}
         }
-
-        wbImport.close()
+        finally {
+            inputStream?.close()
+        }
 
         val listCoordinate = createListCoordinate(cellStringList)
 //        Log.d("MyTag", "importDataBase importList: ${listCoordinate}")
@@ -403,7 +415,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
         //Запись файла Excel в папку "Документы" телефона
         val writeExcel = APP_NAME?.let { WriteExcel(APP_NAME = it) }
-       viewModelScope.launch {  writeExcel?.writeExcel(wb) }
+         writeExcel?.writeExcel(wb)
     }
 
     @Suppress("UNCHECKED_CAST")

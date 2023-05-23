@@ -26,8 +26,10 @@ import com.example.KYL.fragments.MyDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 import com.example.KYL.service.LocationService
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     //Добавляем слушатель нажатий меню
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_all -> {
