@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">КЯЛ-1</string>
+    <string name="app_name">ЭХЗ трекер</string>
     <string name="delete">Удалить все</string>
     <string name="list">Список точек</string>
     <string name="upload">Экспорт точек в Excel.xlsx</string>
