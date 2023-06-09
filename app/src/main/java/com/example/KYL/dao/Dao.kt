@@ -20,7 +20,7 @@ interface Dao {
     suspend fun updateKoordinate (koordinate: Coordinate)
 
     //Считывание все из DB (запрос) автоматически и постоянно при изменении в DB возвращает поток списков координат (Entities)
-    // и запускаем не из корутин (не suspend функция)потому,что есть Flow
+    // и запускаем не из корутин (не suspend функция) потому,что есть Flow
     @Query("SELECT * FROM coordinate")
     fun getAllKoordinate(): Flow<List<Coordinate>>
 
@@ -37,10 +37,10 @@ interface Dao {
     fun getAllKoordinateList(): List<Coordinate>
 
     //Считывание последней записи из DB
-    @Query("SELECT * FROM coordinate WHERE distance = (SELECT MAX(distance) FROM coordinate)")
+    @Query("SELECT * FROM coordinate WHERE distance = (SELECT MAX(id) FROM coordinate)")
     fun getLastCoordinate(): Coordinate?
 
-    //Обнавление DB при замене местами двух записей
+    //Обновление DB при замене местами двух записей
     @Update (onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateСhangeCoordinate(listCoord: List<Coordinate>)
 
