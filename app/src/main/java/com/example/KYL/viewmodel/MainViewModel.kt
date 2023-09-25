@@ -3,8 +3,10 @@ package com.example.KYL.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
@@ -54,7 +56,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     fun getLastCoordinate() = dao.getLastCoordinate()
 
     @SuppressLint("SuspiciousIndentation")
-   fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
+    fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
         val cellStringList: MutableList<String> = mutableListOf()
         val inputStream = context.contentResolver.openInputStream(uri)
         try {
@@ -84,16 +86,30 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
                 }
                 wbImport.close()
             }
-        }catch (e: OLE2NotOfficeXmlFileException){
-            withContext(Dispatchers.Main){ Toast.makeText(context, "Выбранный файл должен иметь раcширение .xlsx", Toast.LENGTH_LONG).show()}
-        }catch (e: Exception){
-            withContext(Dispatchers.Main){ Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()}
-        }
-        finally {
+        } catch (e: OLE2NotOfficeXmlFileException) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    context,
+                    "Выбранный файл должен иметь раcширение .xlsx",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, "$e", Toast.LENGTH_LONG).show()
+            }
+        } finally {
             inputStream?.close()
         }
-
-        val listCoordinate = createListCoordinate(cellStringList)
+        // Получаем список всех запятых
+//        val commas = cellStringList.filter { it.contains(",") }
+//
+// Создаем новый список, заменяя запятые на точки
+        val outputList = cellStringList.map {
+            // Заменяем запятую на точку
+            it.replace(",", ".")
+        }
+        val listCoordinate = createListCoordinate(outputList)
 //        Log.d("MyTag", "importDataBase importList: ${listCoordinate}")
 
         listCoordinate.forEach {
@@ -235,7 +251,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         return coordListBackup
     }
 
-   suspend fun createExcleTable(
+    suspend fun createExcleTable(
         koordList: List<Coordinate>,
         APP_NAME: String
     ) = withContext(Dispatchers.IO) {
@@ -327,34 +343,54 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             sheet.setColumnWidth(i, (30 * 200))
         }
         //Проходим циклом, создаем и заполняем из коллекции таблицу Excel
-
+        Log.d("MyTag", "koordList: $koordList")
 
         for (i in 0..(koordList.size - 1)) {
             val rowNext = sheet.createRow(i + 1)
 
             cell = rowNext.createCell(0)
-            cell.setCellValue("$i")
+            cell.setCellValue(MainDecimalFormat.formatExcelInt(i.toDouble()))
 
             cell = rowNext.createCell(1)
-            cell.setCellValue(koordList[i].distance.toString())
+            cell.setCellValue(MainDecimalFormat.formatExcelInt(koordList[i].distance.toDouble()))
 
             cell = rowNext.createCell(2)
             cell.setCellValue(koordList[i].name)
 
             cell = rowNext.createCell(3)
-            cell.setCellValue(koordList[i].operationalnumberKIP)
+            try {
+                cell.setCellValue(koordList[i].operationalnumberKIP.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].operationalnumberKIP)
+            }
 
             cell = rowNext.createCell(4)
-            cell.setCellValue(koordList[i].operationalKM)
+            try {
+                cell.setCellValue(koordList[i].operationalKM.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].operationalKM)
+            }
 
             cell = rowNext.createCell(5)
-            cell.setCellValue(koordList[i].utsPipe)
+            try {
+                cell.setCellValue(koordList[i].utsPipe.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].utsPipe)
+            }
 
             cell = rowNext.createCell(6)
-            cell.setCellValue(koordList[i].uppPipe)
+            try {
+                cell.setCellValue(koordList[i].uppPipe.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].uppPipe)
+            }
 
             cell = rowNext.createCell(7)
-            cell.setCellValue(koordList[i].ipolPipe)
+            try {
+                cell.setCellValue(koordList[i].ipolPipe.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].ipolPipe)
+            }
 
             cell = rowNext.createCell(8)
             cell.setCellValue(koordList[i].note)
@@ -363,49 +399,112 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             cell.setCellValue(koordList[i].time)
 
             cell = rowNext.createCell(10)
-            cell.setCellValue(koordList[i].utsСover)
+            try {
+                cell.setCellValue(koordList[i].utsСover.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].utsСover)
+            }
+
 
             cell = rowNext.createCell(11)
-            cell.setCellValue(koordList[i].uppCover)
+            try {
+                cell.setCellValue(koordList[i].uppCover.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].uppCover)
+            }
 
             cell = rowNext.createCell(12)
-            cell.setCellValue(koordList[i].ipolCover)
+            try {
+                cell.setCellValue(koordList[i].ipolCover.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].ipolCover)
+            }
 
             cell = rowNext.createCell(13)
-            cell.setCellValue(koordList[i].rPipeCover)
+            try {
+                cell.setCellValue(koordList[i].rPipeCover.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].rPipeCover)
+            }
 
             cell = rowNext.createCell(14)
-            cell.setCellValue(koordList[i].ups)
+            try {
+                cell.setCellValue(koordList[i].ups.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].ups)
+            }
 
             cell = rowNext.createCell(15)
-            cell.setCellValue(koordList[i].iprot)
+            try {
+                cell.setCellValue(koordList[i].iprot.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].iprot)
+            }
 
             cell = rowNext.createCell(16)
-            cell.setCellValue(koordList[i].depthPipe)
+            try {
+                cell.setCellValue(koordList[i].depthPipe.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].depthPipe)
+            }
 
             cell = rowNext.createCell(17)
-            cell.setCellValue(koordList[i].iPipe)
+            try {
+                cell.setCellValue(koordList[i].iPipe.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].iPipe)
+            }
 
             cell = rowNext.createCell(18)
-            cell.setCellValue(koordList[i].ues)
+            try {
+                cell.setCellValue(koordList[i].ues.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].ues)
+            }
 
             cell = rowNext.createCell(19)
-            cell.setCellValue(koordList[i].damageIP)
+            try {
+                cell.setCellValue(koordList[i].damageIP.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].damageIP)
+            }
 
             cell = rowNext.createCell(20)
-            cell.setCellValue(koordList[i].latitude)
+            try {
+                cell.setCellValue(koordList[i].latitude)
+            } catch (e: NumberFormatException) {
+                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].latitude}")
+            }
 
             cell = rowNext.createCell(21)
-            cell.setCellValue(koordList[i].longitude)
+            try {
+                cell.setCellValue(koordList[i].longitude)
+            } catch (e: NumberFormatException) {
+                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].longitude}")
+            }
 
             cell = rowNext.createCell(22)
-            cell.setCellValue(koordList[i].height)
+            try {
+                cell.setCellValue(koordList[i].height.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].height)
+            }
 
             cell = rowNext.createCell(23)
-            cell.setCellValue(koordList[i].accuracy)
+            try {
+                cell.setCellValue(koordList[i].accuracy.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].accuracy)
+            }
+
 
             cell = rowNext.createCell(24)
-            cell.setCellValue(koordList[i].speed)
+            try {
+                cell.setCellValue(koordList[i].speed.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].speed)
+            }
+
 
             for (i in 0..24) {
                 sheet.setColumnWidth(i, (30 * 100))
@@ -415,7 +514,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
         //Запись файла Excel в папку "Документы" телефона
         val writeExcel = APP_NAME?.let { WriteExcel(APP_NAME = it) }
-         writeExcel?.writeExcel(wb)
+        writeExcel?.writeExcel(wb)
     }
 
     @Suppress("UNCHECKED_CAST")

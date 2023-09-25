@@ -56,13 +56,12 @@ class CoordAdapter(private val listener: Listener) :
             tvOperKM.text = koordinate.operationalKM
 
             buttonDel.setOnClickListener {
-                listener.onClickDelItem(koordinate.id!!)
+                listener.onClickDelItem()
             }
 
             cdKoordinate.setOnClickListener {
                 listener.onClickCoordinate(koordinate)
             }
-
         }
 
         companion object{
@@ -71,7 +70,6 @@ class CoordAdapter(private val listener: Listener) :
                     .inflate(R.layout.coord_list_item, parent, false))
             }
         }
-
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
@@ -81,16 +79,16 @@ class CoordAdapter(private val listener: Listener) :
         notifyItemMoved(fromPosition, toPosition)
 
     }
-
+ //Удаление элемента из списка по свайпу влево или вправо
     override fun onItemDismiss(position: Int) {
         // удаляем элемент из списка
-        listener.onClickDelItem(position)
+        listener.onClickDelItem()
         // обновляем RecyclerView
         notifyItemRemoved(position)
     }
 
     interface Listener {
-        fun onClickDelItem(id: Int)
+        fun onClickDelItem()
         fun onClickCoordinate(koordinate: Coordinate)
     }
 }

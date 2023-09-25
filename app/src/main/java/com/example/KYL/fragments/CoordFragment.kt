@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentTransaction
 
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -137,9 +138,15 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         binding.rvKoord.smoothScrollToPosition(lastPosition)
     }
 
-    override fun onClickDelItem(id: Int) {
+    override fun onClickDelItem() {
+       val dialogFragment = ButonDeleteDialogFragment()
+        fragmentManager?.let { dialogFragment.show(it, "dialog") }
+    }
+
+    override fun deleteButton(id: Int) {
         mainViewModel.deleteKoord(id)
     }
+
 
     override fun onClickCoordinate(koordinate: Coordinate) {
         val intent = Intent(activity, CoordActivity::class.java).apply {

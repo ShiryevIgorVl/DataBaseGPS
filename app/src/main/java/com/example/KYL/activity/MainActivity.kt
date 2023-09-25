@@ -18,7 +18,7 @@ import com.example.KYL.R
 import com.example.KYL.databinding.ActivityMainBinding
 import com.example.KYL.fragments.FragmentManager
 import com.example.KYL.fragments.CoordFragment
-import com.example.KYL.fragments.MyDialogFragment
+import com.example.KYL.fragments.AllDeleteDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_all -> {
-                val myDialogFragment = MyDialogFragment()
+                val myDialogFragment = AllDeleteDialogFragment()
                 val manager = supportFragmentManager
                 val transaction: FragmentTransaction = manager.beginTransaction()
                 myDialogFragment.show(transaction, "dialog")
