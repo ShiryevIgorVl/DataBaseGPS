@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.KYL.R
 
-class ButonDeleteDialogFragment: DialogFragment() {
+class ButtonDeleteDialogFragment(private val onDeleteConfirmed: () -> Unit): DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
        return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -14,7 +14,7 @@ class ButonDeleteDialogFragment: DialogFragment() {
                 .setIcon(R.drawable.ic_baseline_delete_24)
                 .setCancelable(true)
                 .setPositiveButton("Удалить") { _, _ ->
-                    FragmentManager.currentFragment?.deleteButton(id)
+                    onDeleteConfirmed.invoke()
                 }
                 .setNegativeButton(
                     "Отмена"

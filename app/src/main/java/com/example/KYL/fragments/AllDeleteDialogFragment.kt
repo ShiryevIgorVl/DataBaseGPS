@@ -15,7 +15,7 @@ class AllDeleteDialogFragment : DialogFragment()  {
                 .setIcon(R.drawable.ic_baseline_delete_24)
                 .setCancelable(true)
                 .setPositiveButton("Удалить") { _, _ ->
-                    FragmentManager.currentFragment?.deleteButton(id)
+                    FragmentManager.currentFragment?.deleteTable()
                 }
                 .setNegativeButton(
                     "Отмена"

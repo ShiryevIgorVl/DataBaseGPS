@@ -9,7 +9,7 @@ abstract class BaseFragment : Fragment() {
     abstract fun confirmationAction()
     abstract fun onActionImport()
     abstract fun deleteButton(id: Int)
-    abstract fun onClickDelItem()
+    abstract fun onClickDelItem(id: Int)
 
 
 }

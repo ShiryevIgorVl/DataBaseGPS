@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 val myDialogFragment = AllDeleteDialogFragment()
                 val manager = supportFragmentManager
                 val transaction: FragmentTransaction = manager.beginTransaction()
-                myDialogFragment.show(transaction, "dialog")
+                myDialogFragment.show(transaction, "dialog1")
             }
 
             R.id.upload -> {
