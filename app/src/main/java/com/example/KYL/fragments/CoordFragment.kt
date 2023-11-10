@@ -139,10 +139,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     override fun onClickDelItem(id: Int) {
         val buttonDeleteDialogFragment = ButtonDeleteDialogFragment{
-            Log.d("Mytag", "deleteButton: вход в метод")
             mainViewModel.deleteKoord(id)
-            Log.d("Mytag", "deleteButton: ${id}")
-            Log.d("Mytag", "deleteButton: выход из метода")
         }
         fragmentManager?.let { buttonDeleteDialogFragment.show(it, "buttonDeleteDialogFragment") }
     }

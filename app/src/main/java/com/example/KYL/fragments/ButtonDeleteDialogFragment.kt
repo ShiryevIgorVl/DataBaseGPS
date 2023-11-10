@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.KYL.R
 
 class ButtonDeleteDialogFragment(private val onDeleteConfirmed: () -> Unit): DialogFragment() {
