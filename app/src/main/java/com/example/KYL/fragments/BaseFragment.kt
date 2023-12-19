@@ -10,6 +10,8 @@ abstract class BaseFragment : Fragment() {
     abstract fun onActionImport()
     abstract fun deleteButton(id: Int)
     abstract fun onClickDelItem(id: Int)
+    abstract fun onClickUp()
+    abstract fun onClickDown()
 
 
 }

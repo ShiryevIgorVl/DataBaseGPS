@@ -1,6 +1,7 @@
 package com.example.KYL.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
@@ -13,10 +14,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.ViewCompat.canScrollVertically
 
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 
 import com.example.KYL.R
 import com.example.KYL.activity.App
@@ -29,7 +33,10 @@ import com.example.KYL.recyclerview.CoordAdapter
 import com.example.KYL.recyclerview.ItemTouchHelperCallback
 
 import com.example.KYL.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
@@ -38,6 +45,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private lateinit var binding: FragmentCoordBinding
     private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: CoordAdapter
+    private var position: Int = 22
+
+    //  private lateinit var layoutManager: LayoutManager
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
     }
@@ -53,7 +63,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                     val editState = it.data?.getStringExtra(STATE_KOORD)
                     val coordinate = it.data?.getSerializableExtra(KOORD_KEY) as Coordinate
                     val koordList = adapter.getData()
-                    Log.d("MyLog", "onCoordResult koordList: $koordList")
 
                     if (editState == "update") {
                         mainViewModel.updateKoord(coordinate)
@@ -76,15 +85,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                             mainViewModel.insertKoord(coordinate)
                         }
                     }
-                    //              Log.d(
-                    //                "MyLog",
-                    //              "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}"
-                    //          )
-                } else {
-                    //                Log.d(
-                    //                  "MyLog",
-                    //                "KoordFragment:: it.resultCode: ${it.resultCode},  Activity.resultCode: ${Activity.RESULT_OK}"
-                    //          )
                 }
             }
     }
@@ -103,27 +103,48 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
         observer()
-        scrollToBottom()
         //  activity?.startForegroundService(Intent(activity, LocationService::class.java))
+    }
+
+    // Расчет расстояний и номеров ID в DB при любом закрытии фрагмента со списком точек
+    override fun onStop() {
+        confirmationAction()
+        Thread.sleep(1000)
+        super.onStop()
+//        Log.d("Mytag", "onStop: ")
     }
 
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.setItem(it as MutableList<Coordinate>)
-            scrollToBottom()
+            //scrollToBottom()
         }
     }
 
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        savedInstanceState?.let {
+//            val position = it.getInt("position")
+//            binding.rvKoord.smoothScrollToPosition(position)
+//        }
+//        Log.d("Mytag", "onViewStateRestored savedInstanceState: ${savedInstanceState}")
+//    }
+
     private fun initAdapter() {
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        layoutManager.stackFromEnd = true
+
         binding.rvKoord.layoutManager = layoutManager
+
         adapter = CoordAdapter(this@CoordFragment)
         binding.rvKoord.adapter = adapter
+
 
         val callback = ItemTouchHelperCallback(adapter)
         val touchHelper = ItemTouchHelper(callback)
@@ -138,15 +159,19 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     override fun onClickDelItem(id: Int) {
-        val buttonDeleteDialogFragment = ButtonDeleteDialogFragment{
+        val buttonDeleteDialogFragment = ButtonDeleteDialogFragment {
             mainViewModel.deleteKoord(id)
         }
-        fragmentManager?.let { buttonDeleteDialogFragment.show(it, "buttonDeleteDialogFragment") }
+        childFragmentManager?.let {
+            buttonDeleteDialogFragment.show(
+                it,
+                "buttonDeleteDialogFragment"
+            )
+        }
     }
 
-
     override fun deleteButton(id: Int) {
-
+        TODO()
     }
 
 
@@ -208,9 +233,20 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
+    override fun onClickUp() {
+        val firstPosition = 0
+        binding.rvKoord.smoothScrollToPosition(firstPosition)
+    }
+
+    override fun onClickDown() {
+        val lastPosition = adapter.itemCount
+        binding.rvKoord.smoothScrollToPosition(lastPosition)
+    }
+
     // Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
     override fun confirmationAction() {
         val dataList = adapter.getData()
+//        Log.d("Mytag", "confirmationAction: ${dataList.size}")
         for (i in 0..dataList.size - 1) {
             dataList[i].distance = 0
         }
@@ -242,18 +278,18 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
- val   startForResult =
-    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // получаем  Uri из intent
-            val intent = result.data
-            val uri = intent?.data!!
-            // запускаем чтение файла .xlsx по полученному Uri
-            context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
+    val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // получаем  Uri из intent
+                val intent = result.data
+                val uri = intent?.data!!
+                // запускаем чтение файла .xlsx по полученному Uri
+                context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
+            }
         }
-    }
 
-    override fun onActionImport()  {
+    override fun onActionImport() {
         // настраиваем фильтры intent
         val intent = Intent()
             .setType("*/*")

@@ -78,6 +78,14 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             R.id.ok -> {
                 FragmentManager.currentFragment?.confirmationAction()
             }
+
+            R.id.up -> {
+                FragmentManager.currentFragment?.onClickUp()
+            }
+
+            R.id.down -> {
+                FragmentManager.currentFragment?.onClickDown()
+            }
         }
 
         return super.onOptionsItemSelected(item)

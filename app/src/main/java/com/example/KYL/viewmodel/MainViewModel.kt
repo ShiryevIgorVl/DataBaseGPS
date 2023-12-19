@@ -11,6 +11,7 @@ import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException
@@ -49,6 +50,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
     fun deleteTable() = viewModelScope.launch {
         dao.deleteAllTable()
+    }
+
+    fun delayDelete() = viewModelScope.launch {
+        delay(3000)
     }
 
     fun getCoordinatList() = dao.getAllKoordinateList()
