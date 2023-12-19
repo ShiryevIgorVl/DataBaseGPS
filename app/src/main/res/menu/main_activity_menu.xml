@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/delete_all"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title="@string/delete_all"
+       />
+    <item
+        android:id="@+id/upload"
+        android:icon="@drawable/ic_baseline_cloud_upload_24"
+        android:title="@string/upload"
+        />
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/baseline_cloud_download_24"
+        android:title="@string/load"
+        />
+    <item
+        android:id="@+id/ok"
+        android:icon="@drawable/baseline_check_24"
+        android:title="@string/distance_calculation"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/up"
+        android:icon="@android:drawable/stat_sys_upload"
+        android:title="@string/arrow_up"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/down"
+        android:icon="@android:drawable/stat_sys_download"
+
+        android:title="@string/arrow_down"
+        app:showAsAction="always">
+    </item>
+</menu>
