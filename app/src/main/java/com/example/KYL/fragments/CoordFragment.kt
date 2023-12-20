@@ -123,7 +123,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.setItem(it as MutableList<Coordinate>)
-            //scrollToBottom()
+            scrollToBottom()
         }
     }
 
@@ -251,12 +251,11 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
             dataList[i].distance = 0
         }
         if (dataList.size != 0) {
-            mainViewModel.deleteTable()
             for (i in 0..dataList.size - 1) {
                 if (i == 0) {
                     dataList[i].distance = 0
                     dataList[i].id = i
-                    mainViewModel.insertKoord(dataList[i])
+                    mainViewModel.updateKoord(dataList[i])
                 } else {
                     var distance = dataList[i - 1].distance
                     val _distance = getDistance(
@@ -270,7 +269,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                     dataList[i].id = i
 //                    Log.d("MyTag", "onCoordResult distance: $distance")
 
-                    mainViewModel.insertKoord(dataList[i])
+                    mainViewModel.updateKoord(dataList[i])
                 }
             }
         } else {
