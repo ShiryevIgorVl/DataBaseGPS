@@ -10,9 +10,16 @@ import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException
 import org.apache.poi.ss.usermodel.Cell
@@ -27,7 +34,13 @@ import java.io.IOException
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     val dao = dataBase.getDao()
     val allKoord: LiveData<List<Coordinate>> = dao.getAllKoordinate().asLiveData()
+    private val _getAllCoordinate = MutableLiveData<List<Coordinate>>()
+    val getAllCoordinate: LiveData<List<Coordinate>> get() = _getAllCoordinate
 
+
+    init {
+        getCoordinatList()
+    }
     fun insertKoord(koordinate: Coordinate) = viewModelScope.launch {
         dao.insertKoordinate(koordinate)
     }
@@ -40,23 +53,53 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         dao.updateKoordinate(koordinate)
     }
 
+    fun updateCoordForMove(koordinate: Coordinate, id: Int) = viewModelScope.launch {
+        dao.updateKoordinate(koordinate)
+        dao.updatePrimaryKeyForMove(id)
+    }
+
+    fun updateForMove(koordinate: Coordinate) = viewModelScope.launch {
+        dao.updateKoordinate(koordinate)
+    }
+
+    fun updatePrimaryKeyForForMove(id: Int) = viewModelScope.launch {
+        dao.updatePrimaryKeyForMove(id)
+    }
+
+
     fun updateAllKoord(listCoord: List<Coordinate>) = viewModelScope.launch {
         dao.updateСhangeCoordinate(listCoord)
     }
 
     fun deleteKoord(id: Int) = viewModelScope.launch {
         dao.deleteKoordinate(id)
+        dao.updatePrimaryKey(id)
     }
 
     fun deleteTable() = viewModelScope.launch {
         dao.deleteAllTable()
     }
 
-    fun delayDelete() = viewModelScope.launch {
-        delay(3000)
+//    fun getCoordinatList(): List<Coordinate> {
+//        val getCoordinatList: Deferred<List<Coordinate>> =
+//            viewModelScope.async {
+//                val dataList = dao.getAllKoordinateList()
+//                Log.d("Mytag", "getCoordinatList async: ${dataList.size}")
+//                return@async dataList
+//            }
+//        return runBlocking {
+//            val dataList = getCoordinatList.await()
+//            Log.d("Mytag", "getCoordinatList runBlocking: ${dataList.size}")
+//            return@runBlocking dataList
+//        }
+//    }
+
+    fun getCoordinatList(){
+        viewModelScope.launch {
+            _getAllCoordinate.value = dao.getAllKoordinateList()
+        }
     }
 
-    fun getCoordinatList() = dao.getAllKoordinateList()
 
     fun getLastCoordinate() = dao.getLastCoordinate()
 

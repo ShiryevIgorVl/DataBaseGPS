@@ -12,6 +12,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun onClickDelItem(id: Int)
     abstract fun onClickUp()
     abstract fun onClickDown()
-
+    abstract fun confirmationMoved()
 
 }

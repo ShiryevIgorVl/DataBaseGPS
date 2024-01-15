@@ -17,7 +17,7 @@ interface Dao {
 
     //Обновление элементов DB
     @Update
-    suspend fun updateKoordinate (koordinate: Coordinate)
+    suspend fun updateKoordinate(koordinate: Coordinate)
 
     //Считывание все из DB (запрос) автоматически и постоянно при изменении в DB возвращает поток списков координат (Entities)
     // и запускаем не из корутин (не suspend функция) потому,что есть Flow
@@ -28,20 +28,26 @@ interface Dao {
     @Query("DELETE FROM coordinate WHERE id IS :id")
     suspend fun deleteKoordinate(id: Int)
 
+    @Query("UPDATE coordinate SET id = id - 1 WHERE id > :id")
+    suspend fun updatePrimaryKey(id: Int)
+
+    @Query("UPDATE coordinate SET id = :id WHERE id <> :id")
+    suspend fun updatePrimaryKeyForMove(id: Int)
+
     //Удаление всей DB
     @Query("DELETE FROM coordinate")
     suspend fun deleteAllTable()
 
     // Получение всех записей
     @Query("SELECT * FROM coordinate")
-    fun getAllKoordinateList(): List<Coordinate>
+    suspend fun getAllKoordinateList(): List<Coordinate>
 
     //Считывание последней записи из DB
     @Query("SELECT * FROM coordinate WHERE distance = (SELECT MAX(id) FROM coordinate)")
     fun getLastCoordinate(): Coordinate?
 
     //Обновление DB при замене местами двух записей
-    @Update (onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateСhangeCoordinate(listCoord: List<Coordinate>)
 
     //Полечени двух записей Coordinate для обмена местами в DB

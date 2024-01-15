@@ -1,7 +1,6 @@
 package com.example.KYL.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
@@ -14,13 +13,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.ViewCompat.canScrollVertically
-
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+
 
 import com.example.KYL.R
 import com.example.KYL.activity.App
@@ -33,10 +30,9 @@ import com.example.KYL.recyclerview.CoordAdapter
 import com.example.KYL.recyclerview.ItemTouchHelperCallback
 
 import com.example.KYL.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
@@ -45,7 +41,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private lateinit var binding: FragmentCoordBinding
     private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: CoordAdapter
-    private var position: Int = 22
+
 
     //  private lateinit var layoutManager: LayoutManager
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -67,7 +63,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                     if (editState == "update") {
                         mainViewModel.updateKoord(coordinate)
                     } else {
-                        if (koordList.size != 0) {
+                        if (koordList.isNotEmpty()) {
                             var distance = koordList[koordList.size - 1].distance
                             val _distance = getDistance(
                                 koordList[koordList.size - 1].latitude,
@@ -112,29 +108,12 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         //  activity?.startForegroundService(Intent(activity, LocationService::class.java))
     }
 
-    // Расчет расстояний и номеров ID в DB при любом закрытии фрагмента со списком точек
-    override fun onStop() {
-        confirmationAction()
-        Thread.sleep(1000)
-        super.onStop()
-//        Log.d("Mytag", "onStop: ")
-    }
-
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.setItem(it as MutableList<Coordinate>)
-            scrollToBottom()
+            //    scrollToBottom()
         }
     }
-
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        savedInstanceState?.let {
-//            val position = it.getInt("position")
-//            binding.rvKoord.smoothScrollToPosition(position)
-//        }
-//        Log.d("Mytag", "onViewStateRestored savedInstanceState: ${savedInstanceState}")
-//    }
 
     private fun initAdapter() {
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -158,9 +137,34 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         binding.rvKoord.smoothScrollToPosition(lastPosition)
     }
 
+
     override fun onClickDelItem(id: Int) {
         val buttonDeleteDialogFragment = ButtonDeleteDialogFragment {
+
+//                mainViewModel.deleteKoord(id).also {
+//                    synchronized(it) {
+//                        val dataList = adapter.getData()
+//                        Log.d("Mytag", "onClickDelItem1: ${dataList.size} onClickDelItem1ID: ${dataList[0].id}")
+//                        updateDistance(dataList)
+//                    }
+//                }
+
             mainViewModel.deleteKoord(id)
+ //           val coordinate = adapter.getData()[id]
+  //          mainViewModel.updateKoord(coordinate)
+
+            val dataList = adapter.getData() as MutableList
+            dataList.remove(dataList[id])
+            updateDistance(dataList)
+
+            Log.d("Mytag", "onClickDelItem1: ${dataList.size} onClickDelItem1ID: ${dataList[0].id}")
+//            Thread.sleep(3000)
+//            val  = mainViewModel.getCoordinatList()
+//            Log.d("Mytag", "onClickDelItem: $dataList")
+//            updateDistance(dataList)
+
+//            onStop()
+//                      // Получаю старый список Coordinate из Adapter еще с удаленным Item и не происходит перезапись дистанции и расчет растояния, не успевает он обновиться
         }
         childFragmentManager?.let {
             buttonDeleteDialogFragment.show(
@@ -208,7 +212,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xlsx"
 
         val koordList = adapter.getData()  //Получаем из адаптера список Coordinate
-        if (koordList.size > 0) {
+        if (koordList.isNotEmpty()) {
 
             mainViewModel.createExcleTable(koordList, APP_NAME!!)
 
@@ -239,22 +243,51 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     override fun onClickDown() {
-        val lastPosition = adapter.itemCount
-        binding.rvKoord.smoothScrollToPosition(lastPosition)
+        scrollToBottom()
     }
 
-    // Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
-    override fun confirmationAction() {
-        val dataList = adapter.getData()
-//        Log.d("Mytag", "confirmationAction: ${dataList.size}")
-        for (i in 0..dataList.size - 1) {
-            dataList[i].distance = 0
+    //confirmationMoved() визуально сработает только при пересоздании фрагмента
+    override fun confirmationMoved() {
+
+        val listAdapter = adapter.getData()
+        Log.d("Mytag", "oconfirmationMoved listAdapter: ${listAdapter.size}")
+        for (i in 0..listAdapter.size - 1) {
+            listAdapter[i].id = i
+            listAdapter[i].distance = 0
+
+            if (listAdapter.isNotEmpty()) {
+                for (i in 0..listAdapter.size - 1) {
+                    if (i == 0) {
+                        listAdapter[i].distance = 0
+                        mainViewModel.updateKoord(listAdapter[i])
+                    } else {
+                        var distance = listAdapter[i - 1].distance
+                        val _distance = getDistance(
+                            listAdapter[i - 1].latitude,
+                            listAdapter[i - 1].longitude,
+                            listAdapter[i].latitude,
+                            listAdapter[i].longitude
+                        )
+                        distance += _distance
+                        listAdapter[i].distance = distance
+
+                        mainViewModel.updateKoord(listAdapter[i])
+
+                    }
+                }
+            }
         }
-        if (dataList.size != 0) {
+    }
+
+
+    private fun updateDistance(dataList: MutableList<Coordinate>) {
+//        for (i in 0..dataList.size - 1) {
+//            dataList[i].distance = 0
+//        }
+        if (dataList.isNotEmpty()) {
             for (i in 0..dataList.size - 1) {
                 if (i == 0) {
                     dataList[i].distance = 0
-                    dataList[i].id = i
                     mainViewModel.updateKoord(dataList[i])
                 } else {
                     var distance = dataList[i - 1].distance
@@ -266,8 +299,39 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                     )
                     distance += _distance
                     dataList[i].distance = distance
-                    dataList[i].id = i
-//                    Log.d("MyTag", "onCoordResult distance: $distance")
+                    mainViewModel.updateKoord(dataList[i])
+                }
+            }
+        } else {
+            return
+        }
+    }
+
+    // Обновляем расчет дистанции и Coordinate.id после перемещения Items в RecyclerView и перезаписываем DB
+    override fun confirmationAction() {
+        val dataList = adapter.getData()
+//        Log.d("MyTag", "onCoordResult id: ${dataList}")
+        for (i in 0..dataList.size - 1) {
+            dataList[i].distance = 0
+        }
+        if (dataList.isNotEmpty()) {
+            for (i in 0..dataList.size - 1) {
+                if (i == 0) {
+                    dataList[i].distance = 0
+//                    dataList[i].id = i.toLong()
+                    mainViewModel.updateKoord(dataList[i])
+                } else {
+                    var distance = dataList[i - 1].distance
+                    val _distance = getDistance(
+                        dataList[i - 1].latitude,
+                        dataList[i - 1].longitude,
+                        dataList[i].latitude,
+                        dataList[i].longitude
+                    )
+                    distance += _distance
+                    dataList[i].distance = distance
+//                    dataList[i].id = i.toLong()
+//                    Log.d("MyTag", "onCoordResult id: ${dataList[i].id}")
 
                     mainViewModel.updateKoord(dataList[i])
                 }
@@ -277,7 +341,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
-    val startForResult =
+    private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // получаем  Uri из intent
