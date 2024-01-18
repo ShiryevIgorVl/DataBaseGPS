@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity (tableName = "coordinate")
 data class Coordinate(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") var id: Int?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") var id: Int? = null,
     @ColumnInfo(name = "name") val name: String = "",
     @ColumnInfo(name = "distance") var distance: Int = 0,
     @ColumnInfo(name = "operational_number_KIP") val operationalnumberKIP: String = "",

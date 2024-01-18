@@ -140,31 +140,12 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     override fun onClickDelItem(id: Int) {
         val buttonDeleteDialogFragment = ButtonDeleteDialogFragment {
-
-//                mainViewModel.deleteKoord(id).also {
-//                    synchronized(it) {
-//                        val dataList = adapter.getData()
-//                        Log.d("Mytag", "onClickDelItem1: ${dataList.size} onClickDelItem1ID: ${dataList[0].id}")
-//                        updateDistance(dataList)
-//                    }
-//                }
-
             mainViewModel.deleteKoord(id)
- //           val coordinate = adapter.getData()[id]
-  //          mainViewModel.updateKoord(coordinate)
 
             val dataList = adapter.getData() as MutableList
             dataList.remove(dataList[id])
+
             updateDistance(dataList)
-
-            Log.d("Mytag", "onClickDelItem1: ${dataList.size} onClickDelItem1ID: ${dataList[0].id}")
-//            Thread.sleep(3000)
-//            val  = mainViewModel.getCoordinatList()
-//            Log.d("Mytag", "onClickDelItem: $dataList")
-//            updateDistance(dataList)
-
-//            onStop()
-//                      // Получаю старый список Coordinate из Adapter еще с удаленным Item и не происходит перезапись дистанции и расчет растояния, не успевает он обновиться
         }
         childFragmentManager?.let {
             buttonDeleteDialogFragment.show(
