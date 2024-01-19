@@ -226,29 +226,30 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     //confirmationMoved() визуально сработает только при пересоздании фрагмента
     override fun confirmationMoved() {
         val listAdapter = adapter.getData()
-        Log.d("Mytag", "oconfirmationMoved listAdapter: ${listAdapter.size}")
-        for (i in 0..listAdapter.size - 1) {
-            listAdapter[i].id = i
-            listAdapter[i].distance = 0
+//        Log.d("Mytag", "oconfirmationMoved listAdapter: ${listAdapter.size}")
 
-            if (listAdapter.isNotEmpty()) {
-                for (i in 0..listAdapter.size - 1) {
-                    if (i == 0) {
-                        listAdapter[i].distance = 0
-                        mainViewModel.updateKoord(listAdapter[i])
-                    } else {
-                        var distance = listAdapter[i - 1].distance
-                        val _distance = getDistance(
-                            listAdapter[i - 1].latitude,
-                            listAdapter[i - 1].longitude,
-                            listAdapter[i].latitude,
-                            listAdapter[i].longitude
-                        )
-                        distance += _distance
-                        listAdapter[i].distance = distance
+        if (listAdapter.isNotEmpty()) {
+            for (i in 0..listAdapter.size - 1) {
+                listAdapter[i].id = i
+                listAdapter[i].distance = 0
+            }
 
-                        mainViewModel.updateKoord(listAdapter[i])
-                    }
+            for (i in 0..listAdapter.size - 1) {
+                if (i == 0) {
+                    listAdapter[i].distance = 0
+                    mainViewModel.updateKoord(listAdapter[i])
+                } else {
+                    var distance = listAdapter[i - 1].distance
+                    val _distance = getDistance(
+                        listAdapter[i - 1].latitude,
+                        listAdapter[i - 1].longitude,
+                        listAdapter[i].latitude,
+                        listAdapter[i].longitude
+                    )
+                    distance += _distance
+                    listAdapter[i].distance = distance
+
+                    mainViewModel.updateKoord(listAdapter[i])
                 }
             }
         }
@@ -282,9 +283,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun confirmationAction() {
         val dataList = adapter.getData()
 //        Log.d("MyTag", "onCoordResult id: ${dataList}")
-        for (i in 0..dataList.size - 1) {
-            dataList[i].distance = 0
-        }
+//        for (i in 0..dataList.size - 1) {
+//            dataList[i].distance = 0
+//        }
         if (dataList.isNotEmpty()) {
             for (i in 0..dataList.size - 1) {
                 if (i == 0) {

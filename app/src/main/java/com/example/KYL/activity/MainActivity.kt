@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
             R.id.ok -> {
                 FragmentManager.currentFragment?.confirmationMoved()
- //               FragmentManager.setFragment(CoordFragment.newInstance(), this)
             }
 
             R.id.up -> {
