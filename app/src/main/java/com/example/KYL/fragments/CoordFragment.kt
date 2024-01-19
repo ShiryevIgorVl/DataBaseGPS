@@ -99,7 +99,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -111,7 +110,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private fun observer() {
         mainViewModel.allKoord.observe(viewLifecycleOwner) {
             adapter.setItem(it as MutableList<Coordinate>)
-            //    scrollToBottom()
+            scrollToBottom()
         }
     }
 
@@ -124,11 +123,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         adapter = CoordAdapter(this@CoordFragment)
         binding.rvKoord.adapter = adapter
 
-
         val callback = ItemTouchHelperCallback(adapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(binding.rvKoord)
-
     }
 
     //Скроллинг в конец списка точек при добавленни точек в адаптер
@@ -136,7 +133,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         val lastPosition = adapter.itemCount
         binding.rvKoord.smoothScrollToPosition(lastPosition)
     }
-
 
     override fun onClickDelItem(id: Int) {
         val buttonDeleteDialogFragment = ButtonDeleteDialogFragment {
@@ -229,7 +225,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
     //confirmationMoved() визуально сработает только при пересоздании фрагмента
     override fun confirmationMoved() {
-
         val listAdapter = adapter.getData()
         Log.d("Mytag", "oconfirmationMoved listAdapter: ${listAdapter.size}")
         for (i in 0..listAdapter.size - 1) {
@@ -253,18 +248,13 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                         listAdapter[i].distance = distance
 
                         mainViewModel.updateKoord(listAdapter[i])
-
                     }
                 }
             }
         }
     }
 
-
     private fun updateDistance(dataList: MutableList<Coordinate>) {
-//        for (i in 0..dataList.size - 1) {
-//            dataList[i].distance = 0
-//        }
         if (dataList.isNotEmpty()) {
             for (i in 0..dataList.size - 1) {
                 if (i == 0) {
@@ -299,7 +289,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
             for (i in 0..dataList.size - 1) {
                 if (i == 0) {
                     dataList[i].distance = 0
-//                    dataList[i].id = i.toLong()
                     mainViewModel.updateKoord(dataList[i])
                 } else {
                     var distance = dataList[i - 1].distance
@@ -311,7 +300,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                     )
                     distance += _distance
                     dataList[i].distance = distance
-//                    dataList[i].id = i.toLong()
 //                    Log.d("MyTag", "onCoordResult id: ${dataList[i].id}")
 
                     mainViewModel.updateKoord(dataList[i])
