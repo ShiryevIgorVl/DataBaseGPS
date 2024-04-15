@@ -11,7 +11,7 @@ object MainDecimalFormat {
     }
 
     fun formatTVAlt(a: Double): String{
-        decimalFormat = DecimalFormat("-##,#")
+        decimalFormat = DecimalFormat("####.##")
         return decimalFormat.format(a).toString()
     }
 
@@ -21,7 +21,7 @@ object MainDecimalFormat {
     }
 
     fun formatExcelTwoSings(a: Double): Double{
-        decimalFormat = DecimalFormat("##.##")
+        decimalFormat = DecimalFormat("####.##")
         return decimalFormat.format(a).toDouble()
     }
 

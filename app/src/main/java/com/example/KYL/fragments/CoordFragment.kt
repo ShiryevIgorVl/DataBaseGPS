@@ -31,6 +31,7 @@ import com.example.KYL.recyclerview.ItemTouchHelperCallback
 
 import com.example.KYL.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -102,6 +103,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getAllListCoordinate()
         initAdapter()
         observer()
         //  activity?.startForegroundService(Intent(activity, LocationService::class.java))
@@ -330,7 +332,13 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
         // запускаем контракт
         startForResult.launch(intent)
+    }
 
+    private fun getAllListCoordinate() {
+       val coordinateFlow = mainViewModel.getALLCoordinate()
+        coordinateFlow.map {
+            Log.d("MyTag", "getAllListCoordinate: $it")
+        }
     }
 
     companion object {

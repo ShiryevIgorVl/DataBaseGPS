@@ -101,7 +101,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     }
 
 
-    fun getLastCoordinate() = dao.getLastCoordinate()
+    fun getALLCoordinate() = dao.getAllKoordinate()
 
     @SuppressLint("SuspiciousIndentation")
     fun importDataBase(uri: Uri, context: Context) = viewModelScope.launch {
@@ -533,9 +533,14 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
             cell = rowNext.createCell(22)
             try {
-                cell.setCellValue(koordList[i].height.toDouble())
+                cell.setCellValue(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))
+            //   cell.setCellValue(koordList[i].height.toDouble())
+            //    cell.setCellValue(koordList[i].height)
+                Log.d("Mytag", "createExcleTable: height try = ${(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))}")
+
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].height)
+                Log.d("Mytag", "createExcleTable: height catch = ${koordList[i].height}")
             }
 
             cell = rowNext.createCell(23)
