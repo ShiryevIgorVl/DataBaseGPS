@@ -4,15 +4,23 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.example.KYL.R
 import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.constans.MainTime
@@ -21,8 +29,15 @@ import com.example.KYL.entities.Coordinate
 import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class CoordActivity: AppCompatActivity(), LocListenerInterfase {
+@Suppress("UNREACHABLE_CODE")
+class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var binding: ActivityCoordBinding
 
     var _latitude: Double = 0.0
@@ -39,6 +54,11 @@ class CoordActivity: AppCompatActivity(), LocListenerInterfase {
 
     private var coordinate: Coordinate? = null
 
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
+
+    private var imageUri: Uri? = null
+    private var tempImageFile: File? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +68,15 @@ class CoordActivity: AppCompatActivity(), LocListenerInterfase {
         initGPSService()
         actionBarSetting()
 
+        registerPermissionCamera()
+
+        checkPermissionCamera()
         chekPermissionGetLocation()
 
         getCoordinate()
         onClickKoordPointBotton()
+
+        getPhoto()
     }
 
     //Получаем Coordinate для редактирования из CoordFragment
@@ -122,6 +147,7 @@ class CoordActivity: AppCompatActivity(), LocListenerInterfase {
                     myLocation
                 )
             }
+
             else -> {
                 Toast.makeText(this, "Нет разрешения GPS", Toast.LENGTH_SHORT).show()
             }
@@ -234,11 +260,103 @@ class CoordActivity: AppCompatActivity(), LocListenerInterfase {
         }
 
         binding.btAD.setOnClickListener {
-            binding.tvKoordName.text = "Автомобильная дорога ( м)"
+            binding.tvKoordName.text = "Автомобильная дорога (6 м)"
         }
 
         binding.btRiver.setOnClickListener {
-            binding.tvKoordName.text = "Река ( м)"
+            binding.tvKoordName.text = "Река (4 м)"
         }
+    }
+
+    private fun getPhoto() {
+        binding.fabPhoto.setOnClickListener {
+            if (checkPermissionCamera()) {
+                startCamera()
+            } else {
+                Toast.makeText(this, "Отсутствуют разрешения камеры", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun startCamera() {
+        val imageFile: File? = createTempImageFile()
+        imageFile?.let {
+            imageUri =
+                FileProvider.getUriForFile(
+                    this,
+                    "com.example.kyl.fileprovider",
+                    it
+                )
+            fotoResul.launch(imageUri)
+        }
+    }
+
+    private fun checkPermissionCamera(): Boolean {
+        return when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) -> {
+                true
+            }
+
+            else -> {
+                permissionLauncher.launch(android.Manifest.permission.CAMERA)
+                false
+            }
+        }
+    }
+
+    private fun registerPermissionCamera() {
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                if (it) {
+                    Toast.makeText(this, "Разрешение для камеры есть", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Разрешение для камеры отсутствует", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+    }
+
+    //Запись фото в файл
+    fun savePhotoToStorage(imageUri: Uri): Boolean {
+        val storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val imageFile = File(storageDir, "фото.jpg")
+        val photoBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+
+        return try {
+            val fos = FileOutputStream(imageFile)
+            photoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.close()
+            true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    private val fotoResul =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { result ->
+            if (result) {
+                savePhotoToStorage(imageUri!!)
+
+                tempImageFile?.delete()
+                Toast.makeText(this, "Фото сохранено в папку PICTURES", Toast.LENGTH_SHORT).show()
+            } else {
+                //               Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun createTempImageFile(): File? {
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//        Toast.makeText(this, "${Environment.DIRECTORY_PICTURES} ${timeStamp}", Toast.LENGTH_SHORT).show()
+        tempImageFile = File.createTempFile(
+            timeStamp,
+            ".jpg",
+            storageDir
+        )
+        return tempImageFile
     }
 }

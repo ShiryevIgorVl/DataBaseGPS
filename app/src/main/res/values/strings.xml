@@ -29,4 +29,5 @@
     <string name="arrow_up">вверх</string>
     <string name="arrow_down">вниз</string>
     <string name="distance_calculation">расчет расстояния</string>
+    <string name="fab_photo">камера</string>
 </resources>
