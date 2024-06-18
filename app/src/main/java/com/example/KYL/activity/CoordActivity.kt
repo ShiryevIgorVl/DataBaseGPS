@@ -20,7 +20,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import com.example.KYL.R
 import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.constans.MainTime
@@ -36,7 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@Suppress("UNREACHABLE_CODE")
+
 class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var binding: ActivityCoordBinding
 
@@ -58,6 +57,11 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private var imageUri: Uri? = null
     private var tempImageFile: File? = null
+
+    private var imageFile: File? = null
+
+    private var imageFileName = ""
+    private var counter = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,7 +161,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     // Заполнение полей и переменных данными из сервиса геолокации
     override fun onGetLocation(location: Location) {
         binding.apply {
-            twLat.text = MainDecimalFormat.formatTV(location.latitude)
+            tvLat.text = MainDecimalFormat.formatTV(location.latitude)
             tvLon.text = MainDecimalFormat.formatTV(location.longitude)
             tvAcc.text = MainDecimalFormat.formatTVAcc(location.accuracy)
         }
@@ -296,7 +300,6 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) -> {
                 true
             }
-
             else -> {
                 permissionLauncher.launch(android.Manifest.permission.CAMERA)
                 false
@@ -316,11 +319,37 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             }
     }
 
+    //Присвоение имени файла фотографии
+    private fun getImageFileName(): String {
+        if (imageFile?.exists() == true) {
+            counter++
+        } else {
+            counter = 1
+        }
+
+        val _imageFileName =
+            binding.tvKoordName.text.toString() + " " +
+                    binding.etOperationalnumberKIP.text.toString() + " " +
+                    binding.etOperationalKM.text.toString() + " " +
+                    binding.tvLat.text.toString() + " " +
+                    binding.tvLon.text.toString() + " " +
+                    "($counter)" +
+                    ".jpg"
+
+        return _imageFileName
+    }
+
     //Запись фото в файл
-    fun savePhotoToStorage(imageUri: Uri): Boolean {
-        val storageDir =
+    fun savePhotoToStorage(imageUri: Uri, imageFileName: String): Boolean {
+        val directoryName = applicationContext?.getString(R.string.app_name)
+        val parentDirectory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val imageFile = File(storageDir, "фото.jpg")
+        val storageDir = File(parentDirectory, directoryName)
+
+        if (!storageDir.exists()) storageDir.mkdirs()
+
+        imageFile = File(storageDir, imageFileName)
+
         val photoBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
 
         return try {
@@ -337,12 +366,18 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private val fotoResul =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { result ->
             if (result) {
-                savePhotoToStorage(imageUri!!)
+                imageFileName = getImageFileName()
+                savePhotoToStorage(imageUri!!, imageFileName)
 
                 tempImageFile?.delete()
-                Toast.makeText(this, "Фото сохранено в папку PICTURES", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Фото сохранено в папку \n Pictures/ЭХЗ трекер",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                //               Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                tempImageFile?.delete()
+//              Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_SHORT).show()
             }
         }
 

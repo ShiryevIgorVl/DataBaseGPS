@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         FragmentManager.setFragment(CoordFragment.newInstance(), this)
-
-
     }
 
     // Создаем в активити верхнее меню
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             }
 
             R.id.upload -> {
-              GlobalScope.launch { FragmentManager.currentFragment?.createExcelTable() }
+                GlobalScope.launch { FragmentManager.currentFragment?.createExcelTable() }
             }
 
             R.id.download -> {
@@ -163,6 +161,4 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 //        binding.bnMenu.menu.getItem(R.id.list).setIcon(R.color.selector)
 //
 //    }
-
-
 }
