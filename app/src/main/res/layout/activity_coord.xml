@@ -70,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="120dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/teal_700"
                 android:text="Труба"
@@ -99,271 +99,431 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUtsСover"
-                android:layout_width="75dp"
+                android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Uтз, В"
-                android:inputType="numberSigned|numberDecimal"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etUppCover" />
+                app:layout_constraintTop_toTopOf="@+id/etUppCover">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="numberSigned|numberDecimal"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etRPipeCover"
-                android:layout_width="84dp"
-                android:layout_height="53dp"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="72dp"
-                android:background="#80DEEA"
-                android:digits="0123456789."
-                android:ems="10"
                 android:hint="R тр-к, Ом"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789."
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etIprot"
-                android:layout_width="84dp"
+                android:layout_width="110dp"
                 android:layout_height="53dp"
                 android:layout_marginTop="72dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="I пр-к, мА"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/etUps"
                 app:layout_constraintStart_toEndOf="@+id/etRPipeCover"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUps"
-                android:layout_width="84dp"
-                android:layout_height="53dp"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="72dp"
                 android:layout_marginEnd="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="U пр-з, В"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUppCover"
-                android:layout_width="75dp"
+                android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Uпп, В"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/etIpolCover"
                 app:layout_constraintStart_toEndOf="@+id/etUtsСover"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etiPolPipe"
-                android:layout_width="112dp"
-                android:layout_height="53dp"
-                android:layout_marginEnd="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
-                android:hint="Iпол. вэ, мА"
-                android:inputType="number"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toTopOf="@+id/tvKoordName3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
-
-            <EditText
-                android:id="@+id/etIpolCover"
-                android:layout_width="112dp"
+                android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginEnd="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Iпол. вэ, мА"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/tvKoordName3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etUppCover" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etIpolCover"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
+                android:layout_marginEnd="8dp"
+                android:hint="Iпол.вэ,мА"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etUppCover">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUtsPipe"
-                android:layout_width="75dp"
+                android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Uтз, В"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
+
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                     />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etDepthPipe"
                 android:layout_width="110dp"
-                android:layout_height="54dp"
+                android:layout_height="52dp"
                 android:layout_marginStart="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Глубина, м"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etIPipe" />
+                app:layout_constraintTop_toTopOf="@+id/etIPipe">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etDamageIP"
-                android:layout_width="100dp"
-                android:layout_height="54dp"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="72dp"
-                android:background="#80DEEA"
-                android:digits="0123456789"
-                android:elegantTextHeight="false"
-                android:ems="10"
                 android:hint="Повр. ИП, м"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789"
+                    android:elegantTextHeight="false"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etOperationalKM"
-                android:layout_width="100dp"
-                android:layout_height="54dp"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="72dp"
                 android:layout_marginEnd="8dp"
-                android:background="#80DEEA"
-                android:digits="0123456789,-"
-                android:elegantTextHeight="false"
-                android:ems="10"
                 android:hint="км/ПК КИП "
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789,-"
+                    android:elegantTextHeight="false"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etOperationalnumberKIP"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="72dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:elegantTextHeight="false"
-                android:ems="10"
                 android:hint="№ КИП"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/etOperationalKM"
                 app:layout_constraintStart_toEndOf="@+id/etDamageIP"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:elegantTextHeight="false"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etIPipe"
-                android:layout_width="80dp"
+                android:layout_width="110dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="10dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Iтр, мА"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/etUES"
                 app:layout_constraintStart_toEndOf="@+id/etDepthPipe"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName4">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789.-"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUES"
-                android:layout_width="81dp"
-                android:layout_height="53dp"
+                android:layout_width="110dp"
+                android:layout_height="52dp"
                 android:layout_marginEnd="8dp"
-                android:background="#80DEEA"
+                android:hint="Ро, Омхм"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etIPipe">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DDDBDB"
                 android:digits="0123456789."
                 android:ems="10"
-                android:hint="Ро, Омхм"
                 android:inputType="number"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etIPipe" />
+                android:textColor="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUppPipe"
-                android:layout_width="72dp"
+                android:layout_width="110dp"
                 android:layout_height="52dp"
-                android:background="#80DEEA"
-                android:digits="0123456789.-"
-                android:ems="10"
                 android:hint="Uпп, В"
-                android:inputType="number"
-                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName3"
                 app:layout_constraintEnd_toStartOf="@+id/etiPolPipe"
                 app:layout_constraintStart_toEndOf="@+id/etUtsPipe"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DDDBDB"
+                android:digits="0123456789.-"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                />
+    </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btKIP"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/kip"
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.20" />
 
             <Button
                 android:id="@+id/btKontPoint"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="@string/kt"
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.20" />
 
 
             <Button
                 android:id="@+id/btAD"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="21dp"
+
                 android:text="@string/ad"
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
                 app:layout_constraintEnd_toStartOf="@+id/btKontPoint"
                 app:layout_constraintStart_toEndOf="@+id/btRiver"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.20" />
 
             <Button
                 android:id="@+id/btRiver"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+
                 android:text="@string/river"
                 app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
                 app:layout_constraintEnd_toStartOf="@+id/btAD"
                 app:layout_constraintStart_toEndOf="@+id/btKIP"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.20"
+                 />
+
+            <Button
+                android:id="@+id/btKmIndicator"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/km_indicator"
+                app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.80" />
+
+            <Button
+                android:id="@+id/btLnearCrane"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/linear_crane"
+                app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.80" />
+
+
+            <Button
+                android:id="@+id/btAngleRotation"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:text="@string/angle_rotation"
+                app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+                app:layout_constraintEnd_toStartOf="@+id/btLnearCrane"
+                app:layout_constraintStart_toEndOf="@+id/btDamageIp"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.80" />
+
+            <Button
+                android:id="@+id/btDamageIp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+
+                android:text="@string/damage_Ip"
+                app:layout_constraintBottom_toTopOf="@+id/tvKoordName2"
+                app:layout_constraintEnd_toStartOf="@+id/btAngleRotation"
+                app:layout_constraintStart_toEndOf="@+id/btKmIndicator"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
+                app:layout_constraintVertical_bias="0.80" />
 
             <EditText
                 android:id="@+id/etNote"
@@ -372,12 +532,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="132dp"
                 android:layout_marginEnd="8dp"
-                android:background="#90CAF9"
+                android:background="#DDDBDB"
                 android:ems="10"
                 android:hint="Примечание"
+                android:textColorHint="@color/black"
                 android:inputType="textMultiLine"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName4" />
 

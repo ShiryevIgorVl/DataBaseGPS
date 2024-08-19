@@ -26,6 +26,7 @@
         tools:targetApi="33">
         <activity
             android:name="com.example.KYL.activity.CoordActivity"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

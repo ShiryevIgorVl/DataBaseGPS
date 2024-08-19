@@ -95,21 +95,21 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     //Записываем из переданного для редактирования Coordinate данные в EditText этого активити
     private fun fillCoordinate() = with(binding) {
         tvKoordName.text = coordinate?.name
-        etUtsPipe.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
-        etUppPipe.setText(coordinate?.uppPipe)
-        etiPolPipe.setText(coordinate?.ipolPipe)
-        etUtsOver.setText(coordinate?.utsСover)
-        etUppCover.setText(coordinate?.uppCover)
-        etIpolCover.setText(coordinate?.ipolCover)
-        etRPipeCover.setText(coordinate?.rPipeCover)
-        etIprot.setText(coordinate?.iprot)
-        etUps.setText(coordinate?.ups)
-        etDepthPipe.setText(coordinate?.depthPipe)
-        etIPipe.setText(coordinate?.iPipe)
-        etUES.setText(coordinate?.ues)
-        etDamageIP.setText(coordinate?.damageIP)
-        etOperationalnumberKIP.setText(coordinate?.operationalnumberKIP)
-        etOperationalKM.setText(coordinate?.operationalKM)
+        etUtsPipe.editText?.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
+        etUppPipe.editText?.setText(coordinate?.uppPipe)
+        etiPolPipe.editText?.setText(coordinate?.ipolPipe)
+        etUtsOver.editText?.setText(coordinate?.utsСover)
+        etUppCover.editText?.setText(coordinate?.uppCover)
+        etIpolCover.editText?.setText(coordinate?.ipolCover)
+        etRPipeCover.editText?.setText(coordinate?.rPipeCover)
+        etIprot.editText?.setText(coordinate?.iprot)
+        etUps.editText?.setText(coordinate?.ups)
+        etDepthPipe.editText?.setText(coordinate?.depthPipe)
+        etIPipe.editText?.setText(coordinate?.iPipe)
+        etUES.editText?.setText(coordinate?.ues)
+        etDamageIP.editText?.setText(coordinate?.damageIP)
+        etOperationalnumberKIP.editText?.setText(coordinate?.operationalnumberKIP)
+        etOperationalKM.editText?.setText(coordinate?.operationalKM)
         etNote.setText(coordinate?.note)
     }
 
@@ -205,21 +205,21 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         return coordinate?.copy(
             name = binding.tvKoordName.text.toString(),
             note = binding.etNote.text.toString(),
-            operationalnumberKIP = binding.etOperationalnumberKIP.text.toString(),
-            operationalKM = binding.etOperationalKM.text.toString(),
-            utsPipe = binding.etUtsPipe.text.toString(),
-            uppPipe = binding.etUppPipe.text.toString(),
-            ipolPipe = binding.etiPolPipe.text.toString(),
-            utsСover = binding.etUtsOver.text.toString(),
-            uppCover = binding.etUppCover.text.toString(),
-            ipolCover = binding.etIpolCover.text.toString(),
-            rPipeCover = binding.etRPipeCover.text.toString(),
-            ups = binding.etUps.text.toString(),
-            iprot = binding.etIprot.text.toString(),
-            depthPipe = binding.etDepthPipe.text.toString(),
-            iPipe = binding.etIPipe.text.toString(),
-            ues = binding.etUES.text.toString(),
-            damageIP = binding.etDamageIP.text.toString()
+            operationalnumberKIP = binding.etOperationalnumberKIP.editText?.text.toString(),
+            operationalKM = binding.etOperationalKM.editText?.text.toString(),
+            utsPipe = binding.etUtsPipe.editText?.text.toString(),
+            uppPipe = binding.etUppPipe.editText?.text.toString(),
+            ipolPipe = binding.etiPolPipe.editText?.text.toString(),
+            utsСover = binding.etUtsOver.editText?.text.toString(),
+            uppCover = binding.etUppCover.editText?.text.toString(),
+            ipolCover = binding.etIpolCover.editText?.text.toString(),
+            rPipeCover = binding.etRPipeCover.editText?.text.toString(),
+            ups = binding.etUps.editText?.text.toString(),
+            iprot = binding.etIprot.editText?.text.toString(),
+            depthPipe = binding.etDepthPipe.editText?.text.toString(),
+            iPipe = binding.etIPipe.editText?.text.toString(),
+            ues = binding.etUES.editText?.text.toString(),
+            damageIP = binding.etDamageIP.editText?.text.toString()
         )
     }
 
@@ -235,22 +235,22 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             accuracy = accuracy,
             speed = speed,
             note = binding.etNote.text.toString(),
-            operationalnumberKIP = binding.etOperationalnumberKIP.text.toString(),
-            operationalKM = binding.etOperationalKM.text.toString(),
-            utsPipe = binding.etUtsPipe.text.toString(),
-            uppPipe = binding.etUppPipe.text.toString(),
-            ipolPipe = binding.etiPolPipe.text.toString(),
+            operationalnumberKIP = binding.etOperationalnumberKIP.editText?.text.toString(),
+            operationalKM = binding.etOperationalKM.editText?.text.toString(),
+            utsPipe = binding.etUtsPipe.editText?.text.toString(),
+            uppPipe = binding.etUppPipe.editText?.text.toString(),
+            ipolPipe = binding.etiPolPipe.editText?.text.toString(),
             time = MainTime.getTime(),
-            utsСover = binding.etUtsOver.text.toString(),
-            uppCover = binding.etUppCover.text.toString(),
-            ipolCover = binding.etIpolCover.text.toString(),
-            rPipeCover = binding.etRPipeCover.text.toString(),
-            ups = binding.etUps.text.toString(),
-            iprot = binding.etIprot.text.toString(),
-            depthPipe = binding.etDepthPipe.text.toString(),
-            iPipe = binding.etIPipe.text.toString(),
-            ues = binding.etUES.text.toString(),
-            damageIP = binding.etDamageIP.text.toString()
+            utsСover = binding.etUtsOver.editText?.text.toString(),
+            uppCover = binding.etUppCover.editText?.text.toString(),
+            ipolCover = binding.etIpolCover.editText?.text.toString(),
+            rPipeCover = binding.etRPipeCover.editText?.text.toString(),
+            ups = binding.etUps.editText?.text.toString(),
+            iprot = binding.etIprot.editText?.text.toString(),
+            depthPipe = binding.etDepthPipe.editText?.text.toString(),
+            iPipe = binding.etIPipe.editText?.text.toString(),
+            ues = binding.etUES.editText?.text.toString(),
+            damageIP = binding.etDamageIP.editText?.text.toString()
         )
     }
 
@@ -269,6 +269,22 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         binding.btRiver.setOnClickListener {
             binding.tvKoordName.text = "Река (4 м)"
+        }
+
+        binding.btAngleRotation.setOnClickListener {
+            binding.tvKoordName.text = "Угол поворота"
+        }
+
+        binding.btDamageIp.setOnClickListener {
+            binding.tvKoordName.text = "Повреждение изоляции"
+        }
+
+        binding.btKmIndicator.setOnClickListener {
+            binding.tvKoordName.text = "Указатель километровый"
+        }
+
+        binding.btLnearCrane.setOnClickListener {
+            binding.tvKoordName.text = "Линейный кран №"
         }
     }
 
@@ -329,8 +345,8 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         val _imageFileName =
             binding.tvKoordName.text.toString() + " " +
-                    binding.etOperationalnumberKIP.text.toString() + " " +
-                    binding.etOperationalKM.text.toString() + " " +
+                    binding.etOperationalnumberKIP.editText?.text.toString() + " " +
+                    binding.etOperationalKM.editText?.text.toString() + " " +
                     binding.tvLat.text.toString() + " " +
                     binding.tvLon.text.toString() + " " +
                     "($counter)" +

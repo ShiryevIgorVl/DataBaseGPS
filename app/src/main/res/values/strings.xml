@@ -30,4 +30,8 @@
     <string name="arrow_down">вниз</string>
     <string name="distance_calculation">расчет расстояния</string>
     <string name="fab_photo">камера</string>
+    <string name="linear_crane">ЛК</string>
+    <string name="angle_rotation">УП</string>
+    <string name="km_indicator">Указ</string>
+    <string name="damage_Ip">ПИП</string>
 </resources>
