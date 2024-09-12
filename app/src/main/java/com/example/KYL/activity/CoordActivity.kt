@@ -45,11 +45,11 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var locationManager: LocationManager
     private lateinit var myLocation: MyLocation
 
-    private lateinit var height: String
-    private lateinit var speed: String
+    private var height: String = "0.0"
+    private var speed: String = "0.0"
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private lateinit var accuracy: String
+    private  var accuracy: String = "0.0"
 
     private var coordinate: Coordinate? = null
 
@@ -196,7 +196,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             putExtra(CoordFragment.KOORD_KEY, tempCoordinate)
             putExtra(CoordFragment.STATE_KOORD, editState)
         }
-        Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
+        //      Log.d("MyLog", "setMainResult: ${i.extras.toString()}")
         setResult(RESULT_OK, i)
     }
 
@@ -293,7 +293,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             if (checkPermissionCamera()) {
                 startCamera()
             } else {
-                Toast.makeText(this, "Отсутствуют разрешения камеры", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Не получено разрешение для камеры", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -327,9 +327,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
                 if (it) {
-                    Toast.makeText(this, "Разрешение для камеры есть", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Разрешение для камеры получено", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Разрешение для камеры отсутствует", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Не получено разрешение для камеры", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
