@@ -19,8 +19,8 @@ android {
         applicationId "com.example.kyl"
         minSdk 26
         targetSdk 34
-        versionCode 9
-        versionName "2.2.8"
+        versionCode 10
+        versionName "2.2.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
