@@ -2,6 +2,7 @@ package com.example.KYL.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -374,7 +375,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         return listCoordinateLatLongName
     }
 
-    //Трансформируем список точек для экспорта в GSON
+    //Трансформируем список точек в GSON
     private fun coordinateListToGson(coodinateList: List<CoordinateLatLongName>): String {
         val gsonPoints = Gson().toJson(coodinateList)
         return gsonPoints
@@ -390,10 +391,16 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         // Формируем URI для открытия Яндекс.Карт с меткой
         val uri =
             Uri.parse("yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude,&z=12&l=skl")
-
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
+
+        try {
+            startActivity(intent)
+        }catch (e: Exception){
+            Toast.makeText(context, "Установите приложение \n Яндекс Карты", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
 
     companion object {
         const val KOORD_KEY = "koord_key"
