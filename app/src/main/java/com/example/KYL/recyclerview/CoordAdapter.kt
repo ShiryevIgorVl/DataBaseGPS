@@ -59,6 +59,10 @@ class CoordAdapter(private val listener: Listener) :
                 listener.onClickDelItem(position)
             }
 
+            buttonToMap.setOnClickListener {
+                listener.onClickToMapItem(position)
+            }
+
             cdKoordinate.setOnClickListener {
                 listener.onClickCoordinate(koordinate)
             }
@@ -89,6 +93,7 @@ class CoordAdapter(private val listener: Listener) :
 
     interface Listener {
         fun onClickDelItem(id: Int)
+        fun onClickToMapItem(id: Int)
         fun onClickCoordinate(koordinate: Coordinate)
     }
 }

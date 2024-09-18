@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 FragmentManager.currentFragment?.onActionImport()
             }
 
+//            R.id.inYandexMap -> {
+//                FragmentManager.currentFragment?.openYandexMap()
+//            }
+
             R.id.ok -> {
                 FragmentManager.currentFragment?.confirmationMoved()
             }

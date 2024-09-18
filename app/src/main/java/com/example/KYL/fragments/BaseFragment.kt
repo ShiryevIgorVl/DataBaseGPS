@@ -8,6 +8,7 @@ abstract class BaseFragment : Fragment() {
     abstract fun deleteTable()
     abstract fun confirmationAction()
     abstract fun onActionImport()
+  //  abstract fun openYandexMap()
     abstract fun deleteButton(id: Int)
     abstract fun onClickDelItem(id: Int)
     abstract fun onClickUp()

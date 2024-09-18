@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:text="@string/name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,12 +83,12 @@
                 android:id="@+id/tvUpp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="56dp"
                 android:text="@string/upp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvUts"
                 app:layout_constraintEnd_toStartOf="@+id/tvUppSet"
                 app:layout_constraintTop_toTopOf="@+id/tvUtsSet"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/tvUppSet"
@@ -194,6 +194,16 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvNumListKipSet" />
+
+            <ImageButton
+                android:id="@+id/button_To_Map"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="70dp"
+                android:src="@android:drawable/ic_menu_mapmode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvNumListKipSet" />
 

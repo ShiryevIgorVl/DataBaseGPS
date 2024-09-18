@@ -3,6 +3,7 @@ package com.example.KYL.fragments
 import android.app.Activity
 import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -14,7 +15,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -25,15 +26,15 @@ import com.example.KYL.activity.CoordActivity
 import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
+import com.example.KYL.entities.CoordinateLatLongName
 import com.example.KYL.recyclerview.CoordAdapter
 
 import com.example.KYL.recyclerview.ItemTouchHelperCallback
 
 import com.example.KYL.viewmodel.MainViewModel
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
@@ -42,6 +43,8 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private lateinit var binding: FragmentCoordBinding
     private lateinit var coordResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var adapter: CoordAdapter
+
+    private val listCoordinateLatLongName: MutableList<CoordinateLatLongName> = arrayListOf()
 
 
     //  private lateinit var layoutManager: LayoutManager
@@ -103,7 +106,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getAllListCoordinate()
+        //getAllListCoordinate()
         initAdapter()
         observer()
         //  activity?.startForegroundService(Intent(activity, LocationService::class.java))
@@ -151,6 +154,11 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 "buttonDeleteDialogFragment"
             )
         }
+    }
+
+    override fun onClickToMapItem(id: Int) {
+        val dataList = adapter.getData()
+        openYandexMapWithMarker(dataList[id].latitude.toFloat(), dataList[id].longitude.toFloat())
     }
 
     override fun deleteButton(id: Int) {
@@ -335,10 +343,56 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     private fun getAllListCoordinate() {
-       val coordinateFlow = mainViewModel.getALLCoordinate()
+        val coordinateFlow = mainViewModel.getALLCoordinate()
         coordinateFlow.map {
             Log.d("MyTag", "getAllListCoordinate: $it")
         }
+    }
+
+//    override fun openYandexMap() {
+//        val coordinateList = adapter.getData()
+//        //for (i in 0..coordinateList.size-1){
+//        openYandexMapWithMarker(
+//            coordinateList[0].latitude,
+//            coordinateList[0].longitude,
+//            coordinateList[0].name
+//        )
+//        // }
+//    }
+
+    //Делаем список точек для экспорта в карты
+    private fun createCoordinateLatLongNameList(): List<CoordinateLatLongName> {
+        val coodinateList = adapter.getData()
+        for (i in 0..coodinateList.size - 1) {
+            CoordinateLatLongName(
+                longitude = coodinateList[i].longitude,
+                latitude = coodinateList[i].latitude,
+                name = coodinateList[i].name
+            )
+            listCoordinateLatLongName.add(CoordinateLatLongName())
+        }
+        return listCoordinateLatLongName
+    }
+
+    //Трансформируем список точек для экспорта в GSON
+    private fun coordinateListToGson(coodinateList: List<CoordinateLatLongName>): String {
+        val gsonPoints = Gson().toJson(coodinateList)
+        return gsonPoints
+    }
+
+
+    //Метод для экспорта одной точки в карты
+    // "yandexmaps://maps.yandex.ru/?pt=37.673098,55.757134&z=12&l=map"
+    //"geo:$longitude,$latitude.3?z=11"
+    //"yandexmaps://maps.yandex.ru/?ll=$longitude,$latitude&z=12&pt=$longitude,$latitude,pm2rdl~$name"
+
+    private fun openYandexMapWithMarker(latitude: Float, longitude: Float) {
+        // Формируем URI для открытия Яндекс.Карт с меткой
+        val uri =
+            Uri.parse("yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude,&z=12&l=skl")
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     companion object {

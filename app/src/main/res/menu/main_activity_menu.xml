@@ -16,6 +16,11 @@
         android:icon="@drawable/baseline_cloud_download_24"
         android:title="@string/load"
         />
+<!--    <item-->
+<!--        android:id="@+id/inYandexMap"-->
+<!--        android:icon="@drawable/baseline_cloud_download_24"-->
+<!--        android:title="@string/inYandexMap"-->
+<!--        />-->
     <item
         android:id="@+id/ok"
         android:icon="@drawable/baseline_check_24"
