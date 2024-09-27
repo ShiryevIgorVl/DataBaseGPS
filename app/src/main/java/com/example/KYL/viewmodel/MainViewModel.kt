@@ -10,16 +10,8 @@ import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException
 import org.apache.poi.ss.usermodel.Cell
@@ -28,7 +20,6 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.IOException
 
 
 class MainViewModel(dataBase: MainDataBase) : ViewModel() {
@@ -301,13 +292,13 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 
     suspend fun createExcleTable(
         koordList: List<Coordinate>,
-        APP_NAME: String
+        fileName: String
     ) = withContext(Dispatchers.IO) {
         val wb: Workbook = XSSFWorkbook()
         var cell: Cell? = null
         var sheet: Sheet? = null
 
-        sheet = wb.createSheet("$APP_NAME") // Создаем новый лист Excel
+        sheet = wb.createSheet("Лист 1") // Создаем новый лист Excel
         val row: Row = sheet.createRow(0) // Создаем новую строку
 
         cell = row.createCell(0) //В этой строке создаем новую ячейку
@@ -391,7 +382,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             sheet.setColumnWidth(i, (30 * 200))
         }
         //Проходим циклом, создаем и заполняем из коллекции таблицу Excel
-        Log.d("MyTag", "koordList: $koordList")
+ //       Log.d("MyTag", "koordList: $koordList")
 
         for (i in 0..(koordList.size - 1)) {
             val rowNext = sheet.createRow(i + 1)
@@ -521,14 +512,14 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             try {
                 cell.setCellValue(koordList[i].latitude)
             } catch (e: NumberFormatException) {
-                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].latitude}")
+ //               Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].latitude}")
             }
 
             cell = rowNext.createCell(21)
             try {
                 cell.setCellValue(koordList[i].longitude)
             } catch (e: NumberFormatException) {
-                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].longitude}")
+//                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].longitude}")
             }
 
             cell = rowNext.createCell(22)
@@ -536,11 +527,11 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
                 cell.setCellValue(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))
             //   cell.setCellValue(koordList[i].height.toDouble())
             //    cell.setCellValue(koordList[i].height)
-                Log.d("Mytag", "createExcleTable: height try = ${(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))}")
+//                Log.d("Mytag", "createExcleTable: height try = ${(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))}")
 
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].height)
-                Log.d("Mytag", "createExcleTable: height catch = ${koordList[i].height}")
+  //              Log.d("Mytag", "createExcleTable: height catch = ${koordList[i].height}")
             }
 
             cell = rowNext.createCell(23)
@@ -566,8 +557,10 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         }
 
         //Запись файла Excel в папку "Документы" телефона
-        val writeExcel = APP_NAME?.let { WriteExcel(APP_NAME = it) }
-        writeExcel?.writeExcel(wb)
+        val writeExcel = WriteExcel(fileName)
+        //fileName?.let { WriteExcel(fileName = it) } ?: WriteExcel(fileName = "Привет")
+        Log.d("MyTAG", "createExcleTable: $fileName")
+        writeExcel.writeExcel(wb)
     }
 
     @Suppress("UNCHECKED_CAST")

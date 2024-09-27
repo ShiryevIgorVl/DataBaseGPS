@@ -1,7 +1,8 @@
 package com.example.KYL.entities
 
 data class CoordinateLatLongName(
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
-    val name: String = ""
+    var latitude: Float = 0.0f,
+    var longitude: Float = 0.0f,
+    var name: String = "",
+    var note: String = ""
 )

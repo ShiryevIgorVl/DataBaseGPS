@@ -1,6 +1,7 @@
-package com.example.KYL.fragments
+﻿package com.example.KYL.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -15,15 +16,22 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.KYL.GPX.GPXCreate
 
 
 import com.example.KYL.R
 import com.example.KYL.activity.App
 import com.example.KYL.activity.CoordActivity
+import com.example.KYL.activity.MainActivity
+import com.example.KYL.constans.Constans
 import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
@@ -31,12 +39,15 @@ import com.example.KYL.entities.CoordinateLatLongName
 import com.example.KYL.recyclerview.CoordAdapter
 
 import com.example.KYL.recyclerview.ItemTouchHelperCallback
+import com.example.KYL.viewmodel.ItemViewModel
 
 import com.example.KYL.viewmodel.MainViewModel
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.lang.StringBuilder
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -52,6 +63,9 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
     }
+
+    private val itemViewModel: ItemViewModel by activityViewModels()
+
 
     override fun onClickNew() {
         coordResultLauncher.launch(Intent(activity, CoordActivity::class.java))
@@ -195,14 +209,19 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     }
 
     //Создаем и записываем файл Excel
-    override suspend fun createExcelTable() {
+    override suspend fun createExcelTable(fileName: String?) {
         val APP_NAME = context?.getString(R.string.app_name)
-        val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xlsx"
+        val FILE_NAME: String
+        if (fileName == null || fileName == "") {
+            FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile()
+        } else {
+            FILE_NAME = fileName
+        }
 
         val koordList = adapter.getData()  //Получаем из адаптера список Coordinate
         if (koordList.isNotEmpty()) {
 
-            mainViewModel.createExcleTable(koordList, APP_NAME!!)
+            mainViewModel.createExcleTable(koordList, FILE_NAME)
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(
@@ -328,8 +347,16 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 // получаем  Uri из intent
                 val intent = result.data
                 val uri = intent?.data!!
+                val path = uri.path
+                val file = File(path!!)
+                val excelFileName = file.name
+                itemViewModel.selectItem(excelFileName)
+                Log.d("MyTAG", "excelFileName: ${excelFileName}")
+
+
                 // запускаем чтение файла .xlsx по полученному Uri
                 context?.let { mainViewModel.importDataBase(uri, it.applicationContext) }
+
             }
         }
 
@@ -346,67 +373,129 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private fun getAllListCoordinate() {
         val coordinateFlow = mainViewModel.getALLCoordinate()
         coordinateFlow.map {
-            Log.d("MyTag", "getAllListCoordinate: $it")
+            //           Log.d("MyTag", "getAllListCoordinate: $it")
         }
     }
 
-//    override fun openYandexMap() {
+    //Метод для экспорта списка точек в Яндекс Карты
+    override fun openYandexMap() {
 //        val coordinateList = adapter.getData()
-//        //for (i in 0..coordinateList.size-1){
-//        openYandexMapWithMarker(
-//            coordinateList[0].latitude,
-//            coordinateList[0].longitude,
-//            coordinateList[0].name
-//        )
-//        // }
-//    }
+//
+//        val coordinateLatLongNameList = createCoordinateLatLongNameList(coordinateList)
+////        Log.d("MyTAG", "openYandexMap: $coordinateLatLongNameList")
+//        val stringForUri = getStringForUri(coordinateLatLongNameList)
+//
+//        // Формируем URI для открытия Яндекс.Карт с меткой
+//        val uri = Uri.parse(stringForUri)
+//
+//        val intent = Intent(Intent.ACTION_VIEW, uri)
+//
+//        try {
+//            startActivity(intent)
+//        } catch (e: Exception) {
+//            Toast.makeText(context, "Установите приложение \n Яндекс Карты", Toast.LENGTH_SHORT)
+//                .show()
+//        }
+
+        val GPXString = createGPXString()
+        Log.d("MyTAG", "openYandexMap: $GPXString")
+    }
+
 
     //Делаем список точек для экспорта в карты
-    private fun createCoordinateLatLongNameList(): List<CoordinateLatLongName> {
-        val coodinateList = adapter.getData()
-        for (i in 0..coodinateList.size - 1) {
-            CoordinateLatLongName(
-                longitude = coodinateList[i].longitude,
-                latitude = coodinateList[i].latitude,
-                name = coodinateList[i].name
+    private fun createCoordinateLatLongNameList(coordinateList: List<Coordinate>): List<CoordinateLatLongName> {
+//        Log.d("MyTAG", "createCoordinateLatLongNameList: $coordinateList")
+        for (i in 0..coordinateList.size - 1) {
+            val clln = CoordinateLatLongName(
+                longitude = coordinateList[i].longitude.toFloat(),
+                latitude = coordinateList[i].latitude.toFloat(),
+                name = coordinateList[i].name
             )
-            listCoordinateLatLongName.add(CoordinateLatLongName())
+            listCoordinateLatLongName.add(clln)
+//            Log.d("MyTAG", "createCoordinateLatLongNameList: ${clln}")
         }
         return listCoordinateLatLongName
     }
 
     //Трансформируем список точек в GSON
-    private fun coordinateListToGson(coodinateList: List<CoordinateLatLongName>): String {
-        val gsonPoints = Gson().toJson(coodinateList)
+    private fun coordinateListToGson(coordinateList: List<CoordinateLatLongName>): String {
+        val gsonPoints = Gson().toJson(coordinateList)
         return gsonPoints
     }
 
-
     //Метод для экспорта одной точки в карты
-    // "yandexmaps://maps.yandex.ru/?pt=37.673098,55.757134&z=12&l=map"
-    //"geo:$longitude,$latitude.3?z=11"
-    //"yandexmaps://maps.yandex.ru/?ll=$longitude,$latitude&z=12&pt=$longitude,$latitude,pm2rdl~$name"
-
     private fun openYandexMapWithMarker(latitude: Float, longitude: Float) {
         // Формируем URI для открытия Яндекс.Карт с меткой
         val uri =
-            Uri.parse("yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude,&z=12&l=skl")
+            Uri.parse("yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude")
+
         val intent = Intent(Intent.ACTION_VIEW, uri)
 
         try {
             startActivity(intent)
-        }catch (e: Exception){
-            Toast.makeText(context, "Установите приложение \n Яндекс Карты", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(context, "Установите приложение \n Яндекс Карты", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
+    //Метод для формирования строки в uri
+    private fun getStringForUri(pointList: List<CoordinateLatLongName>): String {
+        val tilda = "~"
+        val comma = ","
+        val _uriString =
+            "yandexmaps://maps.yandex.ru/?ll${pointList[0].latitude},${pointList[0].longitude}&pt="
+        //"yandexmaps://maps.yandex.ru/?pt="
+        val stringBilder = StringBuilder()
+        stringBilder.append(_uriString)
+
+        if (pointList.isNotEmpty()) {
+            for (i in 0..pointList.size - 2) {
+                stringBilder.append(pointList[i].latitude, comma, pointList[i].longitude, tilda)
+            }
+        } else {
+            Toast.makeText(context, "Нет точек для экспорта", Toast.LENGTH_SHORT).show()
+        }
+        stringBilder.append(
+            pointList[pointList.size - 1].latitude,
+            comma,
+            pointList[pointList.size - 1].longitude
+        )
+
+        val uriString = stringBilder.toString()
+//        Log.d("MyTAG", "getStringForUri: $uriString")
+        return uriString
+    }
+
+    private fun createListCoordinateLatLongName(coordinateList: List<Coordinate>): List<CoordinateLatLongName> {
+        listCoordinateLatLongName.clear()
+        for (i in 0..coordinateList.size - 1) {
+            val clln = CoordinateLatLongName(
+                longitude = coordinateList[i].longitude.toFloat(),
+                latitude = coordinateList[i].latitude.toFloat(),
+                name = coordinateList[i].name,
+                note = coordinateList[i].note
+            )
+            listCoordinateLatLongName.add(clln)
+        }
+        return listCoordinateLatLongName
+    }
+
+    private fun createGPXString(): String {
+        val coordinateList = adapter.getData()
+        val coordinateLatLongNameList = createListCoordinateLatLongName(coordinateList)
+        val gpx = GPXCreate(coordinateLatLongNameList).getGPXString()
+        return gpx
+    }
 
 
     companion object {
         const val KOORD_KEY = "koord_key"
         const val STATE_KOORD = "koord_state"
 
+
         @JvmStatic
         fun newInstance() = CoordFragment()
+
     }
 }

@@ -8,11 +8,11 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-class WriteExcel(APP_NAME: String) {
+class WriteExcel(fileName: String) {
 
-    val FILE_NAME = APP_NAME + " " + MainTime.getTimeForSaveFile() + ".xlsx"
+    val FILE_NAME = "$fileName.xlsx"
 
-   fun writeExcel(wb: Workbook) {
+    fun writeExcel(wb: Workbook) {
         val path =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
@@ -30,6 +30,4 @@ class WriteExcel(APP_NAME: String) {
             e.printStackTrace()
         }
     }
-
-
 }

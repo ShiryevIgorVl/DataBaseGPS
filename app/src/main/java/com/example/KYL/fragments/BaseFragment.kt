@@ -4,11 +4,11 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment : Fragment() {
     abstract fun onClickNew()
-    abstract suspend fun createExcelTable()
+    abstract suspend fun createExcelTable(fileName: String?)
     abstract fun deleteTable()
     abstract fun confirmationAction()
     abstract fun onActionImport()
-  //  abstract fun openYandexMap()
+    abstract fun openYandexMap()
     abstract fun deleteButton(id: Int)
     abstract fun onClickDelItem(id: Int)
     abstract fun onClickUp()

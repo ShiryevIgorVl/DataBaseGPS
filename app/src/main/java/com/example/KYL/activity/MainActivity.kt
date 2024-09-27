@@ -2,29 +2,38 @@ package com.example.KYL.activity
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.example.KYL.R
+import com.example.KYL.constans.Constans
 import com.example.KYL.databinding.ActivityMainBinding
 import com.example.KYL.fragments.FragmentManager
 import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.fragments.AllDeleteDialogFragment
+import com.example.KYL.fragments.FileNameDialogFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
+import com.example.KYL.viewmodel.ItemViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
 
 
 class MainActivity : AppCompatActivity(), LocListenerInterfase {
@@ -33,10 +42,14 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var locationManager: LocationManager
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var fileName: String
+
+    private val itemViewModel: ItemViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         setButtonNavListener()
@@ -46,7 +59,13 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         FragmentManager.setFragment(CoordFragment.newInstance(), this)
+
+        itemViewModel.selectedItem.observe(this, Observer { item ->
+            title = item
+            fileName = item
+        })
     }
+
 
     // Создаем в активити верхнее меню
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,16 +85,29 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             }
 
             R.id.upload -> {
-                GlobalScope.launch { FragmentManager.currentFragment?.createExcelTable() }
+
+                val dialog = FileNameDialogFragment()
+
+                dialog.onFileNameEntered = { fileName ->
+
+                    // Обработка имени файла, например, сохранение файла с этим именем
+                    CoroutineScope(Dispatchers.IO).launch {
+                        FragmentManager.currentFragment?.createExcelTable(
+                            fileName
+                        )
+                    }
+                }
+
+                dialog.show(supportFragmentManager, "FileNameDialog")
             }
 
             R.id.download -> {
                 FragmentManager.currentFragment?.onActionImport()
             }
 
-//            R.id.inYandexMap -> {
-//                FragmentManager.currentFragment?.openYandexMap()
-//            }
+            R.id.inYandexMap -> {
+                FragmentManager.currentFragment?.openYandexMap()
+            }
 
             R.id.ok -> {
                 FragmentManager.currentFragment?.confirmationMoved()
@@ -113,8 +145,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     // Еще одна проверка разрешений для GPS
-    // и запуск GPS если есть (иначе в другом блоке не запустится)
-    // или запуск диалога с разрешениями
+// и запуск GPS если есть (иначе в другом блоке не запустится)
+// или запуск диалога с разрешениями
     private fun chekPermissionGetLocation() {
         when {
             ContextCompat.checkSelfPermission(

@@ -16,4 +16,9 @@ object MainTime {
         return formatter.format(Calendar.getInstance().time)
     }
 
+    fun getTimeForGPX(): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        return  formatter.format(Calendar.getInstance().time)
+    }
+
 }
