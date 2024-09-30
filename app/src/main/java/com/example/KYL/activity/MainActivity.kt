@@ -3,6 +3,7 @@ package com.example.KYL.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     private lateinit var myLocation: MyLocation
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var fileName: String
+    private lateinit var sharedPreferences: SharedPreferences
 
     private val itemViewModel: ItemViewModel by viewModels()
 
@@ -60,12 +62,13 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
 
         FragmentManager.setFragment(CoordFragment.newInstance(), this)
 
+        sharedPreferences = getSharedPreferences(Constans.SPreferences, Context.MODE_PRIVATE)
+
         itemViewModel.selectedItem.observe(this, Observer { item ->
             title = item
-            fileName = item
         })
+        title = getSP(Constans.SPKey)
     }
-
 
     // Создаем в активити верхнее меню
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -74,7 +77,6 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     //Добавляем слушатель нажатий меню
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_all -> {
@@ -193,8 +195,18 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         }
     }
 
-//    private fun setColorItem() {
-//        binding.bnMenu.menu.getItem(R.id.list).setIcon(R.color.selector)
-//
-//    }
+    //Сохранение настроек имени title в файл
+    private fun editorSP(key: String, item: String) {
+        val editor = sharedPreferences.edit()
+        if (item != "") {
+            editor.putString(key, item)
+        }
+    }
+
+    private fun getSP(key: String): String? {
+        val name = sharedPreferences.getString(key, "")
+        Log.d("MyTAG", "getSP: $name")
+        return name
+    }
+
 }

@@ -35,4 +35,5 @@
     <string name="angle_rotation">УП</string>
     <string name="km_indicator">Указ</string>
     <string name="damage_Ip">ПИП</string>
+    <string name="title_coordactivity">Опросный лист</string>
 </resources>

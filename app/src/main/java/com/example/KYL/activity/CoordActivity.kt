@@ -67,7 +67,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         super.onCreate(savedInstanceState)
         binding = ActivityCoordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        title = getString(R.string.title_coordactivity)
         initGPSService()
         actionBarSetting()
 
@@ -80,7 +80,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         onClickKoordPointBotton()
 
         getPhoto()
-        title = "Опросный лист"
+
     }
 
     //Получаем Coordinate для редактирования из CoordFragment
@@ -95,9 +95,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     //Записываем из переданного для редактирования Coordinate данные в EditText этого активити
     private fun fillCoordinate() = with(binding) {
         tvKoordName.text = coordinate?.name
-        etUtsPipe.editText?.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
-        etUppPipe.editText?.setText(coordinate?.uppPipe)
-        etiPolPipe.editText?.setText(coordinate?.ipolPipe)
+        etUtsPipe1.editText?.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
+        etUppPipe1.editText?.setText(coordinate?.uppPipe)
+        etiPolPipe1.editText?.setText(coordinate?.ipolPipe)
         etUtsOver.editText?.setText(coordinate?.utsСover)
         etUppCover.editText?.setText(coordinate?.uppCover)
         etIpolCover.editText?.setText(coordinate?.ipolCover)
@@ -207,9 +207,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             note = binding.etNote.text.toString(),
             operationalnumberKIP = binding.etOperationalnumberKIP.editText?.text.toString(),
             operationalKM = binding.etOperationalKM.editText?.text.toString(),
-            utsPipe = binding.etUtsPipe.editText?.text.toString(),
-            uppPipe = binding.etUppPipe.editText?.text.toString(),
-            ipolPipe = binding.etiPolPipe.editText?.text.toString(),
+            utsPipe = binding.etUtsPipe1.editText?.text.toString(),
+            uppPipe = binding.etUppPipe1.editText?.text.toString(),
+            ipolPipe = binding.etiPolPipe1.editText?.text.toString(),
             utsСover = binding.etUtsOver.editText?.text.toString(),
             uppCover = binding.etUppCover.editText?.text.toString(),
             ipolCover = binding.etIpolCover.editText?.text.toString(),
@@ -237,9 +237,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             note = binding.etNote.text.toString(),
             operationalnumberKIP = binding.etOperationalnumberKIP.editText?.text.toString(),
             operationalKM = binding.etOperationalKM.editText?.text.toString(),
-            utsPipe = binding.etUtsPipe.editText?.text.toString(),
-            uppPipe = binding.etUppPipe.editText?.text.toString(),
-            ipolPipe = binding.etiPolPipe.editText?.text.toString(),
+            utsPipe = binding.etUtsPipe1.editText?.text.toString(),
+            uppPipe = binding.etUppPipe1.editText?.text.toString(),
+            ipolPipe = binding.etiPolPipe1.editText?.text.toString(),
             time = MainTime.getTime(),
             utsСover = binding.etUtsOver.editText?.text.toString(),
             uppCover = binding.etUppCover.editText?.text.toString(),
