@@ -310,7 +310,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         cell.setCellValue("Uпп_1, В")
 
         cell = row.createCell(7)
-        cell.setCellValue("Ток поляризации ВЭ_!, мА")
+        cell.setCellValue("Ток поляризации ВЭ_1, мА")
 
         cell = row.createCell(8)
         cell.setCellValue("Uэсдд-эс_1, В")
