@@ -32,6 +32,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     init {
         getCoordinatList()
     }
+
     fun insertKoord(koordinate: Coordinate) = viewModelScope.launch {
         dao.insertKoordinate(koordinate)
     }
@@ -85,7 +86,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
 //        }
 //    }
 
-    fun getCoordinatList(){
+    fun getCoordinatList() {
         viewModelScope.launch {
             _getAllCoordinate.value = dao.getAllKoordinateList()
         }
@@ -159,57 +160,71 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     private fun createListCoordinate(cellStringList: List<String>): List<Coordinate> {
         val coordListBackup: ArrayList<Coordinate> = arrayListOf()
         val cellList =
-            cellStringList.drop(25)
+            cellStringList.drop(32)
         val idList =
-            cellList.slice(0..cellList.size - 1 step 25)
+            cellList.slice(0..cellList.size - 1 step 32)
         val distanceList =
-            cellList.slice(1 until cellList.size step 25)
+            cellList.slice(1 until cellList.size step 32)
         val nameList =
-            cellList.slice(2 until cellList.size step 25)
+            cellList.slice(2 until cellList.size step 32)
         val operationalnumberKIPList =
-            cellList.slice(3 until cellList.size step 25)
+            cellList.slice(3 until cellList.size step 32)
         val operationalKMList =
-            cellList.slice(4 until cellList.size step 25)
+            cellList.slice(4 until cellList.size step 32)
         val utsPipeList =
-            cellList.slice(5 until cellList.size step 25)
+            cellList.slice(5 until cellList.size step 32)
         val uppPipeList =
-            cellList.slice(6 until cellList.size step 25)
+            cellList.slice(6 until cellList.size step 32)
         val ipolPipeList =
-            cellList.slice(7 until cellList.size step 25)
+            cellList.slice(7 until cellList.size step 32)
+        val uesddesList =
+            cellList.slice(8 until cellList.size step 32)
+        val znesddList =
+            cellList.slice(9 until cellList.size step 32)
+        val utsPipeList2 =
+            cellList.slice(10 until cellList.size step 32)
+        val uppPipeList2 =
+            cellList.slice(11 until cellList.size step 32)
+        val ipolPipeList2 =
+            cellList.slice(12 until cellList.size step 32)
+        val uesddesList2 =
+            cellList.slice(13 until cellList.size step 32)
+        val znesddList2 =
+            cellList.slice(14 until cellList.size step 32)
         val noteList =
-            cellList.slice(8 until cellList.size step 25)
+            cellList.slice(15 until cellList.size step 32)
         val timeList =
-            cellList.slice(9 until cellList.size step 25)
+            cellList.slice(16 until cellList.size step 32)
         val utsСoverList =
-            cellList.slice(10 until cellList.size step 25)
+            cellList.slice(17 until cellList.size step 32)
         val uppCoverList =
-            cellList.slice(11 until cellList.size step 25)
+            cellList.slice(18 until cellList.size step 32)
         val ipolCoverList =
-            cellList.slice(12 until cellList.size step 25)
+            cellList.slice(19 until cellList.size step 32)
         val rPipeCoverList =
-            cellList.slice(13 until cellList.size step 25)
+            cellList.slice(20 until cellList.size step 32)
         val upsList =
-            cellList.slice(14 until cellList.size step 25)
+            cellList.slice(21 until cellList.size step 32)
         val iprotList =
-            cellList.slice(15 until cellList.size step 25)
+            cellList.slice(22 until cellList.size step 32)
         val depthPipeList =
-            cellList.slice(16 until cellList.size step 25)
+            cellList.slice(23 until cellList.size step 32)
         val iPipeList =
-            cellList.slice(17 until cellList.size step 25)
+            cellList.slice(24 until cellList.size step 32)
         val uesList =
-            cellList.slice(18 until cellList.size step 25)
+            cellList.slice(25 until cellList.size step 32)
         val damageIPList =
-            cellList.slice(19 until cellList.size step 25)
+            cellList.slice(26 until cellList.size step 32)
         val latitudeList =
-            cellList.slice(20 until cellList.size step 25)
+            cellList.slice(27 until cellList.size step 32)
         val longitudeList =
-            cellList.slice(21 until cellList.size step 25)
+            cellList.slice(28 until cellList.size step 32)
         val heightList =
-            cellList.slice(22 until cellList.size step 25)
+            cellList.slice(29 until cellList.size step 32)
         val accuracyList =
-            cellList.slice(23 until cellList.size step 25)
+            cellList.slice(30 until cellList.size step 32)
         val speedList =
-            cellList.slice(24 until cellList.size step 25)
+            cellList.slice(31 until cellList.size step 32)
 
 //        Log.d("MyTag", "createListPoint speedList: ${speedList}")
 //        Log.d(TAG, "createListPoint nameList: ${nameList}")
@@ -228,6 +243,13 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
                         utsPipe = utsPipeList[i],
                         uppPipe = uppPipeList[i],
                         ipolPipe = ipolPipeList[i],
+                        uesddes = uesddesList[i],
+                        znesdd = znesddList[i],
+                        utsPipe2 = utsPipeList2[i],
+                        uppPipe2 = uppPipeList2[i],
+                        ipolPipe2 = ipolPipeList2[i],
+                        uesddes2 = uesddesList2[i],
+                        znesdd2 = znesddList2[i],
                         note = noteList[i],
                         time = timeList[i],
                         utsСover = utsСoverList[i],
@@ -249,44 +271,9 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
                 )
 
             } catch (e: Exception) {
-//              Toast.makeText(withContext(), "Ошибка записи в Point ${e}", Toast.LENGTH_LONG).show()
-//                coordListBackup.removeAt(i)
-//                coordListBackup.add(
-//                    i,
-//                    Coordinate(
-//                        id = i + 1,
-//                        name = "",
-//                        distance = 0,
-//                        operationalnumberKIP = "",
-//                        operationalKM = "",
-//                        utsPipe = "",
-//                        uppPipe = "",
-//                        ipolPipe = "",
-//                        note = "",
-//                        time = "",
-//                        utsСover = "",
-//                        uppCover = "",
-//                        rPipeCover = "",
-//                        ups = "",
-//                        iprot = "",
-//                        depthPipe = "",
-//                        iPipe = "",
-//                        ues = "",
-//                        damageIP = "",
-//                        latitude = 0.0,
-//                        longitude = 0.0,
-//                        height = "",
-//                        accuracy = "",
-//                        speed = ""
-//                    )
-//                )
-
-//                Log.d("MyTag", "createListCoordinate Coordinate Exception : ${e}")
+                return emptyList()
             }
-
-//            Log.d("MyTag", "createListCoordinate Coordinate Exception : ${coordListBackup}")
         }
-//        Log.d(TAG, "createListPoint Point после for: ${pointListBackup}")
         return coordListBackup
     }
 
@@ -317,72 +304,93 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         cell.setCellValue("КИП км")
 
         cell = row.createCell(5)
-        cell.setCellValue("Uтз, В")
+        cell.setCellValue("Uтз_1, В")
 
         cell = row.createCell(6)
-        cell.setCellValue("Uпп, В")
+        cell.setCellValue("Uпп_1, В")
 
         cell = row.createCell(7)
-        cell.setCellValue("Ток поляризации ВЭ, мА")
+        cell.setCellValue("Ток поляризации ВЭ_!, мА")
 
         cell = row.createCell(8)
-        cell.setCellValue("Примечание")
+        cell.setCellValue("Uэсдд-эс_1, В")
 
         cell = row.createCell(9)
-        cell.setCellValue("Время")
+        cell.setCellValue("Зав. номер ЭСДД_1")
 
         cell = row.createCell(10)
-        cell.setCellValue("Uпатрон-земля, В")
+        cell.setCellValue("Uтз_2, В")
 
         cell = row.createCell(11)
-        cell.setCellValue("Uпп патрон, В")
+        cell.setCellValue("Uпп_2, В")
 
         cell = row.createCell(12)
+        cell.setCellValue("Ток поляризации ВЭ_2, мА")
+
+        cell = row.createCell(13)
+        cell.setCellValue("Uэсдд-эс_2, В")
+
+        cell = row.createCell(14)
+        cell.setCellValue("Зав. номер ЭСДД_2")
+
+        cell = row.createCell(15)
+        cell.setCellValue("Примечание")
+
+        cell = row.createCell(16)
+        cell.setCellValue("Время")
+
+        cell = row.createCell(17)
+        cell.setCellValue("Uпатрон-земля, В")
+
+        cell = row.createCell(18)
+        cell.setCellValue("Uпп патрон, В")
+
+        cell = row.createCell(19)
         cell.setCellValue(
             "Ток поляризации ВЭ патрон, мА"
         )
 
-        cell = row.createCell(13)
+        cell = row.createCell(20)
         cell.setCellValue("Rтп, Ом")
 
-        cell = row.createCell(14)
+        cell = row.createCell(21)
         cell.setCellValue("Uп-з, В")
 
-        cell = row.createCell(15)
+        cell = row.createCell(22)
         cell.setCellValue("Iпр-с, мА")
 
-        cell = row.createCell(16)
+        cell = row.createCell(23)
         cell.setCellValue("Глубина, м")
 
-        cell = row.createCell(17)
+        cell = row.createCell(24)
         cell.setCellValue("Ток в трубе, мА")
 
-        cell = row.createCell(18)
+        cell = row.createCell(25)
         cell.setCellValue("УЭС, Омхм")
 
-        cell = row.createCell(19)
+        cell = row.createCell(26)
         cell.setCellValue("Повреждение ИП, м")
 
-        cell = row.createCell(20)
+        cell = row.createCell(27)
         cell.setCellValue("Широта")
 
-        cell = row.createCell(21)
+        cell = row.createCell(28)
         cell.setCellValue("Долгота")
 
-        cell = row.createCell(22)
+        cell = row.createCell(29)
         cell.setCellValue("Высота, м")
 
-        cell = row.createCell(23)
+        cell = row.createCell(30)
         cell.setCellValue("Точность, м")
 
-        cell = row.createCell(24)
+        cell = row.createCell(31)
         cell.setCellValue("Скорость, м/с")
 
-        for (i in 0..24) {
+        for (i in 0..31) {
             sheet.setColumnWidth(i, (30 * 200))
         }
         //Проходим циклом, создаем и заполняем из коллекции таблицу Excel
- //       Log.d("MyTag", "koordList: $koordList")
+        //       Log.d("MyTag", "koordList: $koordList")
 
         for (i in 0..(koordList.size - 1)) {
             val rowNext = sheet.createRow(i + 1)
@@ -432,117 +440,164 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             }
 
             cell = rowNext.createCell(8)
-            cell.setCellValue(koordList[i].note)
+            try {
+                cell.setCellValue(koordList[i].uesddes.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].uesddes)
+            }
 
             cell = rowNext.createCell(9)
-            cell.setCellValue(koordList[i].time)
+            try {
+                cell.setCellValue(koordList[i].znesdd.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].znesdd)
+            }
 
             cell = rowNext.createCell(10)
+            try {
+                cell.setCellValue(koordList[i].utsPipe2.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].utsPipe2)
+            }
+
+            cell = rowNext.createCell(11)
+            try {
+                cell.setCellValue(koordList[i].uppPipe2.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].uppPipe2)
+            }
+
+            cell = rowNext.createCell(12)
+            try {
+                cell.setCellValue(koordList[i].ipolPipe2.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].ipolPipe2)
+            }
+
+            cell = rowNext.createCell(13)
+            try {
+                cell.setCellValue(koordList[i].uesddes2.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].uesddes2)
+            }
+
+            cell = rowNext.createCell(14)
+            try {
+                cell.setCellValue(koordList[i].znesdd2.toDouble())
+            } catch (e: NumberFormatException) {
+                cell.setCellValue(koordList[i].znesdd2)
+            }
+
+            cell = rowNext.createCell(15)
+            cell.setCellValue(koordList[i].note)
+
+            cell = rowNext.createCell(16)
+            cell.setCellValue(koordList[i].time)
+
+            cell = rowNext.createCell(17)
             try {
                 cell.setCellValue(koordList[i].utsСover.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].utsСover)
             }
 
-
-            cell = rowNext.createCell(11)
+            cell = rowNext.createCell(18)
             try {
                 cell.setCellValue(koordList[i].uppCover.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].uppCover)
             }
 
-            cell = rowNext.createCell(12)
+            cell = rowNext.createCell(19)
             try {
                 cell.setCellValue(koordList[i].ipolCover.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].ipolCover)
             }
 
-            cell = rowNext.createCell(13)
+            cell = rowNext.createCell(20)
             try {
                 cell.setCellValue(koordList[i].rPipeCover.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].rPipeCover)
             }
 
-            cell = rowNext.createCell(14)
+            cell = rowNext.createCell(21)
             try {
                 cell.setCellValue(koordList[i].ups.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].ups)
             }
 
-            cell = rowNext.createCell(15)
+            cell = rowNext.createCell(22)
             try {
                 cell.setCellValue(koordList[i].iprot.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].iprot)
             }
 
-            cell = rowNext.createCell(16)
+            cell = rowNext.createCell(23)
             try {
                 cell.setCellValue(koordList[i].depthPipe.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].depthPipe)
             }
 
-            cell = rowNext.createCell(17)
+            cell = rowNext.createCell(24)
             try {
                 cell.setCellValue(koordList[i].iPipe.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].iPipe)
             }
 
-            cell = rowNext.createCell(18)
+            cell = rowNext.createCell(25)
             try {
                 cell.setCellValue(koordList[i].ues.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].ues)
             }
 
-            cell = rowNext.createCell(19)
+            cell = rowNext.createCell(26)
             try {
                 cell.setCellValue(koordList[i].damageIP.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].damageIP)
             }
 
-            cell = rowNext.createCell(20)
+            cell = rowNext.createCell(27)
             try {
                 cell.setCellValue(koordList[i].latitude)
             } catch (e: NumberFormatException) {
- //               Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].latitude}")
+                //               Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].latitude}")
             }
 
-            cell = rowNext.createCell(21)
+            cell = rowNext.createCell(28)
             try {
                 cell.setCellValue(koordList[i].longitude)
             } catch (e: NumberFormatException) {
 //                Log.d("Mytag", "createExcleTable: latitude = ${koordList[i].longitude}")
             }
 
-            cell = rowNext.createCell(22)
+            cell = rowNext.createCell(29)
             try {
                 cell.setCellValue(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))
-            //   cell.setCellValue(koordList[i].height.toDouble())
-            //    cell.setCellValue(koordList[i].height)
+                //   cell.setCellValue(koordList[i].height.toDouble())
+                //    cell.setCellValue(koordList[i].height)
 //                Log.d("Mytag", "createExcleTable: height try = ${(MainDecimalFormat.formatExcelTwoSings(koordList[i].height.toDouble()))}")
 
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].height)
-  //              Log.d("Mytag", "createExcleTable: height catch = ${koordList[i].height}")
+                //              Log.d("Mytag", "createExcleTable: height catch = ${koordList[i].height}")
             }
 
-            cell = rowNext.createCell(23)
+            cell = rowNext.createCell(30)
             try {
                 cell.setCellValue(koordList[i].accuracy.toDouble())
             } catch (e: NumberFormatException) {
                 cell.setCellValue(koordList[i].accuracy)
             }
 
-
-            cell = rowNext.createCell(24)
+            cell = rowNext.createCell(31)
             try {
                 cell.setCellValue(koordList[i].speed.toDouble())
             } catch (e: NumberFormatException) {
@@ -550,7 +605,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
             }
 
 
-            for (i in 0..24) {
+            for (i in 0..31) {
                 sheet.setColumnWidth(i, (30 * 100))
                 //sheet.autoSizeColumn(i)
             }
@@ -559,7 +614,7 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         //Запись файла Excel в папку "Документы" телефона
         val writeExcel = WriteExcel(fileName)
         //fileName?.let { WriteExcel(fileName = it) } ?: WriteExcel(fileName = "Привет")
-        Log.d("MyTAG", "createExcleTable: $fileName")
+//        Log.d("MyTAG", "createExcleTable: $fileName")
         writeExcel.writeExcel(wb)
     }
 

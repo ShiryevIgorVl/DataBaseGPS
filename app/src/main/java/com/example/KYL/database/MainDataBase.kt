@@ -10,9 +10,9 @@ import com.example.KYL.entities.Coordinate
 
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [Coordinate::class],
-    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    autoMigrations = [AutoMigration(from = 2, to = 3)],
     exportSchema = true
 )
 abstract class MainDataBase : RoomDatabase() {
