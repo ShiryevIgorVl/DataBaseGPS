@@ -85,9 +85,8 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
             }
 
             R.id.upload -> {
-
                 val dialog = FileNameDialogFragment()
-                dialog.defaultFileName = getSP(Constans.SPKey)
+                if (title != null) {dialog.defaultFileName = title.toString()}
                 dialog.onFileNameEntered = { fileName ->
                     // Обработка имени файла, например, сохранение файла с этим именем
                     CoroutineScope(Dispatchers.IO).launch {
