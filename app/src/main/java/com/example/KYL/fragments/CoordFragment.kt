@@ -1,9 +1,7 @@
 ﻿package com.example.KYL.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -16,31 +14,20 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.KYL.GPX.GPXCreate
-
-
 import com.example.KYL.R
 import com.example.KYL.activity.App
 import com.example.KYL.activity.CoordActivity
-import com.example.KYL.activity.MainActivity
-import com.example.KYL.constans.Constans
 import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.FragmentCoordBinding
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.entities.CoordinateLatLongName
 import com.example.KYL.recyclerview.CoordAdapter
-
 import com.example.KYL.recyclerview.ItemTouchHelperCallback
 import com.example.KYL.viewmodel.ItemViewModel
-
 import com.example.KYL.viewmodel.MainViewModel
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -171,6 +158,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
+    //Открытие Яндекс Карты с точкой
     override fun onClickToMapItem(id: Int) {
         val dataList = adapter.getData()
         openYandexMapWithMarker(dataList[id].latitude.toFloat(), dataList[id].longitude.toFloat())
@@ -221,7 +209,8 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         val koordList = adapter.getData()  //Получаем из адаптера список Coordinate
         if (koordList.isNotEmpty()) {
 
-            mainViewModel.createExcleTable(koordList, FILE_NAME)
+            val workbook = mainViewModel.createExcelTable(koordList)
+            mainViewModel.writeWorkBook(FILE_NAME, workbook)
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(
@@ -350,8 +339,10 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
                 val path = uri.path
                 val file = File(path!!)
                 val excelFileName = file.name
+//               mainViewModel.insertFileName(excelFileName)
                 itemViewModel.selectItem(excelFileName)
-                Log.d("MyTAG", "excelFileName: ${excelFileName}")
+
+//               Log.d("MyTAG", "excelFileName: ${excelFileName}")
 
 
                 // запускаем чтение файла .xlsx по полученному Uri

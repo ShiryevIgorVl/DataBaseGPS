@@ -1,8 +1,8 @@
 package com.example.KYL.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
@@ -30,10 +30,7 @@ import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 import com.example.KYL.viewmodel.ItemViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -65,6 +62,7 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
         sharedPreferences = getSharedPreferences(Constans.SPreferences, Context.MODE_PRIVATE)
 
         itemViewModel.selectedItem.observe(this, Observer { item ->
+            editorSP(Constans.SPKey, item)
             title = item
         })
         title = getSP(Constans.SPKey)
@@ -80,18 +78,17 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_all -> {
-                val myDialogFragment = AllDeleteDialogFragment()
+                val dialog = AllDeleteDialogFragment()
                 val manager = supportFragmentManager
                 val transaction: FragmentTransaction = manager.beginTransaction()
-                myDialogFragment.show(transaction, "dialog1")
+                dialog.show(transaction, "dialog1")
             }
 
             R.id.upload -> {
 
                 val dialog = FileNameDialogFragment()
-
+                dialog.defaultFileName = getSP(Constans.SPKey)
                 dialog.onFileNameEntered = { fileName ->
-
                     // Обработка имени файла, например, сохранение файла с этим именем
                     CoroutineScope(Dispatchers.IO).launch {
                         FragmentManager.currentFragment?.createExcelTable(
@@ -196,10 +193,14 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     //Сохранение настроек имени title в файл
+    @SuppressLint("CommitPrefEdits")
     private fun editorSP(key: String, item: String) {
         val editor = sharedPreferences.edit()
         if (item != "") {
-            editor.putString(key, item)
+            with(editor) {
+                putString(key, item)
+                commit()
+            }
         }
     }
 

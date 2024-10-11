@@ -3,13 +3,13 @@ package com.example.KYL.viewmodel
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -277,10 +277,9 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         return coordListBackup
     }
 
-    suspend fun createExcleTable(
-        koordList: List<Coordinate>,
-        fileName: String
-    ) = withContext(Dispatchers.IO) {
+    fun createExcelTable(
+        koordList: List<Coordinate>
+    ): Workbook {
         val wb: Workbook = XSSFWorkbook()
         var cell: Cell? = null
         var sheet: Sheet? = null
@@ -304,34 +303,34 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         cell.setCellValue("КИП км")
 
         cell = row.createCell(5)
-        cell.setCellValue("Uтз_1, В")
+        cell.setCellValue("Uтз №1, В")
 
         cell = row.createCell(6)
-        cell.setCellValue("Uпп_1, В")
+        cell.setCellValue("Uпп №1, В")
 
         cell = row.createCell(7)
-        cell.setCellValue("Ток поляризации ВЭ_1, мА")
+        cell.setCellValue("Ток поляризации ВЭ №1, мА")
 
         cell = row.createCell(8)
-        cell.setCellValue("Uэсдд-эс_1, В")
+        cell.setCellValue("Uэсдд-эс №1, В")
 
         cell = row.createCell(9)
-        cell.setCellValue("Зав. номер ЭСДД_1")
+        cell.setCellValue("Зав. номер ЭСДД №1")
 
         cell = row.createCell(10)
-        cell.setCellValue("Uтз_2, В")
+        cell.setCellValue("Uтз №2, В")
 
         cell = row.createCell(11)
-        cell.setCellValue("Uпп_2, В")
+        cell.setCellValue("Uпп №2, В")
 
         cell = row.createCell(12)
-        cell.setCellValue("Ток поляризации ВЭ_2, мА")
+        cell.setCellValue("Ток поляризации ВЭ №2, мА")
 
         cell = row.createCell(13)
-        cell.setCellValue("Uэсдд-эс_2, В")
+        cell.setCellValue("Uэсдд-эс №2, В")
 
         cell = row.createCell(14)
-        cell.setCellValue("Зав. номер ЭСДД_2")
+        cell.setCellValue("Зав. номер ЭСДД №2")
 
         cell = row.createCell(15)
         cell.setCellValue("Примечание")
@@ -612,11 +611,25 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
         }
 
         //Запись файла Excel в папку "Документы" телефона
-        val writeExcel = WriteExcel(fileName)
+
         //fileName?.let { WriteExcel(fileName = it) } ?: WriteExcel(fileName = "Привет")
 //        Log.d("MyTAG", "createExcleTable: $fileName")
-        writeExcel.writeExcel(wb)
+        return wb
     }
+
+    suspend fun writeWorkBook(fileName: String, wb: Workbook): Boolean {
+        withContext(Dispatchers.IO)  {
+            val writeExcel = WriteExcel(fileName)
+            val write = writeExcel.writeExcel(wb)
+            if (write) {
+                return@withContext
+            }else{
+                // TODO:  
+            }
+        }
+        return true
+    }
+
 
     @Suppress("UNCHECKED_CAST")
     //В соответствии с рекомендациями Google Android

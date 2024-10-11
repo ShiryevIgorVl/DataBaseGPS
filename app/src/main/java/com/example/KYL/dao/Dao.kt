@@ -15,6 +15,7 @@ interface Dao {
     @Insert
     suspend fun insertListKoordinate(listCoord: List<Coordinate>)
 
+
     //Обновление элементов DB
     @Update
     suspend fun updateKoordinate(koordinate: Coordinate)

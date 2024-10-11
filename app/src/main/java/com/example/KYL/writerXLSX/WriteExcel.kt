@@ -1,7 +1,12 @@
 package com.example.KYL.writerXLSX
 
+import android.content.Context
 import android.os.Environment
+import android.util.Log
+import android.widget.Toast
 import com.example.KYL.constans.MainTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Workbook
 import java.io.File
 import java.io.FileOutputStream
@@ -12,7 +17,7 @@ class WriteExcel(fileName: String) {
 
     val FILE_NAME = "$fileName.xlsx"
 
-    fun writeExcel(wb: Workbook) {
+    fun writeExcel(wb: Workbook): Boolean {
         val path =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
@@ -26,8 +31,11 @@ class WriteExcel(fileName: String) {
             streamWrite = FileOutputStream(file)
             wb.write(streamWrite)
             streamWrite.close()
-        } catch (e: IOException) {
+            return true
+        } catch (e: Exception) {
             e.printStackTrace()
+            return false
+            }
         }
     }
-}
+
