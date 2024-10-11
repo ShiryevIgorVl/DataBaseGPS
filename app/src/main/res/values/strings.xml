@@ -36,4 +36,7 @@
     <string name="km_indicator">Указ</string>
     <string name="damage_Ip">ПИП</string>
     <string name="title_coordactivity">Опросный лист</string>
+    <string name="save_as">Сохранить как</string>
+    <string name="file_name">Введите имя файла</string>
+    <string name="save_button">Сохранить</string>
 </resources>

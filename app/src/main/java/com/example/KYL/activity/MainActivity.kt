@@ -78,9 +78,12 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_all -> {
-                val dialog = AllDeleteDialogFragment()
+                val dialog = AllDeleteDialogFragment(title)
                 val manager = supportFragmentManager
                 val transaction: FragmentTransaction = manager.beginTransaction()
+                dialog.deleteTitle = {
+                    title = null
+                }
                 dialog.show(transaction, "dialog1")
             }
 
