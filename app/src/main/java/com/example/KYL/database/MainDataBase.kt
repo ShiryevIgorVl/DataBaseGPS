@@ -22,10 +22,10 @@ abstract class MainDataBase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MainDataBase? = null
 
-        fun getDataBase(contex: Context): MainDataBase {
+        fun getDataBase(context: Context): MainDataBase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    contex.applicationContext,
+                    context.applicationContext,
                     MainDataBase::class.java, "coordinate.db"
                 ).build()
                 instance

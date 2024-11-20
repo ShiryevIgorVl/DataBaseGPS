@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity(), LocListenerInterfase {
                 val manager = supportFragmentManager
                 val transaction: FragmentTransaction = manager.beginTransaction()
                 dialog.deleteTitle = {
-                    title = null
+                    title = "Без имени.xlsx"
+                    editorSP(Constans.SPKey, "Без имени.xlsx")
+
                 }
                 dialog.show(transaction, "dialog1")
             }

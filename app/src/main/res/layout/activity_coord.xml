@@ -8,6 +8,7 @@
     tools:context="com.example.KYL.activity.CoordActivity">
 
     <ScrollView
+        android:id="@+id/myScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -212,10 +213,10 @@
                 android:id="@+id/etiPolPipe1"
                 android:layout_width="110dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="Iпол1. вэ, мА"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
 
@@ -234,10 +235,10 @@
                 android:id="@+id/etNunEsDd1"
                 android:layout_width="165dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="Зав.ном.ЭСДД 1"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etiPolPipe1">
 
@@ -256,10 +257,10 @@
                 android:id="@+id/etiPolPipe2"
                 android:layout_width="110dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="68dp"
                 android:layout_marginEnd="8dp"
                 android:hint="Iпол2. вэ, мА"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="68dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etiPolPipe1">
 
@@ -271,18 +272,17 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etNunEsDd2"
                 android:layout_width="165dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="Зав.ном.ЭСДД 2"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etiPolPipe2">
 
@@ -294,8 +294,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -324,9 +323,9 @@
                 android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:hint="Uтз1, В"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
 
@@ -338,8 +337,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                     />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -347,9 +345,9 @@
                 android:layout_width="110dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="68dp"
                 android:hint="Uтз2, В"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="68dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etUtsPipe1">
 
@@ -361,8 +359,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -370,9 +367,9 @@
                 android:layout_width="165dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:hint="Uэсдд-эс1, В"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etUtsPipe1">
 
@@ -384,8 +381,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -507,24 +503,25 @@
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etIPipe">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#DDDBDB"
-                android:digits="0123456789."
-                android:ems="10"
-                android:inputType="number"
-                android:textAlignment="center"
-                android:textColor="@color/black"/>
-        </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DDDBDB"
+                    android:digits="0123456789."
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etUppPipe1"
                 android:layout_width="110dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="8dp"
                 android:hint="Uпп1, В"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/etiPolPipe1"
                 app:layout_constraintStart_toEndOf="@+id/etUtsPipe1"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
@@ -544,9 +541,9 @@
                 android:id="@+id/etUppPipe2"
                 android:layout_width="110dp"
                 android:layout_height="52dp"
+                android:layout_marginTop="68dp"
                 android:hint="Uпп2, В"
                 android:textColorHint="@color/black"
-                android:layout_marginTop="68dp"
                 app:layout_constraintEnd_toStartOf="@+id/etiPolPipe1"
                 app:layout_constraintStart_toEndOf="@+id/etUtsPipe1"
                 app:layout_constraintTop_toBottomOf="@+id/etUppPipe1">
@@ -566,12 +563,13 @@
                 android:id="@+id/etUesddes2"
                 android:layout_width="165dp"
                 android:layout_height="52dp"
-                android:hint="Uэсдд-эс2, В"
-                android:textColorHint="@color/black"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:hint="Uэсдд-эс2, В"
+                android:textColorHint="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etUtsPipe2">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -580,8 +578,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -629,8 +626,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btAD"
                 app:layout_constraintStart_toEndOf="@+id/btKIP"
                 app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
-                app:layout_constraintVertical_bias="0.20"
-                 />
+                app:layout_constraintVertical_bias="0.20" />
 
             <Button
                 android:id="@+id/btKmIndicator"
@@ -689,9 +685,9 @@
                 android:background="#DDDBDB"
                 android:ems="10"
                 android:hint="Примечание"
-                android:textColorHint="@color/black"
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -704,7 +700,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/teal_700"
-                android:text="Наименование точки"
+                android:text="@string/name_of_the_point"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -717,7 +713,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+
+
     </ScrollView>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_photo"
@@ -730,12 +730,12 @@
         android:src="@drawable/camera_red"
 
         app:backgroundTint="#B64DA5"
-
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:layout_wrapBehaviorInParent="horizontal_only" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,4 +39,5 @@
     <string name="save_as">Сохранить как</string>
     <string name="file_name">Введите имя файла</string>
     <string name="save_button">Сохранить</string>
+    <string name="name_of_the_point">Наименование точки</string>
 </resources>

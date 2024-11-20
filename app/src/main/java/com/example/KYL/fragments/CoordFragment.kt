@@ -150,7 +150,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
 
             updateDistance(dataList)
         }
-        childFragmentManager?.let {
+        childFragmentManager.let {
             buttonDeleteDialogFragment.show(
                 it,
                 "buttonDeleteDialogFragment"

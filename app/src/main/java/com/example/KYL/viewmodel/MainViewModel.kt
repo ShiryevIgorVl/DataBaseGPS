@@ -9,7 +9,6 @@ import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.database.MainDataBase
 import com.example.KYL.entities.Coordinate
 import com.example.KYL.writerXLSX.WriteExcel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,7 +25,6 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     val dao = dataBase.getDao()
     val allKoord: LiveData<List<Coordinate>> = dao.getAllKoordinate().asLiveData()
     private val _getAllCoordinate = MutableLiveData<List<Coordinate>>()
-    val getAllCoordinate: LiveData<List<Coordinate>> get() = _getAllCoordinate
 
 
     init {
@@ -618,12 +616,12 @@ class MainViewModel(dataBase: MainDataBase) : ViewModel() {
     }
 
     suspend fun writeWorkBook(fileName: String, wb: Workbook): Boolean {
-        withContext(Dispatchers.IO)  {
+        withContext(Dispatchers.IO) {
             val writeExcel = WriteExcel(fileName)
             val write = writeExcel.writeExcel(wb)
             if (write) {
                 return@withContext
-            }else{
+            } else {
                 // TODO:  
             }
         }

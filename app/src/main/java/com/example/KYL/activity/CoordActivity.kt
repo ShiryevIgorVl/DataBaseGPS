@@ -14,6 +14,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +29,7 @@ import com.example.KYL.entities.Coordinate
 import com.example.KYL.fragments.CoordFragment
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -48,7 +51,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     private var speed: String = "0.0"
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private  var accuracy: String = "0.0"
+    private var accuracy: String = "0.0"
 
     private var coordinate: Coordinate? = null
 
@@ -61,6 +64,9 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private var imageFileName = ""
     private var counter = 0
+
+    lateinit var scrollView: ScrollView
+    lateinit var fab: FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +87,33 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
         getPhoto()
 
+        invisibleFAB()
     }
+
+    //Убераем кнопку при скролинге
+    private fun invisibleFAB() {
+        fab = binding.fabPhoto
+        scrollView = binding.myScrollView
+        val scrollListener =
+            View.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if (scrollY > oldScrollY) {
+                    hideFab()
+                } else if (scrollY < oldScrollY) {
+                    showFab()
+                }
+            }
+
+        scrollView.setOnScrollChangeListener(scrollListener)
+    }
+
+    private fun hideFab() {
+        fab.animate().translationY(fab.height.toFloat() + 50).setDuration(500).start()
+    }
+
+    private fun showFab() {
+        fab.animate().translationY(0f).setDuration(500).start()
+    }
+
 
     //Получаем Coordinate для редактирования из CoordFragment
     private fun getCoordinate() {
@@ -94,10 +126,21 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     //Записываем из переданного для редактирования Coordinate данные в EditText этого активити
     private fun fillCoordinate() = with(binding) {
+
+        //Именно так "setText" по другому не работает так как EditText
         tvKoordName.text = coordinate?.name
-        etUtsPipe1.editText?.setText(coordinate?.utsPipe)   //Именно так "setText" по другому не работает так как EditText
+        etUtsPipe1.editText?.setText(coordinate?.utsPipe)
         etUppPipe1.editText?.setText(coordinate?.uppPipe)
         etiPolPipe1.editText?.setText(coordinate?.ipolPipe)
+        etUesddes1.editText?.setText(coordinate?.uesddes)
+        etNunEsDd1.editText?.setText(coordinate?.znesdd)
+
+        etUtsPipe2.editText?.setText(coordinate?.utsPipe2)
+        etUppPipe2.editText?.setText(coordinate?.uppPipe2)
+        etiPolPipe2.editText?.setText(coordinate?.ipolPipe2)
+        etUesddes2.editText?.setText(coordinate?.uesddes2)
+        etNunEsDd2.editText?.setText(coordinate?.znesdd2)
+
         etUtsOver.editText?.setText(coordinate?.utsСover)
         etUppCover.editText?.setText(coordinate?.uppCover)
         etIpolCover.editText?.setText(coordinate?.ipolCover)
@@ -330,6 +373,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) -> {
                 true
             }
+
             else -> {
                 permissionLauncher.launch(android.Manifest.permission.CAMERA)
                 false
@@ -341,7 +385,8 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) {
                 if (it) {
-                    Toast.makeText(this, "Разрешение для камеры получено", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Разрешение для камеры получено", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     Toast.makeText(this, "Не получено разрешение для камеры", Toast.LENGTH_SHORT)
                         .show()
