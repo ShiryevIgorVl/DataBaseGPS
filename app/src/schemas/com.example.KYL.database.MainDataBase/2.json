@@ -1,0 +1,178 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "d023f31e4cc1ccccd135e0c489131f55",
+    "entities": [
+      {
+        "tableName": "coordinate",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `distance` INTEGER NOT NULL, `operational_number_KIP` TEXT NOT NULL, `operational_km` TEXT NOT NULL, `uts_pipe` TEXT NOT NULL, `upp_pipe` TEXT NOT NULL, `ipol_ve_pipe` TEXT NOT NULL, `note` TEXT NOT NULL, `time` TEXT NOT NULL, `uts_cover` TEXT NOT NULL, `upp_cover` TEXT NOT NULL, `ipol_ve_cover` TEXT NOT NULL, `res_pipe_cover` TEXT NOT NULL, `u_prot_semlya` TEXT NOT NULL, `i_prot` TEXT NOT NULL, `depth_pipe` TEXT NOT NULL, `i_in_pipe` TEXT NOT NULL, `ues` TEXT NOT NULL, `damage_IP` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `height` TEXT NOT NULL, `accuracy` TEXT NOT NULL, `speed` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distance",
+            "columnName": "distance",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operationalnumberKIP",
+            "columnName": "operational_number_KIP",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operationalKM",
+            "columnName": "operational_km",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utsPipe",
+            "columnName": "uts_pipe",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uppPipe",
+            "columnName": "upp_pipe",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ipolPipe",
+            "columnName": "ipol_ve_pipe",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "utsСover",
+            "columnName": "uts_cover",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uppCover",
+            "columnName": "upp_cover",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ipolCover",
+            "columnName": "ipol_ve_cover",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rPipeCover",
+            "columnName": "res_pipe_cover",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ups",
+            "columnName": "u_prot_semlya",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iprot",
+            "columnName": "i_prot",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "depthPipe",
+            "columnName": "depth_pipe",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iPipe",
+            "columnName": "i_in_pipe",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ues",
+            "columnName": "ues",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "damageIP",
+            "columnName": "damage_IP",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accuracy",
+            "columnName": "accuracy",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "speed",
+            "columnName": "speed",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd023f31e4cc1ccccd135e0c489131f55')"
+    ]
+  }
+}
