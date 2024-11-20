@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_coordinate"
+    app:startDestination="@id/ADFragment">
+
+    <fragment
+        android:id="@+id/ADFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.ADFragment"
+        android:label="fragment_a_d"
+        tools:layout="@layout/fragment_a_d" />
+    <fragment
+        android:id="@+id/angleOfRotationFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.AngleOfRotationFragment"
+        android:label="fragment_angle_of_rotation"
+        tools:layout="@layout/fragment_angle_of_rotation" />
+    <fragment
+        android:id="@+id/controlPointFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.ControlPointFragment"
+        android:label="fragment_control_point"
+        tools:layout="@layout/fragment_control_point" />
+    <fragment
+        android:id="@+id/indicatorFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.IndicatorFragment"
+        android:label="fragment_indicator"
+        tools:layout="@layout/fragment_indicator" />
+    <fragment
+        android:id="@+id/insulationDamageFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.InsulationDamageFragment"
+        android:label="fragment_insulation_damage"
+        tools:layout="@layout/fragment_insulation_damage" />
+    <fragment
+        android:id="@+id/linearCraneFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.LinearCraneFragment"
+        android:label="fragment_linear_crane"
+        tools:layout="@layout/fragment_linear_crane" />
+    <fragment
+        android:id="@+id/KIPLinearFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.KIPLinearFragment"
+        android:label="fragment_linear_kip"
+        tools:layout="@layout/fragment_linear_kip" />
+    <fragment
+        android:id="@+id/riverFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.RiverFragment"
+        android:label="fragment_river"
+        tools:layout="@layout/fragment_river" />
+</navigation>
