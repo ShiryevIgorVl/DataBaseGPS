@@ -51,136 +51,38 @@
 
             <TextView
                 android:id="@+id/tvKoordName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/teal_700"
+                android:background="@color/teal_200"
                 android:text="@string/name_of_the_point"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.082" />
-
-
-            <Button
-                android:id="@+id/btKIP"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/kip"
-
-                app:layout_constraintBottom_toBottomOf="@+id/btRiver"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btRiver"
-                 />
-
-            <Button
-                android:id="@+id/btKontPoint"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/kt"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/btLnearCrane"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvKoordName"
-                 />
-
-
-            <Button
-                android:id="@+id/btAD"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/ad"
-                app:layout_constraintBottom_toBottomOf="@+id/btKontPoint"
-                app:layout_constraintTop_toTopOf="@+id/btKontPoint"
-                app:layout_constraintEnd_toStartOf="@+id/btKontPoint"
-                app:layout_constraintStart_toEndOf="@+id/btRiver"
-                 />
-
-            <Button
-                android:id="@+id/btRiver"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/river"
-                app:layout_constraintBottom_toBottomOf="@+id/btAD"
-                app:layout_constraintEnd_toStartOf="@+id/btAD"
-                app:layout_constraintStart_toEndOf="@+id/btKIP"
-                app:layout_constraintTop_toTopOf="@+id/btAD"
-                 />
-
-            <Button
-                android:id="@+id/btKmIndicator"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/km_indicator"
-
-                app:layout_constraintBottom_toBottomOf="@+id/btDamageIp"
-                app:layout_constraintTop_toTopOf="@+id/btDamageIp"
-                app:layout_constraintStart_toStartOf="parent"
-                 />
-
-            <Button
-                android:id="@+id/btLnearCrane"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/linear_crane"
-                app:layout_constraintBottom_toTopOf="@+id/fragmentHolder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btKontPoint"
-                 />
-
-
-            <Button
-                android:id="@+id/btAngleRotation"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/angle_rotation"
-                app:layout_constraintBottom_toBottomOf="@+id/btLnearCrane"
-                app:layout_constraintTop_toTopOf="@+id/btLnearCrane"
-                app:layout_constraintEnd_toStartOf="@+id/btLnearCrane"
-                app:layout_constraintStart_toEndOf="@+id/btDamageIp"
-
-                 />
-
-            <Button
-                android:id="@+id/btDamageIp"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-
-                android:text="@string/damage_Ip"
-                app:layout_constraintBottom_toBottomOf="@+id/btAngleRotation"
-                app:layout_constraintTop_toTopOf="@+id/btAngleRotation"
-                app:layout_constraintEnd_toStartOf="@+id/btAngleRotation"
-                app:layout_constraintStart_toEndOf="@+id/btKmIndicator"
-
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/tvLon"
+                app:layout_constraintVertical_bias="0.0" />
 
             <FrameLayout
-                android:id="@+id/fragmentHolder"
+                android:id="@+id/fragmentButtonHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_margin="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvKoordName" />
 
-                app:layout_constraintTop_toBottomOf="@+id/btLnearCrane"
+            <FrameLayout
+                android:id="@+id/fragmentPointHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/fragmentButtonHolder" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -204,6 +106,5 @@
         app:layout_constraintHorizontal_bias="0.73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

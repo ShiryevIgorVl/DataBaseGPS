@@ -2,20 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CoordActivityFragments.KIPLinearFragment">
+    tools:context=".fragments.CoordActivityFragments.KIPtoADFragment">
 
-
+    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/tvPipe1"
+        android:id="@+id/tvKoordName2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/teal_200"
-        android:text="Труба 1"
+        android:text="Труба"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
         android:hint="Uтз1, В"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPipe1">
+        app:layout_constraintTop_toBottomOf="@+id/tvKoordName2">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -193,53 +193,53 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/tvPipe2"
-        android:layout_width="match_parent"
+        android:id="@+id/tvKoordName3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/teal_200"
-        android:text="Труба 2"
+        android:text="Патрон"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/etResdd1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/etResdd1" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUtsPipe2"
+        android:id="@+id/etUtsСover"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Uтз2, В"
+        android:hint="Uтз, В"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPipe2">
+        app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
-            android:inputType="number"
+            android:inputType="numberSigned|numberDecimal"
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUppPipe2"
+        android:id="@+id/etUppCover"
         android:layout_width="110dp"
         android:layout_height="52dp"
-        android:hint="Uпп2, В"
+        android:layout_marginTop="10dp"
+        android:hint="Uпп, В"
         android:textColorHint="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/etUtsPipe2"
-        app:layout_constraintEnd_toStartOf="@+id/etiPolPipe2"
-        app:layout_constraintTop_toTopOf="@+id/etUtsPipe2"
-        app:layout_constraintBottom_toBottomOf="@+id/etUtsPipe2">
+        app:layout_constraintEnd_toStartOf="@+id/etIpolCover"
+        app:layout_constraintStart_toEndOf="@+id/etUtsСover"
+        app:layout_constraintTop_toBottomOf="@+id/tvKoordName3">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -252,16 +252,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etiPolPipe2"
+        android:id="@+id/etIpolCover"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
-        android:hint="Iпол2. вэ, мА"
+        android:hint="Iпол.вэ,мА"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etiPolPipe1"
-        app:layout_constraintTop_toTopOf="@+id/etUppPipe2"
-        app:layout_constraintBottom_toBottomOf="@+id/etUppPipe2">
+        app:layout_constraintTop_toTopOf="@+id/etUppCover">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -274,57 +272,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etUesddes2"
-        android:layout_width="165dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="Uэсдд-эс2, В"
-        android:textColorHint="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUtsPipe2">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#DDDBDB"
-            android:digits="0123456789.-"
-            android:ems="10"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etNunEsDd2"
-        android:layout_width="165dp"
-        android:layout_height="52dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Зав.ном.ЭСДД 2"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etUesddes2"
-        app:layout_constraintBottom_toBottomOf="@+id/etUesddes2">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#DDDBDB"
-            android:digits="0123456789.-"
-            android:ems="10"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etResdd2"
+        android:id="@+id/etUesddesCover"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Rэсдд2, Ом"
+        android:hint="Uэсдд-эс, В"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUesddes2">
+        app:layout_constraintTop_toBottomOf="@+id/etUtsСover">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -337,15 +293,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etRve2"
+        android:id="@+id/etRprotCover"
         android:layout_width="110dp"
         android:layout_height="52dp"
-        android:hint="Rвэ2, Ом"
+
+        android:hint="R упз, Ом"
         android:textColorHint="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/etResddve2"
-        app:layout_constraintStart_toEndOf="@+id/etResdd2"
-        app:layout_constraintTop_toTopOf="@+id/etResdd2"
-        app:layout_constraintBottom_toBottomOf="@+id/etResdd2">
+        app:layout_constraintStart_toEndOf="@+id/etUesddesCover"
+        app:layout_constraintEnd_toStartOf="@+id/etNunEsDdCover"
+        app:layout_constraintTop_toTopOf="@+id/etUesddesCover"
+        app:layout_constraintBottom_toBottomOf="@+id/etUesddesCover"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -358,15 +316,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etResddve2"
+        android:id="@+id/etNunEsDdCover"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
-        android:hint="Rэсдд-вэ2, Ом"
+        android:hint="Зав.ном.ЭСДД"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etRve2"
-        app:layout_constraintBottom_toBottomOf="@+id/etRve2">
+        app:layout_constraintTop_toTopOf="@+id/etUesddesCover"
+        app:layout_constraintBottom_toBottomOf="@+id/etUesddesCover">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -377,6 +335,149 @@
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etResddCover"
+        android:layout_width="110dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="Rэсдд1, Ом"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUesddes1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789.-"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etRveCover"
+        android:layout_width="110dp"
+        android:layout_height="52dp"
+        android:hint="Rвэ1, Ом"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/etResddve1"
+        app:layout_constraintStart_toEndOf="@+id/etResdd1"
+        app:layout_constraintTop_toTopOf="@+id/etResdd1"
+        app:layout_constraintBottom_toBottomOf="@+id/etResdd1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789.-"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etResddveCover"
+        android:layout_width="110dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Rэсдд-вэ1, Ом"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etRve1"
+        app:layout_constraintBottom_toBottomOf="@+id/etRve1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789.-"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etRPipeCover"
+        android:layout_width="110dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="R тр-к, Ом"
+        android:textColorHint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etUesddesCover">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789."
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etIprot"
+        android:layout_width="110dp"
+        android:layout_height="53dp"
+        android:hint="I пр-к, мА"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/etUps"
+        app:layout_constraintStart_toEndOf="@+id/etRPipeCover"
+        app:layout_constraintTop_toTopOf="@+id/etRPipeCover"
+        app:layout_constraintBottom_toBottomOf="@+id/etRPipeCover">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789.-"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etUps"
+        android:layout_width="110dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="8dp"
+        android:hint="U пр-з, В"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etIprot"
+        app:layout_constraintBottom_toBottomOf="@+id/etIprot">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DDDBDB"
+            android:digits="0123456789.-"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvBSZ"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/teal_200"
+        android:text="БСЗ"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRPipeCover" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etTypeBSZ"
@@ -398,28 +499,11 @@
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvBSZ"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/teal_200"
-        android:text="БСЗ"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/etResdd2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etZavNumBSZ"
         android:layout_width="110dp"
         android:layout_height="52dp"
-        android:hint="Зав.ном.БСЗ"
+        android:hint="Зав.№"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toEndOf="@+id/etTypeBSZ"
         app:layout_constraintEnd_toStartOf="@+id/etIchan1"
@@ -524,20 +608,20 @@
 
     <TextView
         android:id="@+id/tvIKP"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/teal_200"
         android:text="ИКП"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/etIchan2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/etIchan2" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etINIKP"
@@ -559,8 +643,6 @@
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etOGKIKP"
@@ -746,4 +828,5 @@
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

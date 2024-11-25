@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CoordActivityFragments.KIPLinearFragment">
+    tools:context=".fragments.CoordActivityFragments.VEIFragment">
 
-
+    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tvPipe1"
         android:layout_width="match_parent"
@@ -523,14 +523,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/tvIKP"
+        android:id="@+id/tvVEI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
         android:background="@color/teal_200"
-        android:text="ИКП"
+        android:text="ВЭИ"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -540,60 +540,54 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etINIKP"
+        android:id="@+id/etVEIType"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="ИН ИКП"
+        android:hint="Тип ВЭИ"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIKP">
+        app:layout_constraintTop_toBottomOf="@+id/tvVEI">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#DDDBDB"
-            android:digits="0123456789.-"
-            android:ems="10"
-            android:inputType="number"
+            android:inputType="textMultiLine"
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etOGKIKP"
+        android:id="@+id/etVEIZavNum"
         android:layout_width="110dp"
         android:layout_height="52dp"
-        android:hint="ОГК ИКП"
+        android:hint="№ ВЭИ"
         android:textColorHint="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/etINIKP"
-        app:layout_constraintEnd_toStartOf="@+id/etSKIKP"
-        app:layout_constraintTop_toTopOf="@+id/etINIKP"
-        app:layout_constraintBottom_toBottomOf="@+id/etINIKP">
+        app:layout_constraintStart_toEndOf="@+id/etVEIType"
+        app:layout_constraintEnd_toStartOf="@+id/etRVEI"
+        app:layout_constraintTop_toTopOf="@+id/etVEIType"
+        app:layout_constraintBottom_toBottomOf="@+id/etVEIType">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#DDDBDB"
-            android:digits="0123456789.-"
-            android:ems="10"
-            android:inputType="number"
+            android:inputType="textMultiLine"
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etSKIKP"
+        android:id="@+id/etRVEI"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
-        android:hint="СК ИКП"
+        android:hint="Rвэи, Ом"
         android:textColorHint="@color/black"
-        app:layout_constraintTop_toEndOf="@+id/etOGKIKP"
+        app:layout_constraintTop_toEndOf="@+id/etVEIZavNum"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etOGKIKP"
-        app:layout_constraintBottom_toBottomOf="@+id/etOGKIKP">
+        app:layout_constraintTop_toTopOf="@+id/etVEIZavNum"
+        app:layout_constraintBottom_toBottomOf="@+id/etVEIZavNum">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -620,7 +614,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etINIKP" />
+        app:layout_constraintTop_toBottomOf="@+id/etVEIType" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etDepthPipe"
@@ -746,4 +740,6 @@
             android:textAlignment="center"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
