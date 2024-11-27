@@ -23,7 +23,7 @@
         android:roundIcon="@drawable/needle"
         android:supportsRtl="true"
         android:theme="@style/Theme.DataBaseGPS"
-        tools:targetApi="33">
+        tools:targetApi="35">
         <activity
             android:name="com.example.KYL.activity.CoordActivity"
             android:screenOrientation="locked"

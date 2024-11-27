@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="EHZ Tracker">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-08-16T08:53:11.992572700Z">
+        <DropdownSelection timestamp="2024-11-27T12:13:30.154031600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=a03053ca" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\igo11\.android\avd\Pixel_9_Pro_API_VanillaIceCream.avd" />
             </handle>
           </Target>
         </DropdownSelection>
