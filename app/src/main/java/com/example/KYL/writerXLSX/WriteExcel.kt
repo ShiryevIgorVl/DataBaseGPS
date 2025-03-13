@@ -1,17 +1,8 @@
 package com.example.KYL.writerXLSX
-
-import android.content.Context
 import android.os.Environment
-import android.util.Log
-import android.widget.Toast
-import com.example.KYL.constans.MainTime
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Workbook
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
-
 
 class WriteExcel(fileName: String) {
 
@@ -27,6 +18,9 @@ class WriteExcel(fileName: String) {
         try {
             if (!path.exists()) {
                 path.mkdirs()
+            }
+            if (file.exists()){
+                file.delete()
             }
             streamWrite = FileOutputStream(file)
             wb.write(streamWrite)

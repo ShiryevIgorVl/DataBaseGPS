@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -15,12 +16,17 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.example.KYL.R
 import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.constans.MainTime
@@ -73,6 +79,21 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         super.onCreate(savedInstanceState)
         binding = ActivityCoordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.myScrollView) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = bars.bottom,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+
         title = getString(R.string.title_coordactivity)
         initGPSService()
         actionBarSetting()
@@ -175,7 +196,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     //Инициализируем менеджер локациии и подключаем setLocListenerInterface у классу MyLocatiion
     private fun initGPSService() {
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         myLocation = MyLocation()
         myLocation.setLocListenerInterface(this)
     }
@@ -370,12 +391,12 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
 
     private fun checkPermissionCamera(): Boolean {
         return when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) -> {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) -> {
                 true
             }
 
             else -> {
-                permissionLauncher.launch(android.Manifest.permission.CAMERA)
+                permissionLauncher.launch(Manifest.permission.CAMERA)
                 false
             }
         }

@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.lang.StringBuilder
+import androidx.core.net.toUri
 
 
 class CoordFragment : BaseFragment(), CoordAdapter.Listener {
@@ -418,7 +419,7 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
     private fun openYandexMapWithMarker(latitude: Float, longitude: Float) {
         // Формируем URI для открытия Яндекс.Карт с меткой
         val uri =
-            Uri.parse("yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude")
+            "yandexmaps://maps.yandex.ru/?pt=$longitude,$latitude&z=12&l=sat".toUri()
 
         val intent = Intent(Intent.ACTION_VIEW, uri)
 
