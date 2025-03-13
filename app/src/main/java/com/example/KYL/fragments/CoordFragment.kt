@@ -431,7 +431,6 @@ class CoordFragment : BaseFragment(), CoordAdapter.Listener {
         }
     }
 
-
     //Метод для формирования строки в uri
     private fun getStringForUri(pointList: List<CoordinateLatLongName>): String {
         val tilda = "~"
