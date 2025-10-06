@@ -12,6 +12,7 @@
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:text="@string/kip"
         android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/btRiver"
@@ -26,7 +27,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/kt"
         android:autoSizeTextType="uniform"
-        android:layout_marginTop="10dp"
+
         app:layout_constraintStart_toEndOf="@+id/btKIP"
         app:layout_constraintBottom_toBottomOf="@+id/btKIP"
         app:layout_constraintTop_toTopOf="@+id/btKIP"

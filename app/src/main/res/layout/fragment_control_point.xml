@@ -6,19 +6,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CoordActivityFragments.ControlPointFragment">
 
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/purple_500"
+        android:text="Контрольная точка"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etDepthPipe"
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
-        android:hint="Глубина, м"
+
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/etIPipe">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Глубина, м"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
@@ -32,14 +49,14 @@
         android:layout_width="110dp"
         android:layout_height="54dp"
         android:layout_marginTop="8dp"
-        android:hint="Iтр, мА"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toEndOf="@+id/etDepthPipe"
         app:layout_constraintEnd_toStartOf="@+id/etUES"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Iтр, мА"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
@@ -53,7 +70,6 @@
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
-        android:hint="Ро, Омхм"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
@@ -62,6 +78,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Ро, Омхм"
             android:background="#DDDBDB"
             android:digits="0123456789."
             android:ems="10"
@@ -76,13 +93,13 @@
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Uтз1, В"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDepthPipe">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Uтз, В"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
@@ -96,7 +113,6 @@
         android:layout_width="110dp"
         android:layout_height="52dp"
         android:layout_marginTop="8dp"
-        android:hint="Uпп1, В"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/etiPolPipe1"
         app:layout_constraintStart_toEndOf="@+id/etUtsPipe1"
@@ -104,6 +120,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Uпп, В"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
@@ -118,13 +135,13 @@
         android:layout_height="52dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Iпол1. вэ, мА"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUES">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Iпол. вэ, мА"
             android:background="#DDDBDB"
             android:digits="0123456789.-"
             android:ems="10"
@@ -137,7 +154,6 @@
         android:id="@+id/etGradientLeft"
         android:layout_width="165dp"
         android:layout_height="52dp"
-        android:hint="Градиент левый, мВ"
         android:textColorHint="@color/black"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/etUtsPipe1"
@@ -145,6 +161,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Градиент левый, мВ"
             android:background="#DDDBDB"
             android:digits="0123456789"
             android:elegantTextHeight="false"
@@ -158,7 +175,6 @@
         android:id="@+id/etGradientRight"
         android:layout_width="165dp"
         android:layout_height="52dp"
-        android:hint="Градиент правый, мВ"
         android:layout_marginEnd="8dp"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +183,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Градиент правый, мВ"
             android:background="#DDDBDB"
             android:digits="0123456789"
             android:elegantTextHeight="false"
@@ -181,13 +198,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Примечание"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etGradientLeft">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="Примечание"
             android:background="#DDDBDB"
             android:ems="10"
             android:inputType="textMultiLine"
