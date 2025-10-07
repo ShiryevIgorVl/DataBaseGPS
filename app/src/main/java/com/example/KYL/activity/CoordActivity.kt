@@ -26,7 +26,9 @@ import com.example.KYL.constans.MainDecimalFormat
 import com.example.KYL.constans.MainTime
 import com.example.KYL.databinding.ActivityCoordBinding
 import com.example.KYL.entities.Coordinate
+import com.example.KYL.fragments.CoordActivityFragments.ButtonPointFragment
 import com.example.KYL.fragments.CoordFragment
+import com.example.KYL.fragments.PointFragmentManager
 import com.example.KYL.gps.LocListenerInterfase
 import com.example.KYL.gps.MyLocation
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -83,9 +85,12 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         chekPermissionGetLocation()
 
         getCoordinate()
-        onClickKoordPointBotton()
+        onClickCoordPointBotton()
 
         getPhoto()
+
+        PointFragmentManager.setPointFragment(ButtonPointFragment.newInstance()
+            , this)
 
         invisibleFAB()
     }
@@ -232,7 +237,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         if (coordinate == null) {
             tempCoordinate = onCreateCoordinate()
         } else {
-            tempCoordinate = updateCootdinate()
+            tempCoordinate = updateCoordinate()
             editState = "update"
         }
         val i = Intent(this, MainActivity::class.java).apply {
@@ -244,7 +249,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
     }
 
     //Передаем данные в CoordFragment из окошек заполнения для редактирования записей в DB
-    private fun updateCootdinate(): Coordinate? {
+    private fun updateCoordinate(): Coordinate? {
         return coordinate?.copy(
             name = binding.tvKoordName.text.toString(),
             note = binding.etNote.text.toString(),
@@ -311,7 +316,7 @@ class CoordActivity : AppCompatActivity(), LocListenerInterfase {
         )
     }
 
-    private fun onClickKoordPointBotton() {
+    private fun onClickCoordPointBotton() {
         binding.btKIP.setOnClickListener {
             binding.tvKoordName.text = "КИП"
         }

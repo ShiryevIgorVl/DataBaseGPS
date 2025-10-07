@@ -27,7 +27,6 @@
         android:layout_marginEnd="8dp"
         android:text="@string/kt"
         android:autoSizeTextType="uniform"
-
         app:layout_constraintStart_toEndOf="@+id/btKIP"
         app:layout_constraintBottom_toBottomOf="@+id/btKIP"
         app:layout_constraintTop_toTopOf="@+id/btKIP"
