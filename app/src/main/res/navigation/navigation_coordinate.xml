@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_coordinate"
+    app:startDestination="@id/KIPLinearFragment">
+
+    <fragment
+        android:id="@+id/ADFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.ADFragment"
+        android:label="fragment_a_d"
+        tools:layout="@layout/fragment_a_d" />
+    <fragment
+        android:id="@+id/angleOfRotationFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.AngleOfRotationFragment"
+        android:label="fragment_angle_of_rotation"
+        tools:layout="@layout/fragment_angle_of_rotation" />
+    <fragment
+        android:id="@+id/controlPointFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.ControlPointFragment"
+        android:label="fragment_control_point"
+        tools:layout="@layout/fragment_control_point" />
+    <fragment
+        android:id="@+id/indicatorFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.IndicatorFragment"
+        android:label="fragment_indicator"
+        tools:layout="@layout/fragment_indicator" />
+    <fragment
+        android:id="@+id/insulationDamageFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.InsulationDamageFragment"
+        android:label="fragment_insulation_damage"
+        tools:layout="@layout/fragment_insulation_damage" />
+    <fragment
+        android:id="@+id/linearCraneFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.LinearCraneFragment"
+        android:label="fragment_linear_crane"
+        tools:layout="@layout/fragment_linear_crane" />
+    <fragment
+        android:id="@+id/KIPLinearFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.KIPLinearFragment"
+        android:label="fragment_linear_kip"
+        tools:layout="@layout/fragment_linear_kip" />
+    <fragment
+        android:id="@+id/riverFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.RiverFragment"
+        android:label="fragment_river"
+        tools:layout="@layout/fragment_river" />
+    <fragment
+        android:id="@+id/buttonPointFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.ButtonPointFragment"
+        android:label="fragment_button_point"
+        tools:layout="@layout/fragment_button_point" >
+        <action
+            android:id="@+id/action_buttonPointFragment_to_candleFragment"
+            app:destination="@id/candleFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_linearCraneFragment"
+            app:destination="@id/linearCraneFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_riverFragment"
+            app:destination="@id/riverFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_controlPointFragment"
+            app:destination="@id/controlPointFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_ADFragment"
+            app:destination="@id/ADFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_angleOfRotationFragment"
+            app:destination="@id/angleOfRotationFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_KIPLinearFragment"
+            app:destination="@id/KIPLinearFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_VEIFragment"
+            app:destination="@id/VEIFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_indicatorFragment"
+            app:destination="@id/indicatorFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_insulationDamageFragment"
+            app:destination="@id/insulationDamageFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_KIPafterADFragment"
+            app:destination="@id/KIPafterADFragment" />
+        <action
+            android:id="@+id/action_buttonPointFragment_to_KIPtoADFragment"
+            app:destination="@id/KIPtoADFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/KIPafterADFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.KIPafterADFragment"
+        android:label="fragment_kip_after_ad"
+        tools:layout="@layout/fragment_kip_after_ad" />
+    <fragment
+        android:id="@+id/KIPtoADFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.KIPtoADFragment"
+        android:label="fragment_kip_to_ad"
+        tools:layout="@layout/fragment_kip_to_ad" />
+    <fragment
+        android:id="@+id/VEIFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.VEIFragment"
+        android:label="fragment_vei"
+        tools:layout="@layout/fragment_vei" />
+    <fragment
+        android:id="@+id/candleFragment"
+        android:name="com.example.KYL.fragments.CoordActivityFragments.CandleFragment"
+        android:label="fragment_candle"
+        tools:layout="@layout/fragment_candle" />
+</navigation>
